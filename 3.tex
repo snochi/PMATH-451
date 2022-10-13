@@ -1,0 +1,469 @@
+\documentclass[pmath451]{subfiles}
+
+%% ========================================================
+%% document
+
+\begin{document}
+
+    \section{Integration}
+    
+    \subsection{Nonnegative Measurable Functions}
+    
+    \begin{definition}{\textbf{Integral} of a Nonnegative Simple Function}
+        Let $\left( X,\mA,\mu \right)$ be a measure space and let
+        \begin{equation*}
+            \phi = \sum^{n}_{i=1}a_i\chi_{A_i}:X\to\left[ 0,\infty \right]
+        \end{equation*}
+        be simple. We define the \emph{integral} of $\phi$, denoted as $\int\phi d\mu$, by
+        \begin{equation*}
+            \int\phi d\mu = \sum^{n}_{i=1}a_i\mu\left( A_i \right).\footnotemark[1]
+        \end{equation*}
+        
+        \noindent
+        \begin{minipage}{\textwidth}
+            \footnotetext[1]{For this, we use the convention $0\infty = \infty 0 = 0$.}
+        \end{minipage}
+    \end{definition}
+    
+    \begin{prop}{}
+        Let $\phi:X\to\left[ 0,\infty \right]$ be simple. Then $\int\phi d\mu$ is well-defined.
+    \end{prop}
+    
+    \begin{proof}[Proof Sketch]
+        Say
+        \begin{equation*}
+            \phi = \sum^{n}_{i=1} a_i\chi_{E_i} = \sum^{m}_{j=1} b_j\chi_{F_j}.
+        \end{equation*}
+        Suppose that $\phi\left( X \right) = \left\lbrace c_1,\ldots,c_p \right\rbrace$ and let
+        \begin{equation*}
+            A_k = \phi^{-1}\left( \left\lbrace c_k \right\rbrace \right),\hspace{1cm}\forall k\in\left\lbrace 1,\ldots,p \right\rbrace.
+        \end{equation*}
+        Then
+        \begin{equation*}
+            \sum^{n}_{i=1} a_i\mu\left( E_i \right) = \sum^{p}_{k=1} c_k \sum^{}_{i:a_i=c_k} \mu\left( E_i \right) = \sum^{p}_{k=1} c_k\mu\left( \bigcupdot^{}_{i:a_i=c_k} E_i \right) = \sum^{p}_{k=1} c_k\mu\left( A_k \right).
+        \end{equation*}
+        By symmetry, $\sum^{m}_{j=1} b_j\chi_{F_j} = \sum^{p}_{k=1}c_k\mu\left( A_k \right)$. Thus $\int\phi d\mu$ is well-defined.
+    \end{proof}
+    
+    \begin{prop}{}
+        Let $\phi,\psi:X\to\left[ 0,\infty \right]$ be simple.
+        \begin{enumerate}
+            \item If $\alpha\geq 0$, then
+                \begin{equation*}
+                    \int\alpha\phi d\mu = \alpha\int\phi d\mu.
+                \end{equation*}
+            \item 
+                \begin{equation*}
+                    \int\phi+\psi d\mu = \int\phi d\mu + \int\psi d\mu.
+                \end{equation*}
+            \item $\phi\leq\psi\implies\int\phi d\mu\leq\int\psi d\mu$.
+        \end{enumerate}
+    \end{prop}
+    
+    \begin{proof}
+        Write
+        \begin{equation*}
+            \phi = \sum^{n}_{i=1}a_i\chi_{E_i}, \psi = \sum^{m}_{j=1} b_j\chi_{F_j}
+        \end{equation*}
+        and let $a_0 = b_0 = 0$, with $E_0 = X\setminus \bigcup^{n}_{i=1}E_i, F_0 = X\setminus \bigcup^{m}_{j=1} F_j$. This means
+        \begin{equation*}
+            \phi = \sum^{n}_{i=0}a_i\chi_{E_i}, \psi = \sum^{m}_{j=0} b_j\chi_{F_j}
+        \end{equation*}
+        as well.
+        \begin{enumerate}
+            \item Note that 
+                \begin{equation*}
+                    \int\alpha\phi d\mu = \sum^{n}_{i=1}\alpha a_i\mu\left( A_i \right) = \alpha\sum^{n}_{i=1}a_i\mu\left( A_i \right) = \alpha\int\phi d\mu.
+                \end{equation*}
+
+            \item For all $i\in\left\lbrace 0,\ldots,n \right\rbrace, j\in\left\lbrace 0,\ldots,n \right\rbrace$, let
+                \begin{equation*}
+                    A_{i,j} = E_i\cap F_j.
+                \end{equation*}
+                Then it follows that
+                \begin{equation*}
+                    \phi = \sum^{n}_{i=0} \sum^{m}_{j=0} a_i\chi_{A_{i,j}}
+                \end{equation*}
+                and
+                \begin{equation*}
+                    \psi = \sum^{m}_{j=0} \sum^{n}_{i=0} b_j\chi_{A_{i,j}}.
+                \end{equation*}
+                Thus
+                \begin{equation*}
+                    \int\phi+\psi d\mu = \sum^{n}_{i=0} \sum^{m}_{j=0} \left( a_i+b_j \right)\mu\left( A_{i,j} \right) = \sum^{n}_{i=0} \sum^{m}_{j=0} a_i\mu\left( A_{i,j} \right) + \sum^{m}_{j=0} \sum^{n}_{i=0} b_j\mu\left( A_{i,j} \right) = \int\phi d\mu + \int\psi d\mu.
+                \end{equation*}
+
+            \item Given $i\in\left\lbrace 0,\ldots,n \right\rbrace, j\in\left\lbrace 0,\ldots,m \right\rbrace$, if $A_{i,j}\neq\emptyset$, then $a_i\leq b_j$. Otherwise, $\mu\left( A_{i,j} \right) = 0$. This means
+                \begin{equation*}
+                    a_i\mu\left( A_{i,j} \right) \leq b_j\mu\left( A_{i,j} \right),\hspace{1cm}\forall i\in\left\lbrace 0,\ldots,n \right\rbrace,j\in\left\lbrace 0,\ldots,m \right\rbrace,
+                \end{equation*}
+                so that
+                \begin{equation*}
+                    \int\phi d\mu = \sum^{n}_{i=0}\sum^{m}_{j=0} a_i\mu\left( A_{i,j} \right) \leq \sum^{m}_{j=0}\sum^{n}_{i=0} b_j\mu\left( A_{i,j} \right) = \int\psi d\mu.
+                \end{equation*}
+        \end{enumerate}
+    \end{proof}
+
+    \begin{definition}{\textbf{Integral} of a Nonnegative Simple Function over a Measurable Subset}
+        Let $\phi:X\to\left[ 0,\infty \right]$ be simple and let $A\in\mA$. We define the \emph{integral} of $\phi$ over $A$, denoted as $\int_A\phi d\mu$, by
+        \begin{equation*}
+            \int_A\phi d\mu = \int\phi\chi_Ad\mu.
+        \end{equation*}
+    \end{definition}
+    
+    \begin{prop}{}
+        Let $\phi:X\to\left[ 0,\infty \right]$ be simple. Define $\nu:\mA\to\left[ 0,\infty \right]$ by
+        \begin{equation*}
+            \nu\left( A \right) = \int_A\phi d\mu.
+        \end{equation*}
+        Then $\nu$ is a measure on $\left( X,\mA \right)$.
+    \end{prop}
+
+    \begin{proof}
+        Write
+        \begin{equation*}
+            \phi = \sum^{n}_{i=1}a_i\chi_{E_i}.
+        \end{equation*}
+
+        We have
+        \begin{equation*}
+            \nu\left( \emptyset \right) = \int\chi_{\emptyset}\phi d\mu = 0.
+        \end{equation*}
+
+        Let $\left\lbrace A_m \right\rbrace^{\infty}_{m=1}\subseteq\mA$ be a collection of disjoint sets and $A=\bigcupdot^{\infty}_{m=1}A_m$. Then
+        \begin{equation*}
+            \begin{aligned}
+                \nu\left( A \right) & = \int_A\phi d\mu = \int\phi\chi_Ad\mu = \int\sum^{n}_{i=1}a_i\chi_{E_i}\chi_Ad\mu = \int\sum^{n}_{i=1}a_i\chi_{E_i\cap A}d\mu = \sum^{n}_{i=1}a_i\mu\left( E_i\cap A \right) = \sum^{n}_{i=1}a_i\mu\left( \bigcupdot^{\infty}_{m=1}\left( E_i\cap A_m \right) \right) \\
+                                    & = \sum^{n}_{i=1}a_i \sum^{\infty}_{m=1}\mu\left( E_i\cap A_m \right) = \sum^{\infty}_{m=1} \sum^{n}_{i=1}a_i\mu\left( E_i\cap A_m \right) = \sum^{\infty}_{m=1} \int_{A_m}\phi d\mu = \sum^{\infty}_{m=1} \nu\left( A_m \right).
+            \end{aligned} 
+        \end{equation*}
+    \end{proof}
+
+    \begin{notation}{$\Lplus\left( X,\mA,\mu \right)$}
+        We write $\Lplus\left( X,\mA,\mu \right)$, or simply $\Lplus$ when $\left( X,\mA,\mu \right)$ is understood, to mean
+        \begin{equation*}
+            \Lplus\left( X,\mA,\mu \right) = \left\lbrace f:X\to\left[ 0,\infty \right] : f\text{ is measurable} \right\rbrace.
+        \end{equation*}
+    \end{notation}
+    
+    \begin{definition}{\textbf{Integral} of a $\Lplus$-function}
+        Let $f\in\Lplus$. We define the \emph{integral} of $f$, denoted as $\int f d\mu$, by
+        \begin{equation*}
+            \int fd\mu = \sup\left\lbrace \int\phi d\mu : \phi:\left[ 0,\infty \right]\to X, \phi\leq f, \phi\text{ is simple} \right\rbrace.
+        \end{equation*}
+
+        If $A\in\mA$, we define the \emph{integral} of $f$ over $A$, denoted as $\int_Afd\mu$, by
+        \begin{equation*}
+            \int_Afd\mu = \int f\chi_Ad\mu.
+        \end{equation*}
+    \end{definition}
+    
+    \begin{prop}{}
+        Let $f,g\in\Lplus$.
+        \begin{enumerate}
+            \item If $\alpha\geq 0$, then
+                \begin{equation*}
+                    \int\alpha fd\mu = \alpha\int fd\mu.
+                \end{equation*}
+            \item If $f\leq g$, then
+                \begin{equation*}
+                    \int fd\mu \leq \int gd\mu.
+                \end{equation*}
+        \end{enumerate}
+    \end{prop}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item This is trivial when $\alpha=0$. For $\alpha>0$,
+                \begin{equation*}
+                    \begin{aligned}
+                        \left\lbrace \phi:X\to\left[ 0,\infty \right]: \phi\leq\alpha f, \phi\text{ is simple} \right\rbrace & = \left\lbrace \phi:X\to \left[ 0,\infty \right]: \frac{1}{\alpha}\phi\leq f, \phi\text{ is simple} \right\rbrace  \\
+                                                                                                                             & = \left\lbrace \alpha\psi: \psi: X\to\left[ 0,\infty \right], \psi\leq f, \psi\text{ is simple} \right\rbrace.
+                    \end{aligned} 
+                \end{equation*}
+                By taking $\sup$, we have the desired equality.
+
+            \item It suffices to note
+                \begin{equation*}
+                    \left\lbrace \phi:X\to\left[ 0,\infty \right] : \phi\leq f,\phi\text{ is simple} \right\rbrace \subseteq \left\lbrace \psi:X\to\left[ 0,\infty \right] : \psi\leq g, \psi\text{ is simple} \right\rbrace.
+                \end{equation*}
+        \end{enumerate}
+    \end{proof}
+
+    \np We are leaving (a one-liner!) proof of $\int f+gd\mu = \int fd\mu + \int gd\mu$ for later.
+    
+    \subsection{Nonnegative Limit Theorems}
+    
+    \begin{lemma}{}
+        Let $\phi:X\to\left[ 0,\infty \right]$ be simple and let $\left( A_{n} \right)^{\infty}_{n=1}\in\mA^{\N}$ be an ascending chain with $X = \bigcup^{\infty}_{n=1}A_n$. Then
+        \begin{equation*}
+            \lim_{n\to\infty}\int_{A_n} \phi d\mu = \int\phi d\mu.
+        \end{equation*}
+    \end{lemma}
+
+    \begin{proof}
+        Recall that $\nu:\mA\to\left[ 0,\infty \right]$ by
+        \begin{equation*}
+            \nu\left( A \right) = \int_A\phi d\mu, \hspace{1cm}\forall A\in\mA
+        \end{equation*}
+        is a measure. Hence by the continuity from below,
+        \begin{equation*}
+            \lim_{n\to\infty}\int_{A_n}\phi d\mu = \lim_{n\to\infty} \nu\left( A_n \right) = \nu\left( \bigcup^{\infty}_{n=1}A_n \right) = \nu\left( X \right) = \int\phi d\mu.
+        \end{equation*}
+    \end{proof}
+    
+    \begin{theorem}{Monotone Convergence Theorem (MCT)}
+        Let $\left( f_{n} \right)^{\infty}_{n=1}\in\Lplus^{\N}$ be an increasing sequence and define $f\in\Lplus$ by
+        \begin{equation*}
+            f\left( x \right) = \lim_{n\to\infty} f_n\left( x \right),\hspace{1cm}\forall x\in X.
+        \end{equation*}
+        Then
+        \begin{equation*}
+            \lim_{n\to\infty}\int f_nd\mu = \int fd\mu.
+        \end{equation*}
+    \end{theorem}
+        
+    \begin{proof}
+        For every $x\in X$, $\left( f_{n}\left( x \right) \right)^{\infty}_{n=1}$ is an increasing sequence. Hence by the MCT for sequences, $\lim_{n\to\infty}f_n\left( x \right)$ converges in $\left[ 0,\infty \right]$. Define
+        \begin{equation*}
+            f\left( x \right) = \lim_{n\to\infty}f_n\left( x \right),\hspace{1cm}\forall x\in X.
+        \end{equation*}
+        In fact, MCT for sequences tells us that
+        \begin{equation*}
+            f\left( x \right) = \sup_{n\in\N}f_n\left( x \right),\hspace{1cm}\forall x\in X,
+        \end{equation*}
+        so that
+        \begin{equation*}
+            f_1\leq f_2\leq \cdots \leq f.
+        \end{equation*}
+        This means
+        \begin{equation*}
+            \int f_1d\mu \leq \int f_2d\mu \leq \cdots \leq \int fd\mu
+        \end{equation*}
+        using monotonicity of integral, so that
+        \begin{equation*}
+            \lim_{n\to\infty}\int f_nd\mu = \sup_{n\in\N} \int f_nd\mu \leq \int fd\mu.
+        \end{equation*}
+
+        Let $\phi:X\to\left[ 0,\infty \right]$ be a simple function with $\phi\leq f$. Let $\epsilon\in\left( 0,1 \right)$ and let
+        \begin{equation*}
+            A_n = \left\lbrace x\in X: \left( 1-\epsilon \right)\phi\left( x \right)\leq f_n\left( x \right) \right\rbrace,\hspace{1cm}\forall n\in\N.
+        \end{equation*}
+        Then
+        \begin{equation*}
+            A_1\subseteq A_2\subseteq \cdots
+        \end{equation*}
+        and
+        \begin{equation*}
+            X = \bigcup^{\infty}_{n=1}A_n,
+        \end{equation*}
+        since $f_n\left( x \right)\to f\left( x \right)$ means there must be $N\in\N$ such that $\left( 1-\epsilon \right)\phi\left( x \right) \leq f_n\left( x \right)$, as $\left( 1-\epsilon \right)\phi\left( x \right)<\phi\left( x \right)\leq f\left( x \right)$. This means
+        \begin{equation*}
+            \left( 1-\epsilon \right)\int\phi d\mu = \int\left( 1-\epsilon \right)\phi d\mu = \lim_{n\to\infty} \int_{A_n}\left( 1-\epsilon \right)\phi d\mu \leq \lim_{n\to\infty} \int_{A_n} f_nd\mu \leq \lim_{n\to\infty} \int f_nd\mu .
+        \end{equation*}
+        Since the choice of $\epsilon$ was arbitrary, we conclude
+        \begin{equation*}
+            \int\phi d\mu \leq \lim_{n\to\infty}\int f_nd\mu.
+        \end{equation*}
+        But $\int fd\mu$ is the supremum of such $\phi$, so it follows that
+        \begin{equation*}
+            \int fd\mu\leq \lim_{n\to\infty}\int f_nd\mu,
+        \end{equation*}
+        as required.
+    \end{proof}
+    
+    \begin{prop}{}
+        Let $f,g\in\Lplus$. Then
+        \begin{equation*}
+            \int f+gd\mu = \int fd\mu + \int gd\mu.
+        \end{equation*}
+    \end{prop}
+
+    \begin{proof}
+        By simple approximation, we can find increasing sequence of simple functions $\left( \phi_{n} \right)^{\infty}_{n=1}, \left( \psi_{n} \right)^{\infty}_{n=1}$ such that $\phi_n\nearrow f, \psi_n\nearrow g$ pointwise. Thus by the MCT,
+        \begin{equation*}
+            \int f+gd\mu = \lim_{n\to\infty} \int\phi_n+\psi_nd\mu = \lim_{n\to\infty} \int\phi_nd\mu + \int\psi_nd\mu = \int fd\mu + \int gd\mu.
+        \end{equation*}
+    \end{proof}
+    
+    \begin{prop}{}
+        Let $\left( f_{n} \right)^{\infty}_{n=1}\in\Lplus^{\N}$. Then
+        \begin{equation*}
+            \int\sum^{\infty}_{n=1}f_nd\mu = \sum^{\infty}_{n=1}\int f_nd\mu.
+        \end{equation*}
+    \end{prop}
+
+    \begin{proof}
+        Note that $\left( \sum^{k}_{n=1}f_n \right)^{\infty}_{k=1}\in\Lplus^{\N}$ is increasing, so that
+        \begin{equation*}
+            \int\sum^{\infty}_{n=1}f_nd\mu = \int\lim_{k\to\infty}\sum^{k}_{n=1}f_nd\mu = \lim_{k\to\infty}\int\sum^{k}_{n=1}f_nd\mu = \lim_{k\to\infty}\int \sum^{k}_{n=1}f_nd\mu = \sum^{\infty}_{n=1}\int f_nd\mu.
+        \end{equation*}
+    \end{proof}
+    
+    \begin{prop}{}
+        Let $f\in\Lplus$. Then
+        \begin{equation*}
+            \begin{aligned}
+                \nu:\mA&\to\left[ 0,\infty \right] \\
+                A & \mapsto \int_Afd\mu
+            \end{aligned} 
+        \end{equation*}
+        is a measure.
+    \end{prop}
+
+    \begin{proof}
+        Clearly $\nu\left( \emptyset \right) = \int_{\emptyset}fd\mu = 0$. 
+
+        Write $\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mA$ be a collection of disjoint sets and let $A = \bigcupdot^{\infty}_{n=1}A_n$. Then
+        \begin{equation*}
+            \nu\left( A \right) = \int f\chi_Ad\mu = \int\sum^{\infty}_{n=1}f\chi_{A_n}d\mu = \sum^{\infty}_{n=1}\int_{A_n}fd\mu = \sum^{\infty}_{n=1}\nu\left( A \right).
+        \end{equation*}
+    \end{proof}
+
+    \clearpage
+    
+    \begin{lemma}{}
+        Let $f\in\Lplus$. Then
+        \begin{equation*}
+            \int fd\mu = 0 \iff f=0\text{ $\mu$-ae}.
+        \end{equation*}
+    \end{lemma}
+    
+    \begin{proof}
+        ($\impliedby$) Suppose $f=0$ $\mu$-ae. Let $\phi:X\to\left[ 0,\infty \right]$ be simple with $\phi\leq f$, say
+        \begin{equation*}
+            \phi = \sum^{n}_{i=1}a_i\chi_{A_i}.
+        \end{equation*}
+        Then $\phi=0$ ae. This means each $a_i>0$ implies $\mu\left( A_i \right)=0$. Thus
+        \begin{equation*}
+            \int\phi d\mu = 0
+        \end{equation*}
+        so that
+        \begin{equation*}
+            \int fd\mu = 0.
+        \end{equation*}
+
+        ($\implies$) Suppose $\int fd\mu = 0$. Let
+        \begin{equation*}
+            A = \left\lbrace x\in X: f\left( x \right)>0 \right\rbrace
+        \end{equation*}
+        and let
+        \begin{equation*}
+            A_n = \left\lbrace x\in X: f\left( x \right)\geq \frac{1}{n} \right\rbrace,\hspace{1cm}\forall n\in\N.
+        \end{equation*}
+        Then
+        \begin{equation*}
+            A_1\subseteq A_2\subseteq\cdots
+        \end{equation*}
+        with
+        \begin{equation*}
+            \bigcup^{\infty}_{n=1}A_n = A.
+        \end{equation*}
+        Therefore
+        \begin{equation*}
+            \mu\left( A \right) = \lim_{n\to\infty}\mu\left( A_n \right)
+        \end{equation*}
+        and
+        \begin{equation*}
+            0 = \int fd\mu \geq \int \frac{1}{n}\chi_{A_n}d\mu = \frac{1}{n}\mu\left( A_n \right),
+        \end{equation*}
+        so that each $\mu\left( A_n \right) = 0$. Thus $\mu\left( A \right) = 0$, as required.
+    \end{proof}
+
+    \begin{prop}{}
+        Let $f\in\Lplus$ and let $A,B\in\mA$ with $A\cap B = \emptyset$. Then
+        \begin{equation*}
+            \int_{A\cupdot B} f d\mu = \int_Afd\mu + \int_Bfd\mu.
+        \end{equation*}
+    \end{prop}
+    
+    \begin{proof}
+        Note that
+        \begin{equation*}
+            \int_{A\cupdot B} fd\mu = \int f\left( \chi_A+\chi_B \right)d\mu = \int f\chi_Ad\mu + \int f\chi_Bd\mu = \int_Afd\mu + \int_Bfd\mu.
+        \end{equation*}
+    \end{proof}
+    
+    \begin{prop}{}
+        Let $f\in\Lplus$ and let $A\in\mA$ with $\mu\left( A \right) = 0$. Then
+        \begin{equation*}
+            \int_Afd\mu = 0.
+        \end{equation*}
+    \end{prop}
+    
+    \begin{proof}
+        Note that $f\chi_A=0$ $\mu$-ae.
+    \end{proof}
+    
+    \clearpage
+
+    \begin{prop}{}
+        Let $\left( f_{n} \right)^{\infty}_{n=1}\in\Lplus^{\N}$ be such that
+        \begin{equation*}
+            f_n\leq f_{n+1} \text{ $\mu$-ae},\hspace{1cm}\forall n\in\N
+        \end{equation*}
+        and let $f\in\Lplus^{\N}$ be such that
+        \begin{equation*}
+            \lim_{n\to\infty}f_n = f\text{ pointwise $\mu$-ae}.
+        \end{equation*}
+        Then
+        \begin{equation*}
+            \lim_{n\to\infty}\int f_nd\mu = \int fd\mu.
+        \end{equation*}
+    \end{prop}
+
+    \begin{proof}
+        Let
+        \begin{equation*}
+            A_n = \left\lbrace x\in X: f_n\left( x \right)>f_{n+1}\left( x \right) \right\rbrace
+        \end{equation*}
+        and let
+        \begin{equation*}
+            A_0 = \left\lbrace x\in X: \lim_{n\to\infty}f_n\left( x \right)\neq f\left( x \right) \right\rbrace.
+        \end{equation*}
+        Then $\mu\left( A_n \right) = 0$ for all $n\in\N\cup\left\lbrace 0 \right\rbrace$. Let $A = \bigcup^{\infty}_{n=0} A_n$, so that $\mu\left( A \right) = 0$ as well. We have
+        \begin{equation*}
+            f_n\chi_{X\setminus A} \leq f_{n+1}\chi_{X\setminus A},\hspace{1cm}\forall n\in\N
+        \end{equation*}
+        and
+        \begin{equation*}
+            f_n\chi_{X\setminus A} \to f\chi_{X\setminus A}\text{ pointwise}.
+        \end{equation*}
+        By the MCT,
+        \begin{equation*}
+            \int_{X\setminus A}f_nd\mu \to \int_{X\setminus A}fd\mu.
+        \end{equation*}
+        The result then follows from Proposition 3.11 and 3.12.
+    \end{proof}
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+\end{document}

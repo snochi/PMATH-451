@@ -1,0 +1,949 @@
+\documentclass[pmath451]{subfiles}
+
+%% ========================================================
+%% document
+
+\begin{document}
+
+    \section{Measures}
+    
+    \subsection{Motivation}
+
+    Let $X$ be a set and let $A\subseteq X$. We aim to develop a \textit{meaningful} theory of integration that is
+    \begin{equation*}
+        \int^{}_{A}f,
+    \end{equation*}
+    where $f:X\to\R$.
+
+    There are a bunch of natural question that come out here.
+    \begin{enumerate}
+        \item \textit{Which $A$ are appropirate?}
+        \item \textit{Which $f$ are appropirate?}
+        \item \textit{What does $\int^{}_{A}f$ even mean?}
+    \end{enumerate}
+
+    \np Moreover, we want the following:
+    \begin{equation*}
+        \mu\left( A \right) = \int^{}_{A} 1
+    \end{equation*}
+    to be some meaningful idea of size/volume/measure. Some $\mu$'s do this better than others. Here are some properties we want $\mu$ to satisfy:
+    \begin{enumerate}
+        \item $\mu\left( \emptyset \right) = 0$.
+        \item $\mu\left( A\cupdot B \right) = \mu\left( A \right) + \mu\left( B \right)$.
+        \item $\mu\left( A\cup B \right) \leq \mu\left( A \right) + \mu\left( B \right)$.
+        \item $A\subseteq B\implies \mu\left( A \right)\leq\mu\left( B \right)$.
+        \item $\mu\left( X \right)\in\left[ 0,\infty \right]$.
+        \item $\mu\left( \bigcup^{\infty}_{n=1} A_n \right) \leq \sum^{\infty}_{n=1} \mu\left( A_n \right)$.
+        \item $\mu\left( \bigcupdot^{\infty}_{n=1} A_n \right) = \sum^{\infty}_{n=1} \mu\left( A_n \right)$.
+    \end{enumerate}
+    
+    \np Let's take a step back. If we are going to achieve those things, we want some basics. Let $D$ be the domain of $\mu$ -- the \textit{nonprecise measure function} handed on us. We need:
+    \begin{enumerate}
+        \item $\emptyset\in D$; and
+        \item if $A_1,A_2,\ldots\in D$, then $\bigcup^{\infty}_{n=1} A_n\in D$.
+    \end{enumerate}
+    
+    \subsection{$\sigma$-algebras}
+    
+    \begin{definition}{\textbf{$\sigma$-algebra} of Subsets of $X$}
+        Let $X$ be a set and let $\mA\subseteq\mP\left( X \right)$. We say $\mA$ is an \emph{algebra}\footnotemark[1] of subsets of $X$ if
+        \begin{enumerate}
+            \item $\emptyset\in\mA$;
+            \item $A\in\mA$ implies $X\setminus A\in\mA$; and\hfill\textit{closure under complements}
+            \item $A,B\in\mA$ implies $A\cup B\in\mA$.\hfill\textit{closure under finite union}
+        \end{enumerate}
+        Moreover, we say $\mA$ is a \emph{$\sigma$-algebra} if it satisfies in addition
+        \begin{equation*}
+            \left\lbrace A_n \right\rbrace^{\infty}_{n=1} \subseteq\mA \implies \bigcup^{\infty}_{n=1} A_n\in\mA.
+        \end{equation*}
+        That is, $\mA$ is \textit{closed under countable unions}.
+        
+        \noindent
+        \begin{minipage}{\textwidth}
+            \footnotetext[1]{The word \textit{algebra} comes from boolean algebra, one of the most universal objects in abstract math.}
+        \end{minipage}
+    \end{definition}
+    
+    \clearpage
+
+    \begin{question}
+        Are all algebra a $\sigma$-algebra?
+    \end{question}
+
+    \begin{answer}
+        To answer this question, we should think about:
+        \begin{equation*}
+            \text{\textit{what is preserved for finite sets but not infinite sets?}}
+        \end{equation*}
+        The easiest answer is \textit{finiteness}. Let $X$ be an infinite set and let
+        \begin{equation*}
+            \mA = \left\lbrace A\subseteq X: A\text{ is finite or } X\setminus A\text{ is finite} \right\rbrace.
+        \end{equation*}
+        Then $\mA$ is an algebra but not a $\sigma$-algebra.
+    \end{answer}
+    
+    \np Let $\mA\subseteq\mP$ be an algebra. Then, as a corollary to Def'n 1.1,
+    \begin{enumerate}
+        \item $A,B\in\mA$ implies $X\setminus A, X\setminus B\in\mA$, so that $A\cap B = X\setminus \left( \left( X\setminus A \right)\cup \left( X\setminus B \right) \right)\in\mA$;\hfill\textit{closure under closure}
+        \item $X = X\setminus\emptyset\in\mA$;
+        \item $A,B\in\mA$ implies $A\setminus B = A\cap\left( X\setminus B \right) \in\mA$; and\hfill\textit{closure under set difference}
+        \item $A,B\in\mA$ implies $A\triangle B\in\mA$.\hfill\textit{closure under symmetric set difference}
+    \end{enumerate}
+    Moreover, if $\mA$ is a $\sigma$-algebra, then (a) holds with countable number of sets.
+    
+    \begin{prop}{Generating $\sigma$-algebra from a Collection of Subsets}
+        Let $X$ be a set and let $\mE\subseteq\mP\left( X \right)$. Then
+        \begin{equation*}
+            \left< \mE \right> = \bigcap^{}_{} \left\lbrace \mA\supseteq\mE: \text{$\mA$ is a $\sigma$-algebra} \right\rbrace 
+        \end{equation*}
+        is a $\sigma$-algebra.
+    \end{prop}
+
+    \placeqed[Exercise]
+
+    \begin{definition}{$\sigma$-algebra \emph{Generated} by $\mE$}
+        Consider Proposition 1.1. We call $\left< \mE \right>$ the $\sigma$-algebra \emph{generated} by $\mE$. 
+    \end{definition}
+
+    \begin{definition}{\textbf{Borel $\sigma$-algebra} of a Topological Space}
+        Let $\left( X,\tau \right)$ be a topological space. Then
+        \begin{equation*}
+            \Bor\left( X \right) = \left< \tau \right> 
+        \end{equation*}
+        is called the \emph{Borel $\sigma$-algebra} of $\left( X,\tau \right)$.
+
+        We call elements of $\Bor\left( X \right)$ the \emph{Borel sets}.
+    \end{definition}
+
+    \begin{definition}{\textbf{Measurable Space}}
+        Let $X$ be a set and let $\mA$ be a $\sigma$-algebra of $X$. Then we call $\left( X,\mA \right)$ a \emph{measurable space}.
+
+        The elements of $\mA$ are called the \emph{measurable sets}.
+    \end{definition}
+    
+    \subsection{Measures}
+    
+    \np In this course, we often work in the extend real numbers $\R\cup\left\lbrace -\infty,\infty \right\rbrace = \left[ -\infty,\infty \right]$. Here are things that we assume.
+
+    \begin{assumption}{Assumptions about Extended Real Numbers}
+        For all $a\in\R$,
+        \begin{enumerate}
+            \item $a+\infty = \infty$;
+            \item $a-\infty = -\infty$;
+            \item $\infty+\infty = \infty$; and
+            \item $-\infty-\infty = -\infty$.
+        \end{enumerate}
+    \end{assumption}
+
+    \clearpage
+    \np However, we leave the following expressions to be \textit{undefined}:
+    \begin{enumerate}
+        \item $\infty-\infty$;
+        \item $\frac{\infty}{\infty}$; and
+        \item $0\infty$.
+    \end{enumerate}
+
+    \begin{definition}{\textbf{Measure} on a Measurable Space}
+        Let $\left( X,\mA \right)$ be a measurable space. A \emph{measure} on $\left( X,\mA \right)$\footnotemark is a function $\mu:\mA\to\left[ 0,\infty \right]$ such that
+        \begin{enumerate}
+            \item $\mu\left( \emptyset \right) = 0$; and
+            \item we have 
+                \begin{equation*}
+                    \mu\left( \bigcupdot^{}_{n\in\N} A_n \right) = \sum^{}_{n\in\N} \mu\left( A_n \right)
+                \end{equation*}
+                for every $\left\lbrace A_n \right\rbrace^{}_{n\in\N}\subseteq\mA$ with $A_n\cap A_m$ for $n\neq m$.\hfill\textit{countable additivity}
+        \end{enumerate}
+        In case $\mu$ is a measure on $\left( X,\mA \right)$, we call $\left( X,\mA,\mu \right)$ a \emph{measure space}.
+        
+        \noindent
+        \begin{minipage}{\textwidth}
+            \footnotetext[1]{Or, \emph{measure} on $X$ if we are lazy.}
+        \end{minipage}
+    \end{definition}
+    
+    \begin{example}{Examples of Measures}
+        Let $X$ be a set.
+        \begin{enumerate}
+            \item $\mu\left( A \right) = 0$ for all $A\in\mP\left( X \right)$ is a measure on $\left( X,\mP\left( X \right) \right)$.\hfill\textit{zero measure}
+            \item $\mu\left( \emptyset \right) = 0, \mu\left( A \right) = \infty$ for all $A\in\mP\left( X \right)\setminus \left\lbrace \emptyset \right\rbrace$ is a measure on $\left( X,\mP\left( X \right) \right)$.
+            \item $\mu\left( A \right) = \left| A \right|$ (where $\left| A \right|=\infty$ if $A$ is infinite) is a measure on $\left( X,\mP\left( X \right) \right)$.\hfill\textit{counting measure}
+            \item Fix $x\in X$ and define
+                \begin{equation*}
+                    \mu\left( A \right) =
+                    \begin{cases} 
+                        1 & \text{if $x\in A$} \\
+                        0 & \text{if $x\notin A$} \\
+                    \end{cases}
+                \end{equation*}
+                for all $A\in\mP\left( X \right)$. Then $\mu$ is a measure on $\left( X,\mP\left( X \right) \right)$.\hfill\textit{point-mass measure}
+        \end{enumerate}
+    \end{example}
+
+    \rruleline
+    
+    \begin{prop}{}
+        Let $\left( X,\mA,\mu \right)$ be a measure space.
+        \begin{enumerate}
+            \item For all $A,B\in\mA$ and $A\subseteq B$, $\mu\left( A \right)\leq\mu\left( B \right)$.\hfill\textit{monotonicity}
+            \item For all $A,B\in\mA$ with $A\subseteq B$ and $\mu\left( A \right)<\infty$, then $\mu\left( B\setminus A \right) = \mu\left( B \right)-\mu\left( A \right)$.\hfill\textit{excision}
+            \item If $\left\lbrace A_n \right\rbrace^{}_{n\in\N}\subseteq\mA$, then $\mu\left( \bigcup^{}_{n\in\N}A_n \right) \leq \sum^{}_{n\in\N}\mu\left( A_n \right)$.\hfill\textit{countable subadditivity}
+        \end{enumerate}
+    \end{prop}
+    
+    \begin{proof}
+        \begin{enumerate}
+            \item Consider $B\setminus A$, which is measurable since $\mA$ is closed under set difference. Hence we have
+                \begin{equation*}
+                    \mu\left( B \right) = \mu\left( A \right) + \mu\left( B\setminus A \right) \geq \mu\left( A \right).
+                \end{equation*}
+            \item We have
+                \begin{equation*}
+                    \mu\left( A \right) + \mu\left( B\setminus A \right) = \mu\left( B \right)
+                \end{equation*}
+                as seen in (a). Since $\mu\left( A \right)<\infty$, we can freely subtract $\mu\left( A \right)$ from both sides to obtain that $\mu\left( B\setminus A \right) = \mu\left( B \right)-\mu\left( A \right)$.
+            \item Let $B_1 = A_1$ and let $B_n = A_n\setminus \bigcup^{n-1}_{m=1}A_m$ for all $n\geq 2$. Then each $B_n$ is measurable with $B_n\subseteq A_n$ and we have
+                \begin{equation*}
+                    \mu\left( \bigcup^{}_{n\in\N}A_n \right) = \mu\left( \bigcupdot^{}_{n\in\N}B_n \right) = \sum^{}_{n\in\N} \mu\left( B_n \right) \leq \sum^{}_{n\in\N} \mu\left( A_n \right).
+                \end{equation*}
+        \end{enumerate}
+    \end{proof}
+
+    \clearpage
+    
+    \begin{prop}{Continuity of Measure}
+        Let $\left( X,\mA,\mu \right)$ be a measure space.
+        \begin{enumerate}
+            \item Let $\left\lbrace A_n \right\rbrace^{}_{n\in\N}\subseteq\mA$ be an ascending chain. That is,
+                \begin{equation*}
+                    A_1\subseteq A_2\subseteq\cdots.
+                \end{equation*}
+                Then
+                \begin{equation*}
+                    \mu\left( \bigcup^{}_{n\in\N}A_n \right) = \lim_{n\to\infty}\mu\left( A_n \right).\eqno\text{\textit{continuity from below}}
+                \end{equation*}
+            \item Let $\left\lbrace B_n \right\rbrace^{}_{n\in\N}\subseteq\mA$ be a decending chain with $\mu\left( B_1 \right)<\infty$. That is,
+                \begin{equation*}
+                    B_1\supseteq B_2\supseteq\cdots.
+                \end{equation*}
+                Then
+                \begin{equation*}
+                    \mu\left( \bigcap^{}_{n\in\N}B_n \right) = \lim_{n\to\infty}\mu\left( B_n \right).\eqno\text{\textit{continuity from above}}
+                \end{equation*}
+        \end{enumerate}
+    \end{prop}
+    
+    \begin{proof}
+        \begin{enumerate}
+            \item Let $C_1 = A_1$ and let $C_n = A_n\setminus A_{n-1} = A_n\setminus \bigcup^{n-1}_{m=1} A_m$ for all $n\geq 2$, where the last equality follows from the ascending chain condition. 
+                \begin{equation*}
+                    \mu\left( \bigcup^{}_{n\in\N}A_n \right) = \mu\left( \bigcupdot^{}_{n\in\N}C_n \right) = \sum^{}_{n\in\N} \mu\left( C_n \right) = \lim_{N\to\infty} \sum^{N}_{n=1} \mu\left( C_n \right) = \lim_{N\to\infty} \mu\left( \bigcup^{N}_{n=1}C_n \right) = \lim_{N\to\infty} \mu\left( A_N \right).
+                \end{equation*}
+
+        \item Let $D_n = B_1\setminus B_n$ for all $n\in\N$, so that $\left\lbrace D_n \right\rbrace^{}_{n\in\N}$ is an ascending chain. Then
+            \begin{equation*}
+                B_1\setminus \bigcap^{}_{n\in\N} B_n = \bigcup^{}_{n\in\N} D_n,
+            \end{equation*}
+            so that
+            \begin{equation*}
+                \mu\left( B_1\setminus \bigcap^{}_{n\in\N} B_n \right) = \mu\left( \bigcup^{}_{n\in\N} D_n \right) = \lim_{n\to\infty}\mu\left( D_n \right) = \lim_{n\to\infty} \mu\left( B_1 \right) - \mu\left( B_n \right) = \mu\left( B_1 \right) - \lim_{n\to\infty} \mu\left( B_n \right).
+            \end{equation*}
+            The result then follows from excision property of $\mu$.
+        \end{enumerate}
+    \end{proof}
+    
+    \begin{definition}{\textbf{Finite}, \textbf{Probability}, \textbf{$\sigma$-finite}, \textbf{Semifinite}, \textbf{Complete} Measure}
+        Let $\left( X,\mA,\mu \right)$ be a measure space. We say $\mu$ is
+        \begin{enumerate}
+            \item \emph{finite} if $\mu\left( X \right) < \infty$;
+            \item a \emph{probability} measure if $\mu\left( X \right) = 1$;
+            \item \emph{$\sigma$-finite} if
+                \begin{equation*}
+                    X = \bigcup^{\infty}_{n=1} A_n
+                \end{equation*}
+                for some $\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mA$ with $\mu\left( A_n \right)<\infty$ for all $n\in\N$; 
+            \item \emph{semifinite} if
+                \begin{equation*}
+                    \forall A\in\mA \left[ \mu\left( A \right)\neq 0 \implies B\in\mA \left[ B\subseteq A, 0<\mu\left( B \right)<\infty \right] \right];
+                \end{equation*}
+                and
+            \item \emph{complete} if 
+                \begin{equation*}
+                    \forall A\in\mA \left[ \mu\left( A \right) = 0 \implies \forall B\subseteq A \left[ B\in\mA \right] \right].
+                \end{equation*}
+        \end{enumerate}
+    \end{definition}
+    
+    \clearpage
+
+    \subsection{Completion of Measure Spaces}
+    
+    \begin{example}{An Example of Non-complete Measure}
+        Let $X = \left\lbrace a,b \right\rbrace, \mA = \left\lbrace \emptyset, \left\lbrace a,b \right\rbrace \right\rbrace, \mu = 0$. Then $\mu$ is not complete, as $\left\lbrace a \right\rbrace\in\mA$.
+    \end{example}
+
+    \rruleline
+
+    \np The goal of this section is:
+    \begin{equation*}
+        \text{\textit{given a measure space $\left( X,\mu,\mA \right)$, if $\mu$ is not complete, we extend $\mA$ and $\mu$ so that the result is complete.}}
+    \end{equation*}
+    A natural way of doing this is throw every subsets of measure-zero sets into $\mA$.
+
+    \begin{prop}{Completion of a Measure Space}
+        Let $\left( X,\mu,\mA \right)$ be a measure space. Let
+        \begin{equation*}
+            \overline{\mA} = \left\lbrace A\cup F: A\in\mA, \exists N\in\mA \left[ F\subseteq N, \mu\left( N \right)=0 \right] \right\rbrace
+        \end{equation*}
+        and define
+        \begin{equation*}
+            \begin{aligned}
+                \overline{\mu}:\overline{\mA}&\to\left[ 0,\infty \right] \\
+                A\cup F &\mapsto\mu\left( A \right)
+            \end{aligned} .
+        \end{equation*}
+        Then 
+        \begin{enumerate}
+            \item $\overline{\mA}$ is a $\sigma$-algebra;
+            \item $\overline{\mu}$ is a measure;
+            \item $\overline{\mu}|_{\mA} = \mu$; and
+            \item $\overline{\mu}$ is complete.
+        \end{enumerate}
+    \end{prop}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Note that $\emptyset = \emptyset \cup \emptyset$ with $\emptyset\subseteq\emptyset$ where $\mu\left( \emptyset \right) = 0$. Hence $\emptyset\in\overline{\mA}$.
+
+                Let $E = A\cup F$ with $A\in\mA, F\subseteq N\in\mA$ where $\mu\left( N \right) = 0$. Then
+                \begin{equation*}
+                    X\setminus E = \underbrace{X\setminus \left( A\cup N \right)}_{\in\mA} \cup \underbrace{\left( N\setminus \left( A\cup F \right) \right)}_{\subseteq N} \in\overline{\mA}.
+                \end{equation*}
+
+                Let $\left\lbrace E_n \right\rbrace^{\infty}_{n=1}\subseteq\mA$ with $E_n = A_n\cup F_n$ where $F_n\subseteq N_n$ for some $n\in\N$. Then
+                \begin{equation*}
+                    \bigcup^{\infty}_{n=1} E_n = \left( \bigcup^{\infty}_{n=1} A_n \right) \cup \left( \bigcup^{\infty}_{n=1} F_n \right).
+                \end{equation*}
+                But $\bigcup^{\infty}_{n=1} F_n\subseteq \bigcup^{\infty}_{n=1} N_n$ with $\mu\left( \bigcup^{\infty}_{n=1}N_n \right) \leq \sum^{\infty}_{n=1}\mu\left( N_n \right) = 0$. Thus $\bigcup^{\infty}_{n=1}E_n\in\overline{\mA}$.
+
+            \item We first check that $\overline{\mu}$ is well-defined. Let
+                \begin{equation*}
+                    E = A_1\cup F_1 = A_2\cup F_2
+                \end{equation*}
+                for some $A_1,A_2\in\mA$ and $F_1\subseteq N_1, F_2\subseteq N_2$ with $\mu\left( N_1 \right) = \mu\left( N_2 \right) = 0$.
+
+                Then note that
+                \begin{equation*}
+                    A_1\cap A_2\subseteq A_i \subseteq E \subseteq \left( A_1\cup F_1 \right)\cap \left( A_2\cup F_2 \right) \subseteq \left( A_1\cap A_2 \right) \cup N_1\cup N_2.
+                \end{equation*}
+                Hence
+                \begin{equation*}
+                    \mu\left( A_1\cap A_2 \right)\leq \mu\left( A_i \right) \leq \mu\left( E_1\cap E_2 \right).
+                \end{equation*}
+                This means $\mu\left( A_i \right) = \mu\left( A_1\cap A_2 \right)$, sot hat $\mu\left( E_1 \right) = \mu\left( E_2 \right)$.
+
+                Thus $\overline{\mu}$ is well-defined.
+
+                To show $\overline{\mu}$ is a measure, note that
+                \begin{equation*}
+                    \overline{\mu}\left( \emptyset \right) = \overline{\mu}\left( \emptyset\cup\emptyset  \right) = \mu\left( \emptyset \right) = 0.
+                \end{equation*}
+                Say we have a collection of disjoint sets in $\overline{\mA}$, $\left\lbrace E_n \right\rbrace^{\infty}_{n=1}\subseteq\overline{\mA}$, with
+                \begin{equation*}
+                    E_n = A_n \cup F_n
+                \end{equation*}
+                for some $E_n\subseteq N_n$ with $\mu\left( N_n \right) = 0$. Then
+                \begin{equation*}
+                    \bigcupdot^{\infty}_{n=1} E_n = \left( \bigcupdot^{\infty}_{n=1} A_n \right) \cup \underbrace{\left( \bigcupdot^{\infty}_{n=1} F_n \right)}_{\subseteq \bigcupdot^{\infty}_{n=1} N_n}.
+                \end{equation*}
+                Thus
+                \begin{equation*}
+                    \overline{\mu}\left( \bigcupdot^{\infty}_{n=1}E_n \right) = \mu\left( \bigcupdot^{\infty}_{n=1}A_n \right) = \sum^{\infty}_{n=1} \mu\left( E_n \right) = \sum^{\infty}_{n=1}\overline{\mu}\left( A_n \right),
+                \end{equation*}
+                so $\overline{\mu}$ is a measure.
+
+            \item Given $A\in\mA$, $A=A\cupdot\emptyset$, so that $\overline{\mu}\left( A \right) = \mu\left( A \right)$.
+
+            \item Let $A\subseteq B\in\overline{A}$ with $\overline{\mu}\left( B \right) = 0$. We are going to show $A\in\overline{\mA}$.
+
+                We can write
+                \begin{equation*}
+                    B = E\cup F
+                \end{equation*}
+                for some $F\subseteq N\in\mA$ with $\mu\left( N \right)=0$. Then
+                \begin{equation*}
+                    \overline{\mu}\left( B \right) = \mu\left( E \right) = 0.
+                \end{equation*}
+                Since $A\subseteq B\subseteq E\cup N$ with $\mu\left( E\cup N \right) = 0$ (complete this).
+        \end{enumerate}
+    \end{proof}
+
+    \begin{definition}{\textbf{Completion} of a Measure Space}
+        Let $\left( X,\mu,\mA \right)$ be a measure space. We call $\left( X,\overline{\mu},\overline{\mA} \right)$ the \emph{completion} of $\left( X,\mu,\mA \right)$.
+    \end{definition}
+
+    \subsection{Construction of Measures}
+
+    \begin{definition}{\textbf{Outer Measure} on a Set}
+        Let $X$ be a nonempty set. An \emph{outer measure} on $X$ is a function $\mu^{*}:\mP\left( X \right)\to\left[ 0,\infty \right]$ such that
+        \begin{enumerate}
+            \item $\mu^{*}\left( \emptyset \right) = 0$;
+            \item $A\subseteq B$ implies $\mu^{*}\left( A \right)\leq\mu^{*}\left( B \right)$; and\hfill\textit{monotonicity}
+            \item $\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\mP\left( X \right)$ implies $\mu^{*}\left( \bigcup^{\infty}_{n=1} A_n \right) \leq \sum^{\infty}_{n=1}\mu^{*}\left( A_n \right)$.\hfill\textit{countable subadditivity}
+        \end{enumerate}
+    \end{definition}
+    
+    \np The idea is that
+    \begin{equation*}
+        \text{\textit{outer measures are naive approaches to measure \emph{every} subset of $X$.}}
+    \end{equation*}
+    We start with $\mE\subseteq\mP\left( X \right)$ which are \textit{easy} to measure. We use the outer measure $\mu^{*}$ and $\mE$ to construct a measure.
+
+    \begin{prop}{Construction of an Outer Measure}
+        Suppose $\left\lbrace \emptyset,X \right\rbrace\subseteq\mE\subseteq\mP\left( X \right)$ and $\mu:\mE\to\left[ 0,\infty \right]$ satisfies $\mu\left( \emptyset \right) = 0$. For $A\subseteq X$, define
+        \begin{equation*}
+            \mu^{*}\left( A \right) = \inf \left\lbrace \sum^{\infty}_{n=1} \mu\left( E_n \right) : \left\lbrace E_n \right\rbrace^{\infty}_{n=1}\subseteq\mE, A\subseteq\bigcup^{\infty}_{n=1} E_n \right\rbrace.
+        \end{equation*}
+        Then $\mu^{*}$ is an outer measure on $X$.
+    \end{prop}
+    
+    \begin{example}{Lebesgue Outer Measure}
+        Let $X = \R, \mE = \left\lbrace \left( a,b \right): -\infty<a<b<\infty \right\rbrace \cup \left\lbrace \emptyset, X \right\rbrace$. Define
+        \begin{equation*}
+            \mu\left( \left( a,b \right) \right) = b-a, \mu\left( X \right) = \infty.
+        \end{equation*}
+        Then $\mu^{*}$ as said in Proposition 1.5 is called the \emph{Lebesgue outer measure}.
+    \end{example}
+
+    \rruleline
+    
+    \begin{prop}{}
+        Suppose $\left\lbrace \emptyset,X \right\rbrace\subseteq\mE\subseteq X$ and let $\mu:\mE\to\left[ 0,\infty \right]$. If $\mu\left( \emptyset \right) = 0$, then $\mu^{*}:\mP\left( X \right)\to\left[ 0,\infty \right]$ by
+        \begin{equation*}
+            \mu^{*}\left( A \right) = \inf\left\lbrace \sum^{\infty}_{n=1}\mu\left( A_n \right):\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mE, A\subseteq\bigcup^{\infty}_{n=1}A_n \right\rbrace,\hspace{1cm}\forall A\in\mE.
+        \end{equation*}
+        is an outer measure.
+    \end{prop}
+
+    \begin{proof}
+        We verify few things.
+        \begin{enumerate}
+            \item Note that $\emptyset\subseteq\bigcup^{\infty}_{n=1}\emptyset$ and so $0\leq\mu^{*}\left( \emptyset \right)\leq\sum^{\infty}_{n=1} \mu\left( \emptyset \right) =0$.
+
+            \item Say $A\subseteq B\subseteq X$. Then
+                \begin{equation*}
+                    \left\lbrace \sum^{\infty}_{n=1}\mu\left( A_n \right) : \forall n\in\N\left[ A_n\in\mE \right], A\subseteq\bigcup^{\infty}_{n=1}A_n \right\rbrace \supseteq
+                    \left\lbrace \sum^{\infty}_{n=1}\mu\left( A_n \right) : \forall n\in\N\left[ A_n\in\mE \right], B\subseteq\bigcup^{\infty}_{n=1}A_n \right\rbrace
+                \end{equation*}
+                by definition. By taking infimum, we see that
+                \begin{equation*}
+                    \mu^{*}\left( A \right)\leq\mu^{*}\left( B \right).
+                \end{equation*}
+
+            \item Say $\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mP\left( X \right)$ and consider $\bigcup^{\infty}_{n=1} A_n$. We claim that
+                \begin{equation*}
+                    \mu^{*}\left( \bigcup^{\infty}_{n=1}A_n \right) \leq \sum^{\infty}_{n=1} \mu^{*}\left( A_n \right).
+                \end{equation*}
+                We may assume $\sum^{\infty}_{n=1}\mu^{*}\left( A_n \right)<\infty$.
+
+                Let $\epsilon>0$ be given. For every $A_i$, we may find $\left\lbrace E_{i,j} \right\rbrace^{\infty}_{j=1}\subseteq\mE$ such that
+                \begin{equation*}
+                    A_i \subseteq \bigcup^{\infty}_{n=1} E_{i,j}
+                \end{equation*}
+                and
+                \begin{equation*}
+                    \sum^{\infty}_{j=1} \mu\left( E_{i,j} \right) < \mu^{*}\left( A_i \right) + \frac{\epsilon}{2^i}
+                \end{equation*}
+                We then have
+                \begin{equation*}
+                    \bigcup^{\infty}_{i=1} A_i \subseteq \bigcup^{\infty}_{i,j=1} E_{i,j}.
+                \end{equation*}
+                Hence
+                \begin{equation*}
+                    \mu^{*}\left( \bigcup^{\infty}_{i=1} A_i \right) \overset{\text{inf}}{\leq} \sum^{\infty}_{i=1} \sum^{\infty}_{j=1} \mu\left( E_{i,j} \right) \leq \sum^{\infty}_{i=1} \mu^{*}\left( A_i \right) + \frac{\epsilon}{2^i} = \left( \sum^{\infty}_{i=1} \mu^{*}\left( A_i \right) \right) + \epsilon.
+                \end{equation*}
+                Since $\epsilon$ is an arbitary positive number, we see that $\mu^{*}$ is countably subadditive.
+        \end{enumerate}
+    \end{proof}
+
+    \clearpage
+    
+    \begin{definition}{\textbf{$\mu^{*}$-measurable} Set}
+        Let $\mu^{*}$ be an outer measure on $X$. We say $A\subseteq X$ is \emph{$\mu^*$-measurable} if
+        \begin{equation*}
+            \mu^{*}\left( E \right) = \mu^{*}\left( E\cap A \right) + \mu^{*}\left( E\cap \left( X\setminus A \right) \right)
+        \end{equation*}
+        for all $E\subseteq X$.
+    \end{definition}
+
+    \np Let $A,E\subseteq X$.
+    \begin{enumerate}
+        \item Note
+            \begin{equation*}
+                \mu^{*}\left( E \right) \leq \mu^{*}\left( E\cap A \right) + \mu^{*}\left( E\cap\left( X\setminus A \right) \right).
+            \end{equation*}
+            Hence it suffices to prove the reverse inequality to show that $A$ is $\mu^{*}$-measurable.
+
+        \item As a corollary to (a), we may assume $\mu^{*}\left( E \right)<\infty$ when proving $A$ is $\mu^{*}$-measurable.
+
+        \item When $A=\emptyset$,
+            \begin{equation*}
+                \mu^{*}\left( E\cap\emptyset \right) + \mu^{*}\left( E\cap\left( X\setminus\emptyset \right) \right) = 0+\mu^{*}\left( E \right) = \mu^{*}\left( E \right).
+            \end{equation*}
+            Thus $\emptyset$ is $\mu^{*}$-measurable.
+
+        \item If $A$ is $\mu^{*}$-measurable, then $X\setminus A$ is also $\mu^{*}$-measurable. This is direct from the definition of $\mu^{*}$-measurability.
+    \end{enumerate}
+    
+    \begin{theorem}{Caratheodory}
+        Let $\mu^{*}$ be an outer measure on $X$. Then the collection of $\mu^{*}$-measurable subsets of $X$,
+        \begin{equation*}
+            \mA = \left\lbrace A\subseteq X: \text{$A$ is $\mu^{*}$-measurable} \right\rbrace,
+        \end{equation*}
+        is a $\sigma$-algebra.
+
+        Moreover, $\mu = \mu^{*}|_{\mA}$ is a complete measure on $\left( X,\mA \right)$.
+    \end{theorem}
+    
+    \begin{proof}
+        Let $A,B\in\mA$ and let $E\subseteq X$. Then
+        \begin{flalign*}
+            && \mu^{*}\left( E \right) & 
+            = \mu^{*}\left( E\cap A \right) + \mu^{*}\left( E\cap \left( X\setminus A \right)\cap B \right) + \mu^{*}\left( E\cap \left( X\setminus A \right)\cap \left( X\setminus B \right) \right) && \text{since $A,B$ are $\mu^{*}$-measurable}\\
+                                                                                                                                                                                                      && & \geq \mu^{*}\left( E\cap \left( A\cup B \right) \right) + \mu^{*}\left( E\cap \left( X\setminus \left( A\cup B \right) \right) \right). && \text{by subadditivity of $\mu^{*}$ and de Morgan's Law}
+        \end{flalign*}
+        Since we know the other direction of the above inequality, we see that $A\cup B\in\mA$. Inductively, $\mA$ is closed under finite union, which means $\mA$ is an algebra on $X$ (we know $\emptyset\in\mA$).
+
+        Now assume $A,B\in\mA$ with $A\cap B=\emptyset$. For any $E\subseteq X$,
+        \begin{equation*}
+            \mu^{*}\left( E\cap \left( A\cupdot B \right) \right) = \mu^{*}\left( E\cap\left( A\cupdot B \right)\cap A \right) + \mu^{*}\left( E\cap\left( A\cupdot B \right)\cap \left( X\setminus A \right) \right) = \mu^{*}\left( E\cap A \right) + \mu^{*}\left( E\cap B \right).
+        \end{equation*}
+        By taking $E=X$, we see that
+        \begin{equation*}
+            \mu^{*}\left( A\cupdot B \right) = \mu^{*}\left( A \right) + \mu^{*}\left( B \right),
+        \end{equation*}
+        so that $\mu^{*}$ is finitely additive.
+
+        Assume $\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mA$, let $B_n = \bigcup^{n}_{k=1} A_k$, and let $A_n' = A_1\setminus\bigcup^{n-1}_{k=1}A_k$ for all $n\in\N$. Since $\mA$ is an algebra, each $A_n',B_n\in\mA$. Then $B_n = \bigcupdot^{\infty}_{n=1} A_k'$ and $B = \bigcup^{\infty}_{n=1} A_n = \bigcupdot^{\infty}_{n=1} A_n'$. For any $E\subseteq X$,
+        \begin{flalign*}
+            && \mu^{*}\left( E \right) & = \mu^{*}\left( E\cap B_n \right) + \mu^{*}\left( E\cap \left( X\setminus B_n \right) \right) && \\
+            && & \geq \mu^{*}\left( E\cap B_n \right) + \mu^{*}\left( E\cap \left( X\setminus B \right) \right) && \text{by monotonicity of $\mu^{*}$} \\
+            && & = \sum^{n}_{k=1}\mu^{*}\left( E\cap A_k' \right) + \mu^{*}\left( E\cap\left( X\setminus B \right) \right) && \\
+            && & \geq \lim_{n\to\infty} \sum^{n}_{k=1}\mu^{*}\left( E\cap A_k' \right)+\mu^{*}\left( E\cap \left( X\setminus B \right) \right) && \\
+            && & \geq \mu^{*}\left( E\cap B \right) + \mu^{*}\left( E\cap\left( X\setminus B \right) \right) && \\
+            && & \geq \mu^{*}\left( E \right). && \text{by subadditivity of $\mu^{*}$}
+        \end{flalign*}
+        This means $\mu^{*}\left( E \right) = \mu^{*}\left( E\cap B \right) + \mu^{*}\left( E\cap \left( X\setminus B \right) \right)$, so $\bigcup^{\infty}_{n=1}A_n = B\in\mA$. Hence $\mA$ is a $\sigma$-algebra.
+
+        Assume $\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mA$ is a collection of disjoint sets in $\mA$. By taking $A_n' = A_n$ for all $n\in\N$ and $E=B$, we see that
+        \begin{equation*}
+            \mu^{*}\left( B \right) \geq \sum^{\infty}_{n=1} \mu^{*}\left( B\cap A_n \right) + \underbrace{\mu^{*}\left( B\cap \left( X\setminus B \right) \right)}_{=0} \geq \mu^{*}\left( B \right) \implies \mu^{*}\left( B \right) = \sum^{\infty}_{n=1} \mu^{*}\left( B\cap A_n \right)
+        \end{equation*}
+        from the series of inequalities we used for proving closure of $\mA$ under countable union.
+
+        We now show that $\mu$ is complete. Let $A\subseteq X$ with $\mu^{*}\left( A \right) = 0$. For any $E\subseteq X$,
+        \begin{equation*}
+            \mu^{*}\left( E \right)\leq \mu^{*}\left( E\cap A \right)+\mu^{*}\left( E\cap \left( X\setminus A \right) \right) \leq \underbrace{\mu^{*}\left( A \right)}_{=0} + \mu^{*}\left( E \right).
+        \end{equation*}
+        This means every set $A$ with $\mu^{*}\left( A \right) = 0$ is measurable. But given any $B\in\mA$ with $\mu\left( B \right) = 0$, we have
+        \begin{equation*}
+            0\leq \mu^{*}\left( A \right) \leq \mu^{*}\left( B \right) = \mu\left( B \right) = 0,\hspace{1cm}\forall A\subseteq B,
+        \end{equation*}
+        so that $\mu^{*}\left( A \right) = 0$ and that $A$ is measurable.
+    \end{proof}
+
+    \np We can construct a measure as follows. Given $\mE\subseteq\mP\left( X \right)$ with $\left\lbrace \emptyset,X \right\rbrace\subseteq\mE$ and $\mu:\mE\to\left[ 0,\infty \right]$, we let $\mu^{*}:\mP\left( X \right)\to\left[ 0,\infty \right]$ be an outer measure as defind in Proposition 1.6. 
+
+    In general, $\mA = \left\lbrace A\subseteq X: \text{$A$ is $\mu^{*}$-measurable} \right\rbrace$ and $\mu^{*}|_{\mA}$ are very different from $\mE, \mu$. To resolve this, we introduce the following notion.
+
+    \begin{definition}{\textbf{Premeasure} on an Algebra of Subsets}
+        Let $\mA\subseteq\mP\left( X \right)$ be an algebra of subsets of $X$. We say $\mu:\mA\to\left[ 0,\infty \right]$ is a \emph{premeasure} on $\mA$ if
+        \begin{enumerate}
+            \item $\mu\left( \emptyset \right) = 0$; and
+            \item for any $\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mA$ with $\bigcupdot^{\infty}_{n=1}A_n\in\mA$, we have
+                \begin{equation*}
+                    \mu\left( \bigcupdot^{\infty}_{n=1}A_n \right) = \sum^{\infty}_{n=1}\mu\left( A_n \right).
+                \end{equation*}
+        \end{enumerate}
+    \end{definition}
+    
+    \begin{theorem}{Constructing Measure from Premeasure I}
+        Let $\mA\subseteq\mP\left( X \right)$ be an algebra and let $\mu:\mA\to\left[ 0,\infty \right]$ be a premeasure on $\mA$. Let $\mu^{*}$ be the outer measure constructed with $\mA$:
+        \begin{equation*}
+            \mu^{*}\left( A \right) = \inf\left\lbrace \sum^{\infty}_{n=1}\mu\left( A_n \right) : \left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mA, A\subseteq\bigcup^{\infty}_{n=1}A_n \right\rbrace,\hspace{1cm}\forall A\in\mP\left( X \right).
+        \end{equation*}
+        Then
+        \begin{enumerate}
+            \item $\mu^{*}|_{\mA} = \mu$; and
+            \item every $A\in\mA$ is $\mu^{*}$-measurable.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item We show $\mu^{*}|_{\mA} = \mu$. Let $E\in\mA$. Say
+                \begin{equation*}
+                    E \subseteq \bigcup^{\infty}_{n=1}A_n
+                \end{equation*}
+                where each $A_n\in\mA$. Then by taking $A_n' = A_n\setminus\bigcup^{n-1}_{k=1}A_k$,
+                \begin{equation*}
+                    E = \bigcup^{\infty}_{n=1} \left( A_n\cap E \right) = \bigcupdot^{\infty}_{n=1} \left( A_n'\cap E \right).
+                \end{equation*}
+                But each $A_n'\cap E\in\mA$, so that
+                \begin{equation*}
+                    \mu\left( E \right) = \sum^{\infty}_{n=1} \mu\left( A_n'\cap E \right) \leq \sum^{\infty}_{n=1} \mu\left( A_n \right)
+                \end{equation*}
+                by the monotonicity of $\mu$.\footnotemark[1] Therefore, $\mu\left( E \right)\leq \mu^{*}\left( E \right)$ by taking infimum.
+
+                On the other hand, by letting $\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mA$ with $A_1 = E, A_2=A_3=\cdots=\emptyset$, we see that $\mu^{*}\left( E \right)\geq \mu\left( E \right)$. Hence $\mu^{*}|_{\mA}=\mu$.
+
+            \item Let $A\in\mA$. We show $A$ is $\mu^{*}$-measurable. Let $E\subseteq X$ and let $\epsilon>0$ be given. We may find $\left\lbrace B_n \right\rbrace^{\infty}_{n=1}\subseteq\mA$ such that $E\subseteq\bigcup^{\infty}_{n=1} B_n$ and
+                \begin{equation*}
+                    \sum^{\infty}_{n=1} \mu\left( B_n \right) < \mu^{*}\left( E \right) + \epsilon.
+                \end{equation*}
+                Then,
+                \begin{flalign*}
+                    && \mu^{*}\left( E \right)+\epsilon & \geq \sum^{\infty}_{n=1} \mu\left( B_n \right) && \\ 
+                    && & = \sum^{\infty}_{n=1} \mu\left( B_n\cap A \right) + \mu\left( B_n\cap\left( X\setminus A \right) \right) && \\
+                    && & = \sum^{\infty}_{n=1} \mu^{*}\left( B_n\cap A \right) + \sum^{\infty}_{n=1} \mu^{*}\left( B_n\cap\left( X\setminus A \right) \right) && \text{by (a)} \\
+                    && & \geq \mu^{*}\left( \left( \bigcup^{\infty}_{n=1} B_n \right)\cap A \right) + \mu^{*}\left( \left( \bigcup^{\infty}_{n=1} B_n \right)\cap \left( X\setminus A \right) \right) && \text{by subadditivity of $\mu^{*}$} \\
+                    && & \geq \mu^{*}\left( E\cap A \right) + \mu^{*}\left( E\cap \left( X\setminus A \right) \right). && \text{by monotonicity of $\mu^{*}$ since $E\subseteq\bigcup^{\infty}_{n=1}B_n$}
+                \end{flalign*}
+        \end{enumerate}
+        
+        \noindent
+        \begin{minipage}{\textwidth}
+            \footnotetext[1]{It suffices to note that premeasures are finitely additive, which implies monotonicity.}
+        \end{minipage}
+    \end{proof}
+
+    \begin{theorem}{Constructing Measure from Premeasure II}
+        Let $\mA\subseteq\mP\left( X \right)$ be an algebra and let $\mu^{*}$ be as in Theorem 1.8. Let $\mB = \sigma\left( \mA \right)$. Then
+        \begin{enumerate}
+            \item $\overline{\mu} = \mu^{*}|_{\mB}$ is a complete measure with $\overline{\mu}|_{\mA} = \mu$.
+            \item Let $\nu$ be another measure on $\mB$ with $\nu|_{\mA} = \mu$. Then $\nu\leq\overline{\mu}$. That is,
+                \begin{equation*}
+                    \nu\left( A \right)\leq\overline{\mu}\left( A \right),\hspace{1cm}\forall A\in\mB.
+                \end{equation*}
+            \item For any $E\in\mB$, if $\overline{\mu}\left( E \right) < \infty$, then $\nu\left( E \right)=\overline{\mu}\left( E \right)$.
+            \item If $\mu$ is $\sigma$-finite,\footnotemark[1] then $\overline{\mu} = \nu$.
+        \end{enumerate}
+
+        
+        \noindent
+        \begin{minipage}{\textwidth}
+            \footnotetext[1]{We say a premeasure is \emph{$\sigma$-finite} if $X=\bigcup^{\infty}_{n=1}A_n$ for some $\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mA$ with $\mu\left( A_n \right)<\infty$ for all $n\in\N$.}
+        \end{minipage}
+    \end{theorem}
+
+    \begin{proof}
+        \begin{enumerate}
+            \item Let
+                \begin{equation*}
+                    \mC = \left\lbrace A\subseteq\mP\left( X \right) : \text{$A$ is $\sigma$-measurable} \right\rbrace,
+                \end{equation*}
+                which is a $\sigma$-algebra. Then by Theorem 1.8, $\mA\subseteq\mC$, and so $\mB\subseteq\mC$ by minimality of $\mB$. Therefore,
+                \begin{equation*}
+                    \overline{\mu} = \mu^{*}|_{\mB}
+                \end{equation*}
+                is the restriction of $\mu^{*}|_{\mC}$ to $\mB$. Since $\mu^{*}|_{\mC}$ is a complete measure on $\left( X,\mC \right)$, it follows $\overline{\mu} = \mu^{*}|_{\mB}$ is a complete measure on $\left( X,\mB \right)$. Since $\mu^{*}|_{\mA} = \mu$, $\overline{\mu}|_{\mA} = \mu$ as well.
+
+            \item Let $A\in\mB$ and let $\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mA$ be such that $A\subseteq\bigcup^{\infty}_{n=1}A_n$. Since $\nu$ is a measure extending $\mu$,
+                \begin{equation*}
+                    \nu\left( A \right)\leq\nu\left( \bigcup^{\infty}_{n=1}A_n \right) \leq \sum^{\infty}_{n=1} \nu\left( A_n \right) \overset{\nu|_{\mA}=\mu}{=} \sum^{\infty}_{n=1} \mu\left( A_n \right).
+                \end{equation*}
+                By recalling that $\mu^{*}$ is defined as the \textit{greatest} lower bound, it follows
+                \begin{equation*}
+                    \nu\left( A \right)\leq\mu^{*}\left( A \right)=\overline{\mu}\left( A \right).
+                \end{equation*}
+
+            \item Let $A\in\mB$ with $\overline{\mu}\left( A \right) < \infty$. Let $\epsilon>0$ be given. We may find $\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mA$ such that $A\subseteq\bigcup^{\infty}_{n=1} A_n$ and
+                \begin{equation*}
+                    \sum^{\infty}_{n=1} \mu\left( A_n \right) < \overline{\mu}\left( A \right) + \epsilon.
+                \end{equation*}
+                Let $B = \bigcup^{\infty}_{n=1} A_n\in\mB$. Note that
+                \begin{equation*}
+                    \nu\left( B \right) = \nu\left( \bigcup^{\infty}_{n=1} A_n \right) = \lim_{k\to\infty} \nu\left( \bigcup^{k}_{n=1}A_n \right) = \lim_{k\to\infty} \overline{\mu}\left( \bigcup^{k}_{n=1} A_n \right) = \overline{\mu}\left( \bigcup^{\infty}_{n=1} A_n \right) = \overline{\mu}\left( B \right).
+                \end{equation*}
+                Moreover
+                \begin{equation*}
+                    \overline{\mu}\left( B \right) \leq \sum^{\infty}_{n=1} \mu\left( A_n \right) < \overline{\mu}\left( A \right) + \epsilon < \infty.
+                \end{equation*}
+                It follows
+                \begin{equation*}
+                    \overline{\mu}\left( B\setminus A \right) < \epsilon,
+                \end{equation*}
+                so that
+                \begin{equation*}
+                    \overline{\mu}\left( A \right) \leq \overline{\mu}\left( B \right) = \nu\left( B \right) = \nu\left( A \right) + \nu\left( B\setminus A \right) \leq \nu\left( A \right) + \overline{\mu}\left( B\setminus A \right) < \nu\left( A \right) < \epsilon.
+                \end{equation*}
+                Since $\epsilon$ was given arbitrarily, we have $\overline{\nu}\left( A \right)\leq\nu\left( A \right)$. Since the reverse inequality is given in (b), we thus conclude $\overline{\mu}\left( A \right) = \nu\left( A \right)$.
+
+            \item Say $\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mA$ is such that $X=\bigcup^{\infty}_{n=1} A_n$ with $\mu\left( A_n \right) < \infty$. Write $A'_n = A_n\setminus\bigcup^{n-1}_{m=1} A_m$ so that
+                \begin{equation*}
+                    X = \bigcupdot^{\infty}_{n=1} A_n' .
+                \end{equation*}
+                Therefore,
+                \begin{equation*}
+                    \overline{\mu}\left( A \right) = \overline{\mu}\left( \bigcupdot^{\infty}_{n=1} \left( A\cap A_n' \right) \right) = \sum^{\infty}_{n=1} \overline{\mu}\left( A\cap A'_n \right) = \sum^{\infty}_{n=1} \nu\left( A\cap A_n' \right) = \nu\left( A \right).
+                \end{equation*}
+        \end{enumerate}
+    \end{proof}
+
+    \subsection{Lebesgue-Stieltjes Measures on $\R$}
+    
+    Suppose we have a measure space $\left( \R,\Bor\left( \R \right),\mu \right)$, where we are working with the usual topology on $\R$. We further assume that
+    \begin{equation*}
+        \text{\textit{for all compact $K\subseteq\R$, $\mu\left( K \right) < \infty$.}}
+    \end{equation*}
+    We consider
+    \begin{equation*}
+        \begin{aligned}
+            F:\R&\to\R \\
+            x&\mapsto
+            \begin{cases} 
+                \mu\left( \left[ 0,x \right] \right) & x\geq 0 \\
+                -\mu\left( \left( x,0 \right) \right) & x < 0
+            \end{cases}
+        \end{aligned} .
+    \end{equation*}
+    Then by definition, $F$ is increasing.
+
+    Let $\left( x_{n} \right)^{\infty}_{n=1}\in\R^{\N}$ be a decreasing sequence with $x_n\to x\in\R$. In case $x\geq 0$,
+    \begin{equation*}
+        F\left( x \right) = \mu\left( \left[ 0,x \right] \right) = \mu\left( \bigcap^{\infty}_{n=1}\left[ 0,x_n \right] \right) = \lim_{n\to\infty} \mu\left( \left[ 0,x_n \right] \right) = \lim_{n\to\infty} F\left( x_n \right),
+    \end{equation*}
+    where we are using the compactness assumption to use the continuity from above. Hence $F$ is \emph{right-continuous} on $\left[ 0,\infty \right)$.
+
+    \begin{exercise}{}
+        Show that $F$ is right-continuous on $\left( -\infty,0 \right)$. That is, when $x < 0$,
+        \begin{equation*}
+            F\left( x \right) = \lim_{n\to\infty} F\left( x_n \right).
+        \end{equation*}
+    \end{exercise}
+
+    \rruleline
+
+    \begin{example}{}
+        Consider the point-mass measure
+        \begin{equation*}
+            \begin{aligned}
+                \mu_0 : \Bor\left( \R \right) & \to \left[ 0,\infty \right] \\
+                A & \mapsto
+                \begin{cases} 
+                    0 & \text{if $0\notin A$} \\
+                    1 & \text{if $0\in A$}
+                \end{cases}
+            \end{aligned} 
+        \end{equation*}
+        and the measure space $\left( \R,\Bor\left( \R \right),\mu_0 \right)$.
+
+        Then note that,
+        \begin{equation*}
+            F\left( x \right) =
+            \begin{cases} 
+                0 & \text{if $x<0$} \\
+                1 & \text{if $x\geq 0$}
+            \end{cases},
+        \end{equation*}
+        which is right-continuous but not left-continuous.
+    \end{example}
+    
+    \rruleline
+
+    \np The goal of this section is, then:
+    \begin{equation*}
+        \text{\textit{given an increasing right-continuous $F:\R\to\R$, we make a measure $\mu_F$ on $\left( \R,\Bor\left( \R \right) \right)$.}}
+    \end{equation*}
+    That is, we are doing the converse of the motivation for this section.
+
+    The idea is to start with
+    \begin{equation*}
+        \mu_F\left( \left( a,b \right] \right) = F\left( b \right) - F\left( a \right),\hspace{1cm}\forall a,b\in\R, a<b.
+    \end{equation*}
+    Let $\mA$ be the set of finite unions of half-open intervals of the form $\left( a,b \right]$, where $a\in\left[ -\infty,\infty \right),b\in\left( -\infty,\infty \right]$ (we note that when $b=\infty$, we are taking $\left( a,\infty \right)$ instead of $\left( a,\infty \right]$, since we are working with subsets of $\R$).
+
+    We note that
+    \begin{equation*}
+        \R\setminus\left( a,b \right] = \left( -\infty,a \right]\cup\left( b,\infty \right)\in\mA
+    \end{equation*}
+    so that $\mA$ is an algebra.
+
+    In addition, we insist
+    \begin{enumerate}
+        \item $F\left( \infty \right) = \lim_{x\to\infty}F\left( x \right)$ and $F\left( -\infty \right) = \lim_{x\to-\infty}F\left( x \right)$; and
+        \item $\mu_F\left( \bigcupdot^{n}_{k=1}\left( a_k,b_k \right] \right) = \sum^{n}_{k=1} F\left( b_k \right)-F\left( a_k \right)$.
+    \end{enumerate}
+    In this way we get a fuction $\mu_F:\mA\to\left[ 0,\infty \right]$.
+
+    \begin{fact}{}
+        $\mu_F$ is a premeasure on $\left( \R,\mA \right)$.
+    \end{fact}
+
+    \begin{theorem}{}
+        Consider the above setting. There is a complete measure space $\left( \R,\mB,\overline{\mu_F} \right)$ such that
+        \begin{enumerate}
+            \item $\overline{\mu_F}|_{\mA} = \mu_F$; and
+            \item $\Bor\left( \R \right)\subseteq\mB$.
+        \end{enumerate}
+    \end{theorem}
+
+    \clearpage
+
+    \begin{proof}
+        Consider $\mu_F^{*}$ be the outer measure constructed as in Theorem 1.8 and let $\mB$ be the $\sigma$-algebra of $\mu_F^{*}$-measurable sets. We set $\overline{\mu_F} = \mu_F^{*}|_{\mB}$. By Theorem 1.8, we know that $\left( \R,\mB,\overline{\mu_F} \right)$ is complete and $\overline{\mu_F}|_{\mA} = \mu_F$.
+
+        By Theorem 1.8 again, $\mA\subseteq\mB$ (which was implicit in restricting $\overline{\mu_F}$ to $\mA$). In particular, half-open intervals are $\mB$, so that
+        \begin{equation*}
+            \left( a,b \right) = \bigcup^{\infty}_{n=1} \left( a,b-\frac{1}{n} \right]\in\mB
+        \end{equation*}
+        for all $a<b$ in $\R$. Since $\mB$ has every open intervals, which generate the Borel $\sigma$-algebra on $\R$, it follows $\Bor\left( \R \right)\subseteq\mB$.
+    \end{proof}
+
+    \begin{theorem}{}
+        When $F\left( x \right) = x$ for all $x\in\R$, then
+        \begin{enumerate}
+            \item $\overline{\mu_F}$ is the Lebesgue measure; and
+            \item $\mB$ is the set of Lebesgue measurable sets.
+        \end{enumerate}
+    \end{theorem}
+
+    \rruleline
+
+    \begin{definition}{\textbf{Lebesgue-Steltjes Measure}}
+        Any measure of the form $\overline{\mu_F}$ is called a \emph{Lebesgue-Steltjes measure}.
+    \end{definition}
+
+    \begin{theorem}{Regularity of Lebesgue-Steltjes Measures}
+        Let $\left( \R,\mB,\overline{\mu_F} \right)$ as above and let $A\subseteq\R$. The following are equivalent.
+        \begin{enumerate}
+            \item $A\in\mB$ (i.e. $A$ is $\mu_F^{*}$-measurable).
+            \item For all $\epsilon>0$, there is open $U\subseteq\R$ such that $A\subseteq U$ and $\mu_F^{*}\left( U\setminus A \right) < \epsilon$.
+            \item For all $\epsilon>0$, there is closed $C\subseteq\R$ such that $C\subseteq A$ and $\mu_F^{*}\left( A\setminus C \right) < \epsilon$.
+            \item There exists a $G_{\delta}$-set\footnotemark[1] such that $A\subseteq G$ and $\mu_F^{*}\left( G\setminus A \right) = 0$.
+            \item There exists a $F_{\sigma}$-set\footnotemark[2] such that $F\subseteq A$ and $\mu_F^{*}\left( A\setminus F \right) = 0$.
+        \end{enumerate}
+        
+        \noindent
+        \begin{minipage}{\textwidth}
+            \footnotetext[1]{A set is $G_{\delta}$ if it is a countable intersection of open sets.}
+            \footnotetext[2]{A set is $F_{\sigma}$ if it is a countable union of closed sets.}
+        \end{minipage}
+    \end{theorem}
+    
+    \begin{proof}
+        (1)$\implies$(2) Assume $A\in\mB$ and let $\epsilon > 0$ be given.
+
+        \begin{case}
+            \textit{Suppose $A$ is bounded.}
+
+            Then $A\subseteq\left( a,b \right]$ and $\overline{\mu_F}\left( A \right)\leq F\left( b \right)-F\left( a \right)<\infty$. We may find $\left\lbrace \left( a_n,b_n \right] \right\rbrace^{\infty}_{n=1}$ such that
+            \begin{equation*}
+                B = \bigcup^{\infty}_{n=1} \left( a_n,b_n \right]
+            \end{equation*}
+            contains $A$ and
+            \begin{equation*}
+                \overline{\mu_F}\left( B \right) < \overline{\mu_F}\left( A \right) + \frac{\epsilon}{2}.
+            \end{equation*}
+            Now, choose $c_n>b_n$ such that
+            \begin{equation*}
+                F\left( c_n \right) < F\left( b_n \right) + \frac{\epsilon}{2^{n+1}}
+            \end{equation*}
+            by the right-continuity of $F$. Let $U = \bigcup^{\infty}_{n=1} \left( a_n,c_n \right)$. Since $A\in\mB$, we have
+            \begin{equation*}
+                \overline{\mu_F}\left( B \right) = \overline{\mu_F}\left( A \right) + \overline{\mu_F}\left( B\setminus A \right)
+            \end{equation*}
+            by Caratheodory measurability condition (Def'n 1.9). So by excision,
+            \begin{equation*}
+                \overline{\mu_F}\left( B\setminus A \right) = \overline{\mu_F}\left( B \right) - \overline{\mu_F}\left( A \right) < \frac{\epsilon}{2}.
+            \end{equation*}
+            Hence
+            \begin{equation*}
+                \overline{\mu_F}\left( U\setminus A \right) \leq \overline{\mu_F}\left( U\setminus B \right) + \overline{\mu_F}\left( B\setminus A \right) < \overline{\mu_F}\left( \bigcup^{\infty}_{n=1} \left( b_n,c_n \right) \right) + \frac{\epsilon}{2} \leq \sum^{\infty}_{n=1} \frac{\epsilon}{2^{n+1}} + \frac{\epsilon}{2} = \epsilon.
+            \end{equation*}
+        \end{case}
+
+        \begin{case}
+            Let $A\in\mB$ and consider $A_n = A\cap\left[ -n,n \right]$ for all $n\in\N$. Let $\epsilon>0$ be given and choose open $U_n$ such that $A_n\subseteq U_n$ and
+            \begin{equation*}
+                \mu_F^{*}\left( U_n\setminus A_n \right) < \frac{\epsilon}{2^n}
+            \end{equation*}
+            for all $n\in\N$. Consider $U = \bigcup^{\infty}_{n=1} U_n$. Then $A = \bigcup^{\infty}_{n=1} A_n\subseteq U$ and
+            \begin{equation*}
+                \mu_F^{*}\left( U\setminus A \right) \leq \mu_F^{*}\left( \bigcup^{\infty}_{n=1} \left( U_n\setminus A_n \right) \right) \leq \sum^{\infty}_{n=1} \mu_F^{*}\left( U_n\setminus A_n \right) < \sum^{\infty}_{n=1} \frac{\epsilon}{2^n} = \epsilon.
+            \end{equation*}
+        \end{case}
+
+        (2)$\implies$(4) For every $n\in\N$, find open $U_n\subseteq\R$ containing $A$ such that
+        \begin{equation*}
+            \mu_F^{*}\left( U_n\setminus A \right) < \frac{1}{n}.
+        \end{equation*}
+        Take
+        \begin{equation*}
+            G = \bigcap^{\infty}_{n=1} U_n.
+        \end{equation*}
+        Then $A\subseteq G$ and
+        \begin{equation*}
+            \mu_F^{*}\left( G\setminus A \right) \leq \mu_F^{*}\left( U_n\setminus A \right) < \frac{1}{n}
+        \end{equation*}
+        for all $n\in\N$. Thus $\mu_F^{*}\left( G\setminus A \right) = 0$.
+
+        (4)$\implies$(1) Take a $G_{\delta}$-set $G\subseteq\R$ containing $A$ with $\mu^{*}\left( G\setminus A \right) = 0$. In particular, we have that $G\setminus A\in\mB$.\footnotemark[1] Since every open set is in $\mB$ and $\mB$ is closed under countable intersection, $G\in\mB$ as a countable intersection of open sets, and
+        \begin{equation*}
+            A = G\setminus\left( G\setminus A \right)\in\mB.
+        \end{equation*}
+
+        (1)$\implies$(3) Let $A\in\mB$ and let $\epsilon>0$. Since $X\setminus A\in\mB$, we may find open $U\supseteq X\setminus A$ such that
+        \begin{equation*}
+            \mu_F^{*}\left( U\setminus \left( X\setminus A \right) \right) < \epsilon.
+        \end{equation*}
+        Letting $C = X\setminus U$, $C\subseteq A$ and
+        \begin{equation*}
+            \mu_F^{*}\left( A\setminus C \right) = \mu_F^{*}\left( U\setminus \left( X\setminus A \right) \right) <\epsilon.
+        \end{equation*}
+
+        (3)$\implies$(5) Choose $C_n\subseteq A$ such that
+        \begin{equation*}
+            \mu_F^{*}\left( A\setminus C_n \right) < \frac{1}{n}
+        \end{equation*}
+        for all $n\in\N$ and let
+        \begin{equation*}
+            K = \bigcup^{\infty}_{n=1} C_n.
+        \end{equation*}
+
+        (5)$\implies$(1) Let $K$ be a $F_{\sigma}$-set contained in $A$ with $\mu_F^{*}\left( A\setminus F \right) = 0$. Then we observe that $A = \left( A\setminus F \right)\cup F\in\mB$.
+        
+        \noindent
+        \begin{minipage}{\textwidth}
+            \footnotetext[1]{See the proof of Theorem 1.7, Caratheodory theorem.}
+        \end{minipage}
+    \end{proof}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+\end{document}
