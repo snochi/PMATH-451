@@ -436,8 +436,245 @@
         The result then follows from Proposition 3.11 and 3.12.
     \end{proof}
 
+    \begin{theorem}{Fatou's Lemma}
+        Let $\left( f_{n} \right)^{\infty}_{n=1}\in\Lplus^{\N}$. Then
+        \begin{equation*}
+            \int\liminf_{n\to\infty}f_nd\mu \leq \liminf_{n\to\infty}\int f_nd\mu.
+        \end{equation*}
+    \end{theorem}
 
+    \begin{proof}
+        Let
+        \begin{equation*}
+            g_n = \inf_{k\geq n}f_k.
+        \end{equation*}
+        Then $\left( g_{n} \right)^{\infty}_{n=1}$ is an increasing sequence in $\Lplus$ such that
+        \begin{equation*}
+            \lim_{n\to\infty} g_n = \liminf_{n\to\infty}f_n
+        \end{equation*}
+        pointwise. By the monotone convergence theorem,
+        \begin{equation*}
+            \int\liminf_{n\to\infty}f_nd\mu = \int\lim_{n\to\infty}g_nd\mu = \lim_{n\to\infty}\int g_nd\mu = \liminf_{n\to\infty}\int g_nd\mu \leq \liminf_{n\to\infty}\int f_nd\mu.
+        \end{equation*}
+    \end{proof}
+
+    \begin{cor}{}
+        Let $\left( f_{n} \right)^{\infty}_{n=1}\in\Lplus^{\N}$ such that $f_n\to f$ pointwise for some $f\in\Lplus$. Then
+        \begin{equation*}
+            \int fd\mu \leq \liminf_{n\to\infty}\int f_nd\mu.
+        \end{equation*}
+    \end{cor}	
     
+    \rruleline
+
+    \subsection{General Integration}
+    
+    \begin{definition}{\textbf{Integrable} Complex-valued Function}
+        Let $f:X\to\CC$ be measurable. We say $f$ is \emph{integrable} if
+        \begin{equation*}
+            \int\left| f \right|d\mu < \infty.
+        \end{equation*}
+        
+        In case $f:X\to\R$ is integrable, we consider the \emph{positive part} $f^+$ and \emph{negative part} $f^-$ of $f$ defined as
+        \begin{equation*}
+            \begin{aligned}
+                f^+ & = \max\left\lbrace f,0 \right\rbrace, \\
+                f^- & = -\min\left\lbrace f,0 \right\rbrace.
+            \end{aligned} 
+        \end{equation*}
+        Note that both $f^+,f^-$ are nonnegative and we define the \emph{integral} of $f$, denoted as $\int fd\mu$, by
+        \begin{equation*}
+            \int fd\mu = \int f^+d\mu - \int f^-d\mu.\footnotemark[1]
+        \end{equation*}
+
+        Let $f:X\to\CC$ be integrable. Then we define the \emph{integral} of $f$, denoted as $\int fd\mu$, by
+        \begin{equation*}
+            \int fd\mu = \int\re\circ fd\mu + i\int\im\circ fd\mu.\footnotemark[2]
+        \end{equation*}
+
+        In case $f:X\to\CC$ is measurable, we define
+        \begin{equation*}
+            \left\lVert f \right\rVert_{1} = \int\left| f \right|d\mu.
+        \end{equation*}
+        
+        \noindent
+        \begin{minipage}{\textwidth}
+            \footnotetext[1]{Note that $f=f^+-f^-$ and $\left| f \right|=f^++f^-$. Hence $f^+,f^-\leq\left| f \right|$ so that both $\int f^+d\mu, \int f^-d\mu$ are finite.}
+            \footnotetext[2]{Observe that $\left| \re\circ f \right|, \left| \im\circ f \right|\leq \left| f \right|$, so that $\re\circ f, \im\circ f$ are integrable.}
+        \end{minipage}
+    \end{definition}
+    
+    \begin{notation}{$L^1\left( X,\mA,\mu \right)$}
+        We define
+        \begin{equation*}
+            L^1\left( X,\mA,\mu \right) = \left\lbrace f:X\to\CC : \text{$f$ is measurable and } \left\lVert f \right\rVert_{1}<\infty \right\rbrace.
+        \end{equation*}
+        We shall write $L^1$ when $\left( X,\mA,\mu \right)$ are understood.
+    \end{notation}
+
+    \np We state few results without proof.
+    
+    \begin{prop}{Linearity}
+        Let $f,g\in L^1$ and $\alpha\in\CC$. Then $\alpha f+g\in L^1$ with
+        \begin{equation*}
+            \int\alpha f+gd\mu = \alpha\int fd\mu + \int gd\mu.
+        \end{equation*}
+    \end{prop}
+    
+    \rruleline
+
+    \begin{prop}{Monotonicity}
+        Let $f,g\in L^1$ be real-valued functions. If $f\leq g$, then
+        \begin{equation*}
+            \int fd\mu \leq \int gd\mu.
+        \end{equation*}
+    \end{prop}
+
+    \rruleline
+    
+    \begin{definition}{\textbf{Integral} over a Measurable Set}
+        Let $f\in L^1$. For $A\in\mA$, we define the \emph{integral} of $f$ over $A$, denoted as $\int_Afd\mu$, by
+        \begin{equation*}
+            \int_Afd\mu = \int f\chi_Ad\mu.
+        \end{equation*}
+    \end{definition}
+    
+    \begin{prop}{}
+        Let $f\in L^1$ and let $A,B\in\mA$ be disjoint. Then
+        \begin{equation*}
+            \int_{A\cupdot B} fd\mu = \int_Afd\mu + \int_Bfd\mu.
+        \end{equation*}
+    \end{prop}
+
+    \rruleline
+    
+    \np The following proposition is surprisingly non-trivial.
+
+    \begin{prop}{}
+        Let $f\in L^1$. Then
+        \begin{equation*}
+            \left| \int fd\mu \right| \leq \int \left| f \right|d\mu.
+        \end{equation*}
+    \end{prop}
+
+    \begin{proof}
+        The case when $f$ is real-valued is trivial:
+        \begin{equation*}
+            \left| \int fd\mu \right| = \left| \int f^+d\mu - \int f^-d\mu \right| \leq \int f^+d\mu + \int f^-d\mu = \int f^++f^-d\mu = \int\left| f \right|d\mu.
+        \end{equation*}
+        Let
+        \begin{equation*}
+            z = \int fd\mu.
+        \end{equation*}
+        Write
+        \begin{equation*}
+            z = re^{i\theta}
+        \end{equation*}
+        in polar form, so that $r = \left| z \right|$. Therefore,
+        \begin{equation*}
+            \left| \int fd\mu \right| = r = e^{-i\theta}z = \int e^{-i\theta}fd\mu = \re\int e^{-i\theta}fd\mu 
+            = \int \underbrace{\re\circ e^{-i\theta}f}_{=g}d\mu \leq \int \left| g \right|d\mu \leq \int\left| f \right|d\mu.
+        \end{equation*}
+    \end{proof}
+    
+    \begin{theorem}{Lebesgue Dominated Convergence Theorem (LDCT)}
+        Let $\left( f_{n} \right)^{\infty}_{n=1}\in \left( L^1 \right)^{\N}$ and let $g\in L^1$. If $f_n\to f$ pointwise for some $f:X\to\CC$ and $\left| f_n \right|\leq g$ for all $n\in\N$, then $f\in L^1$ with
+        \begin{equation*}
+            \int\lim_{n\to\infty}f_nd\mu = \lim_{n\to\infty}\int f_nd\mu.
+        \end{equation*}
+    \end{theorem}
+    
+    \begin{proof}
+        \begin{case}
+            \textit{Suppose $f,g,f_n$ are real-valued.}
+
+            Since $\left| f \right|\leq g$ by taking limits as $n\to\infty$,
+            \begin{equation*}
+                \int\left| f \right|d\mu\leq\int gd\mu < \infty.
+            \end{equation*}
+            Hence $f\in L^1$. Then
+            \begin{equation*}
+                \int g+fd\mu \overset{\text{Fatou}}{\leq} \liminf_{n\to\infty}\int g+f_nd\mu = \int gd\mu + \liminf_{n\to\infty}\int f_nd\mu.
+            \end{equation*}
+            Similarly,
+            \begin{equation*}
+                \int g-fd\mu \overset{\text{Fatou}}{\leq} \liminf_{n\to\infty}\int g-f_nd\mu = \int gd\mu - \limsup_{n\to\infty}\int f_nd\mu.
+            \end{equation*}
+        \end{case}
+    \end{proof}
+
+    \subsection{Spaces of Integrable Functions}
+
+    \begin{prop}{}
+        $\Lone\left( X,\mA,\mu \right)$ is a Banach space.
+    \end{prop}
+
+    \rruleline
+
+    \np Here are some ideas for the proof.
+
+    Suppose that $V$ is a normed linear space and let $\left( a_{n} \right)^{\infty}_{n=1}\in V^n$ be Cauchy. Then we know
+    \begin{equation*}
+        \text{there is a subsequence $\left( a_{n_k} \right)^{\infty}_{k=1}$ such that }a_{n_k}\to a\in V \implies a_n\to a.
+    \end{equation*}
+    
+    Let $\left( f_{n} \right)^{\infty}_{n=1}\in \Lone\left( X,\mA,\mu \right)^{\N}$ be Cauchy. Then
+    \begin{equation*}
+        \left| \re\circ f_n - \re\circ f_m \right|^{2} \leq \left| \re\circ f_n-\re\circ f_m \right|^{2} + \left| \im\circ f_n-\im\circ f_m \right| = \left| f_n-f_m \right|^{2}
+    \end{equation*}
+    so that
+    \begin{equation*}
+        \left| \re\circ f_n-\re\circ f_m \right| \leq \left| f_n-f_m \right|.
+    \end{equation*}
+    Hence by monotonicity,
+    \begin{equation*}
+        \left\lVert \re\circ f_n-\re\circ f_m \right\rVert_{1} \leq \left\lVert f_n-f_m \right\rVert_{1},
+    \end{equation*}
+    which means $\left( \re\circ f_{n} \right)^{\infty}_{n=1}$ is Cauchy. Similarly, $\left( \im\circ f_{n} \right)^{\infty}_{n=1}$ is also Cauchy.
+    
+    \begin{boxyproof}{Proof of Proposition 3.20}
+        Let $\left( f_{n} \right)^{\infty}_{n=1}\in\Lone\left( X,\mA,\mu \right)$ be Cauchy. Assume each $f_n$ is real-valued without loss of generality. For all $k\in\N$, there is $n_k\in\N$ such that
+        \begin{equation*}
+            \left\lVert f_n-f_m \right\rVert_{1} < \frac{1}{2^k}, \hspace{1cm}\forall n,m\geq n_k.
+        \end{equation*}
+        Without loss of generality assume $\left( n_{k} \right)^{\infty}_{k=1}$ is increasing. Let
+        \begin{equation*}
+            \hat{g} = \left| f_{n_1} \right| + \sum^{\infty}_{k=1} \left| f_{n_{k+1}}-f_{n_k} \right|.
+        \end{equation*}
+        By the MCT,
+        \begin{equation*}
+            \int \hat{g}d\mu = \int \left| f_{n_1} \right|d\mu + \sum^{\infty}_{k=1}\int\left| f_{n_{k+1}}-f_{n_k} \right|d\mu = \left\lVert f_{n_1} \right\rVert_{1} + \sum^{\infty}_{k=1} \left\lVert f_{n_{k+1}}-f_{n_k} \right\rVert_{1} = \left\lVert f_{n_1} \right\rVert_{1} + 1 < \infty.
+        \end{equation*}
+        This means $\hat{g}$ is finite almost everywhere -- that is, there is $N\in\mA$ such that $\hat{g}|_{X\setminus N}$ is finite and $\mu\left( N \right) = 0$. Hence define $g:X\to\R$ by
+        \begin{equation*}
+            g\left( x \right) = \begin{cases} \hat{g}\left( x \right) & \text{if $x\in X\setminus N$} \\ 0 & \text{if $x\in N$} \end{cases}, \hspace{1cm}\forall x\in X.
+        \end{equation*}
+
+        Let $f:X\to\R$ by
+        \begin{equation*}
+            f\left( x \right) = 
+            \begin{cases} 
+                f_{n_1}\left( x \right) + \sum^{\infty}_{k=1} f_{n_{k+1}}\left( x \right)-f_{n_k}\left( x \right) & \text{if $x\in X\setminus N$} \\
+                0 & \text{if $x\in N$}
+            \end{cases} ,\hspace{1cm}\forall x\in X.
+        \end{equation*}
+        Then $f_{n_k}\to f$ pointwise almost everywhere and we have that $\left| f \right|\leq g$. Then by the LDCT,
+        \begin{equation*}
+            f\in\Lone\left( X,\mA,\mu \right).
+        \end{equation*}
+        Moreover,
+        \begin{equation*}
+            \left| f_{n_k} \right| \leq \left| f_{n_1} \right| + \sum^{k-1}_{j=1} \left| f_{n_{j+1}}-f_{n_j} \right| \overset{\text{ae}}{\leq} g, \hspace{1cm}\forall k\in\N.
+        \end{equation*}
+        Finally,
+        \begin{equation*}
+            \left| f-f_{n_k} \right|\leq 2g, \hspace{1cm}\forall k\in\N,
+        \end{equation*}
+        so by the LDCT,
+        \begin{equation*}
+            \left\lVert f-f_{n_k} \right\rVert_{1} = \int\left| f-f_{n_k} \right|d\mu \to 0.
+        \end{equation*}
+    \end{boxyproof}
     
     
     

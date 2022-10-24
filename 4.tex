@@ -5,7 +5,265 @@
 
 \begin{document}
 
-    \section{Differentiation}
+    \section{Product Measures}
+    
+    \subsection{Product Measures}
+
+    \begin{definition}{\textbf{Measurable Rectangle}}
+        Let $\left( X,\mA,\mu \right),\left( Y,\mB,\nu \right)$ be measure spaces. For every $A\in\mA,B\in\mB$, we call $A\times B$ a \emph{measurable rectangle}.
+    \end{definition}
+    
+    \begin{lemma}{}
+        Let $\left( X,\mA,\mu \right),\left( Y,\mB,\nu \right)$ be measure spaces and let $\left\lbrace A_k\times B_k \right\rbrace^{\infty}_{k=1}$ be a collection of measurable rectangles that are pairwise disjoint. Also assume that
+        \begin{equation*}
+            \bigcupdot^{\infty}_{k=1} A_k\times B_k = A\times B
+        \end{equation*}
+        for some $A\in\mA,B\in\mB$. Then
+        \begin{equation*}
+            \mu\left( A \right)\nu\left( B \right) = \sum^{\infty}_{k=1} \mu\left( A_k \right)\nu\left( B_k \right).\footnotemark[1]
+        \end{equation*}
+        
+        \noindent
+        \begin{minipage}{\textwidth}
+            \footnotetext[1]{We are using the convention $0\infty = 0$.}
+        \end{minipage}
+    \end{lemma}
+    
+    \begin{proof}
+        Fix $x\in A$. For all $y\in B$, there exists a unique $k\in\N$ such that $\left( x,y \right)\in A_k\times B_k$. Hence
+        \begin{equation*}
+            B = \bigcupdot^{}_{k\in\N:x\in A_k} B_k
+        \end{equation*}
+        This means
+        \begin{equation*}
+            \mu\left( B \right) = \sum^{}_{k\in\N:x\in A_k} \mu\left( B_k \right),
+        \end{equation*}
+        so that
+        \begin{equation*}
+            \nu\left( B \right)\chi_A\left( x \right) = \sum^{\infty}_{k=1}\nu\left( B_k \right)\chi_{A_k},\hspace{1cm}\forall x\in X.
+        \end{equation*}
+        By MCT,
+        \begin{equation*}
+            \nu\left( B \right)\mu\left( A \right) - \sum^{\infty}_{k=1} \sum^{\infty}_{k=1}\nu\left( B_k \right)\mu\left( A_k \right).
+        \end{equation*}
+    \end{proof}
+    
+    \np Let
+    \begin{equation*}
+        \mR = \left\lbrace \bigcupdot^{n}_{k=1} A_k\times B_k : n\geq 0 , \forall k\in\left\lbrace 1,\ldots,n \right\rbrace\left[ A_k\in\mA,B_k\in\mB \right] \right\rbrace.
+    \end{equation*}
+    
+    \begin{prop}{}
+        Let
+        \begin{equation*}
+            \begin{aligned}
+                \lambda:\mR&\to\left[ 0,\infty \right] \\
+                \bigcupdot^{n}_{k=1} A_k\times B_k&\mapsto \sum^{n}_{k=1}\mu\left( A_k \right)\nu\left( B_k \right)
+            \end{aligned} .
+        \end{equation*}
+        Then $\lambda$ is a premeasure.
+    \end{prop}
+
+    \rruleline
+
+    \np By Caratheodory, there is a complete measure
+    \begin{equation*}
+        \left( X\times Y, \overline{\mA\times\mB}, \mu\times\nu \right)
+    \end{equation*}
+    on $X\times Y$ such that
+    \begin{equation*}
+        \mA\times\mB \subseteq \overline{\mA\times\mB} = \left\lbrace A\times B\in\mA\times\mB : A\times B\text{ is $\lambda^{*}$-measurable} \right\rbrace.
+    \end{equation*}
+    and
+    \begin{equation*}
+        \left( \mu\times\nu \right)\left( A\times B \right) = \mu\left( A \right)\nu\left( B \right), \hspace{1cm}\forall A\in\mA, B\in\mB.
+    \end{equation*}
+    
+    \begin{definition}{\textbf{Product Measure}}
+        Consider the above setting. We call $\mu\times\nu$ the \emph{product measure} on $\mA\times\mB$.
+    \end{definition}
+    
+    \subsection{Product Integration}
+    
+    \begin{theorem}{Fubini}
+        Let $\left( X,\mA,\mu \right),\left( Y,\mB,\nu \right)$ be complete measure spaces. If $f\in\Lone\left( X\times Y,\overline{\mA\times\mB},\mu\times\nu \right)$, then
+        \begin{enumerate}
+            \item For all $x\in X$, let
+                \begin{equation*}
+                    \begin{aligned}
+                        f_x:Y&\to\F \\
+                        y&\mapsto f\left( x,y \right)
+                    \end{aligned}.
+                \end{equation*}
+                Then $f_x\in\Lone\left( Y,\mB,\nu \right)$ for almost all $x$.
+            \item For all $y\in Y$, let
+                \begin{equation*}
+                    \begin{aligned}
+                        f^y:X&\to\F \\
+                        x&\mapsto f\left( x,y \right)
+                    \end{aligned}.
+                \end{equation*}
+                Then $f^y\in\Lone\left( X,\mA,\mu \right)$ for almost all $y$.
+            \item Let
+                \begin{equation*}
+                    \begin{aligned}
+                        F:X&\to\F \\
+                        x&\mapsto\int f_xd\nu
+                    \end{aligned} .
+                \end{equation*}
+                Then $F\in\Lone\left( X,\mA,\nu \right)$.
+            \item Let
+                \begin{equation*}
+                    \begin{aligned}
+                        G:X&\to\F \\
+                        y&\mapsto\int f^yd\mu
+                    \end{aligned} .
+                \end{equation*}
+                Then $G\in\Lone\left( X,\mA,\nu \right)$.
+            \item We have
+                \begin{equation*}
+                    \int_{X\times Y} fd\left( \mu\times\nu \right) = \int_X\int_Y f\left( x,y \right)d\nu d\mu = \int_Y\int_Xf\left( x,y \right)d\mu d\nu.
+                \end{equation*}
+        \end{enumerate}
+    \end{theorem}
+
+    \rruleline
+    
+    \np Given $E\subseteq X\times Y$, let us write write
+    \begin{equation*}
+        E_x = \left\lbrace y\in Y: \left( x,y \right)\in E \right\rbrace, \hspace{1cm}\forall x\in X
+    \end{equation*}
+    and
+    \begin{equation*}
+        E^y = \left\lbrace x\in X: \left( x,y \right)\in E \right\rbrace,\hspace{1cm}\forall y\in Y.
+    \end{equation*}
+
+    \begin{lemma}{}
+        Let $\left( X,\mA,\mu \right),\left( Y,\mB,\nu \right)$ be measure spaces and let
+        \begin{equation*}
+            \mR = \left\lbrace \bigcupdot^{n}_{k=1}A_k\times B_k : n\geq 0, \forall k\in\left\lbrace 1,\ldots,n \right\rbrace\left[ A_k\in\mA,B_k\in\mB \right] \right\rbrace.
+        \end{equation*}
+        Let $E\in\mR_{\sigma\delta}$ with $\left( \mu\times\nu \right)\left( E \right) < \infty$. Then
+        \begin{enumerate}
+            \item $g:X\to\R$ by $g\left( x \right) = \nu\left( E_x \right)$ for all $x\in X$ is $\mu$-measurable;
+            \item $g\in\Lplus\cap\Lone$; and
+            \item $\int gd\mu = \left( \mu\times\nu \right)\left( E \right)$.
+        \end{enumerate}
+    \end{lemma}
+    
+    \begin{proof}
+        
+        \begin{case}
+            \textit{Suppose $E=A\times B$ for some $A\in\mA,B\in\mB$.}
+
+            Then
+            \begin{equation*}
+                E_x = \begin{cases} B & \text{if $x\in A$} \\ \emptyset & \text{if $x\notin A$} \end{cases} \in\mB,  \hspace{1cm}\forall x\in X
+            \end{equation*}
+            Now
+            \begin{equation*}
+                g\left( x \right) = \nu\left( E_x \right) = \nu\left( B \right)\chi_A\left( x \right),\hspace{1cm}\forall x\in X
+            \end{equation*}
+            so that $g$ is a nonnegative measurable function, with
+            \begin{equation*}
+                \int gd\mu = \int\nu\left( B \right)\chi_Ad\mu = \nu\left( B \right)\mu\left( A \right) = \left( \mu\times \nu \right)\left( E \right)<\infty,
+            \end{equation*}
+            as needed.
+        \end{case}
+
+        \begin{case}
+            \textit{Consider $E=\bigcup^{\infty}_{i=1}A_i\times B_i$ for some $A_1,\ldots\in\mA, B_1,\ldots\in\mB$.}
+
+            Without loss of generality, we may assume that the union is disjoint, since intersection of rectangles is still a rectangle.
+
+            Define $g_i=\nu\left( B_i \right)\chi_{A_i}$ for all $i\in\N$. Then
+            \begin{equation*}
+                g = \sum^{\infty}_{i=1} g_i
+            \end{equation*}
+            so that $g$ is $\mu$-measurable. Moreover, every $E_x = \bigcupdot^{\infty}_{i=1} \left( A_i\times B_i \right)_x$ is measurable.
+
+            Then by the MCT,
+            \begin{equation*}
+                \int gd\mu = \sum^{\infty}_{i=1} \int g_id\mu = \sum^{\infty}_{i=1}\mu\left( A_i \right)\nu\left( B_i \right) = \sum^{\infty}_{i=1}\left( \mu\times\nu \right)\left( A_i\times B_i \right) = \left( \mu\times\nu \right)\left( E \right) < \infty.
+            \end{equation*}
+        \end{case}
+
+        \begin{case}
+            \textit{Consider $E=\bigcap^{\infty}_{n=1}E_n$, where each $E_n\in\mR_{\sigma}$.}
+
+            Without loss of generality, we may assume
+            \begin{equation*}
+                E_1\supseteq E_2\supseteq\cdots.
+            \end{equation*}
+            Moreover, we may also assume that
+            \begin{equation*}
+                \left( \mu\times\nu \right)\left( E_1 \right) < \infty,
+            \end{equation*}
+            since $\left( \mu\times\nu \right)\left( E \right)<\infty$.
+
+            Then we have that
+            \begin{equation*}
+                E_x = \bigcap^{\infty}_{n=1} \left( E_n \right)_x
+            \end{equation*}
+            and
+            \begin{equation*}
+                \left( E_1 \right)_x\supseteq\left( E_2 \right)_x\supseteq\cdots,
+            \end{equation*}
+            so
+            \begin{equation*}
+                \lim_{n\to\infty}\nu\left( \left( E_n \right)_x \right) = \nu\left( E \right)
+            \end{equation*}
+            and
+            \begin{equation*}
+                \lim_{n\to\infty}\left( \mu\times\nu \right)\left( E_n \right) = \left( \mu\times\nu \right)\left( E \right).
+            \end{equation*}
+
+            Let
+            \begin{equation*}
+                \begin{aligned}
+                    g_n:X&\to\R\\
+                    x&\mapsto \nu\left( \left( E_n \right)_x \right)
+                \end{aligned} ,\hspace{1cm}\forall n\in\N.
+            \end{equation*}
+            Then $0\geq g$ and $g_n\searrow g$ pointwise with
+            \begin{equation*}
+                \int g_1d\nu = \left( \mu\times\nu \right)\left( E_1 \right) < \infty,
+            \end{equation*}
+            so by the LDCT, 
+            \begin{equation*}
+                \int gd\mu = \lim_{n\to\infty}\int g_nd\mu = \lim_{n\to\infty}\left( \mu\times\nu \right)\left( E_n \right) = \left( \mu\times\nu \right)\left( E \right).
+            \end{equation*}
+        \end{case}
+    \end{proof}
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 
 \end{document}

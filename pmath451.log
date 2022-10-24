@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.7.28)  7 OCT 2022 10:21
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2022.7.28)  24 OCT 2022 10:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1025,9 +1025,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 22--27
 
 ] [26] [27] [28] [29] [30
 
-]) (./4.tex [31
+] [31
 
-]) (./5.tex
+]
+Underfull \hbox (badness 10000) in paragraph at lines 500--506
+
+ []
+
+[32] [33] [34]) (./4.tex [35]
+Underfull \hbox (badness 10000) in paragraph at lines 26--31
+
+ []
+
+[36
+
+] [37] [38]) (./5.tex [39]) (./6.tex
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 8.
@@ -1040,23 +1052,23 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 8.
 
-[32
+[40
 
-]) (./6.tex [33
+]) (./7.tex [41
 
-]) [34
+]) [42
 
 ] (./pmath451.aux)
 Package rerunfilecheck Info: File `pmath451.out' has not changed.
-(rerunfilecheck)             Checksum: 5CBE9741DEAC9CABD69797DDD0BA2CBC;2715.
+(rerunfilecheck)             Checksum: D01175AC9A6A121E116924F65DB1E5EC;3489.
  ) 
 Here is how much of TeX's memory you used:
- 27514 strings out of 478190
- 547707 string characters out of 5854827
- 889305 words of memory out of 5000000
- 47556 multiletter control sequences out of 15000+600000
+ 27523 strings out of 478190
+ 547775 string characters out of 5854827
+ 890043 words of memory out of 5000000
+ 47562 multiletter control sequences out of 15000+600000
  482718 words of font info for 152 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  99i,24n,105p,432b,628s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on pmath451.pdf (34 pages).
+Output written on pmath451.pdf (42 pages).

@@ -1,8 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1665152493 "pmath451.tex" "pmath451.pdf" "pmath451" 1665152495
+["pdflatex"] 1666621195 "pmath451.tex" "pmath451.pdf" "pmath451" 1666621197
   "/etc/texmf/web2c/texmf.cnf" 1659040328 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/snochi/texmf/tex/latex/commonstuff/infimum.sty" 1664374391 11755 9ccb30760b2f02498e2066a64f5a2504 ""
-  "/home/snochi/texmf/tex/latex/commonstuff/solmathsym.sty" 1664992830 11429 25f695552f5ba981df99f5ca0ab9406e ""
+  "/home/snochi/texmf/tex/latex/commonstuff/solmathsym.sty" 1666361014 11495 f4a383048b4526d1a7bfaa13c4283ec8 ""
   "/home/snochi/texmf/tex/latex/commonstuff/solphyssym.sty" 1659040724 1412 71089ecbe5be1c75e1938cf1f4e8c5d4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
@@ -184,13 +184,14 @@
   "/var/lib/texmf/web2c/xetex/xelatex.fmt" 1659040798 3606626 f59b4d0550c22735e2a428d889ac18e1 ""
   "1.tex" 1663941538 53876 4681df6cebad943c6e7d545844036221 ""
   "2.tex" 1664806643 30847 ef57f99bae02d233ed5dc93fe4b3d80d ""
-  "3.tex" 1665152492 19480 90f461bd737e9f53a128c418979903cd ""
-  "4.tex" 1662558443 178 72317558c7545fba24dc9edbd58b42d0 ""
-  "5.tex" 1662558465 175 a678a5db99176a1571edcc823241e698 ""
-  "6.tex" 1662558499 200 31d0f3375b5d52e1f7d361c9d85f9526 ""
-  "pmath451.aux" 1665152494 2737 75c3d1dde20dc63b25376fb9d6e379a1 "pdflatex"
-  "pmath451.out" 1665152494 2715 5cbe9741deac9cabd69797ddd0ba2cbc "pdflatex"
-  "pmath451.tex" 1664372089 411 bfe6aac392dbee3da320d49b86171217 ""
+  "3.tex" 1666361002 30010 301f90f5f66bb5ea9ab73ee43dee1894 ""
+  "4.tex" 1666621194 10361 75e866335c044171467bbaa844285351 ""
+  "5.tex" 1666014246 178 72317558c7545fba24dc9edbd58b42d0 ""
+  "6.tex" 1666014260 175 a678a5db99176a1571edcc823241e698 ""
+  "7.tex" 1666014281 196 cdab3af6121af821708da05ee76ef74a ""
+  "pmath451.aux" 1666621197 3355 3f7446af8e2a45dc6f7deb507001f162 "pdflatex"
+  "pmath451.out" 1666621197 3489 d01175ac9a6a121e116924f65db1e5ec "pdflatex"
+  "pmath451.tex" 1666014314 427 a5de92316cebe1d2db9959a69828f75f ""
   (generated)
   "pmath451.aux"
   "pmath451.log"
