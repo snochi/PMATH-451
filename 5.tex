@@ -7,5 +7,795 @@
 
     \section{Differentiation}
     
+    \subsection{Introduction}
+
+    We ask the following questions.
+
+    \begin{enumerate}
+        \item Is there a Lebesgue-measure-theoretic fundamental theorem of calculus?
+        \item Is there a measure theoretic differentiation?
+        \item Given integrable $f:X\to\R$, to what extent is
+            \begin{equation*}
+                \begin{aligned}
+                    F:X&\to\R\\
+                    x&\mapsto C+\int^{x}_{a}fdm
+                \end{aligned} 
+            \end{equation*}
+            differentiable?
+    \end{enumerate}
+    
+    \np We are going to consider functions of the form
+    \begin{equation*}
+        f:\left[ a,b \right]\to\R.
+    \end{equation*}
+    By considering $f^+,f^-$, we first assume $f\geq 0$. In this way, we see that $F$ (in (c)) is increasing.
+
+    \begin{definition}{\textbf{Upper Derivative}, \textbf{Lower Derivative} of a Real-valued Function}
+        Let $f:\left[ a,b \right]\to\R$. We define the
+        \begin{enumerate}
+            \item \emph{upper derivative from the right} of $f$, denoted as $\overline{D_r}f$, by
+                \begin{equation*}
+                    \overline{D_r}f\left( x \right) = \limsup_{h\downarrow 0} \frac{f\left( x+h \right)-f\left( x \right)}{h}, \hspace{2cm}\forall x\in\left[ a,b \right];
+                \end{equation*}
+            \item \emph{upper derivative from the left} of $f$, denoted as $\overline{D_l}f$, by
+                \begin{equation*}
+                    \overline{D_l}f\left( x \right) = \limsup_{h\downarrow 0} \frac{f\left( x \right)-f\left( x-h \right)}{h}, \hspace{2cm}\forall x\in\left[ a,b \right];
+                \end{equation*}
+            \item \emph{lower derivative from the right} of $f$, denoted as $\underline{D_r}f$, by
+                \begin{equation*}
+                    \underline{D_r}f\left( x \right) = \liminf_{h\downarrow 0} \frac{f\left( x+h \right)-f\left( x \right)}{h}, \hspace{2cm}\forall x\in\left[ a,b \right];
+                \end{equation*}
+                and
+            \item \emph{lower derivative from the left} of $f$, denoted as $\underline{D_l}f$, by
+                \begin{equation*}
+                    \underline{D_l}f\left( x \right) = \liminf_{h\downarrow 0} \frac{f\left( x \right)-f\left( x-h \right)}{h}, \hspace{2cm}\forall x\in\left[ a,b \right].
+                \end{equation*}
+        \end{enumerate}
+    \end{definition}
+    
+    \begin{definition}{\textbf{Differentiable} Function}
+        We say $f:\left[ a,b \right]\to\R$ is \emph{differentiable} if
+        \begin{equation*}
+            \overline{D}_rf\left( x \right) = \overline{D}_lf\left( x \right) = \underline{D}_rf\left( x \right) = \underline{D}_lf\left( x \right)\in\R , \hspace{2cm}\forall x\in\left[ a,b \right].
+        \end{equation*}
+    \end{definition}
+    
+    \np In case $f:\left[ a,b \right]\to\R$ is differentiable in Def'n 5.2 sense, then all four quantities in Def'n 5.1 are equal to
+    \begin{equation*}
+        \begin{aligned}
+            f':\left[ a,b \right]&\to\R\\
+            x&\mapsto\lim_{h\to 0} \frac{f\left( x+h \right)-f\left( x \right)}{h}
+        \end{aligned} .
+    \end{equation*}
+
+    \clearpage
+    
+    \begin{definition}{\textbf{Degenerate} Interval}
+        We say an interval is \emph{degenerate} if it is $\emptyset$ or a singleton.
+    \end{definition}
+    
+    \begin{definition}{\textbf{Vitali Covering} of a Set}
+        Let $E\subseteq\R$. We say a collection of non-degenerate intervals $\mC$ is a \emph{Vitali covering} of $E$ if
+        \begin{equation*}
+            \forall x\in E, \epsilon>0\exists I\in\mC \left[ x\in I, m\left( I \right)<\epsilon \right].
+        \end{equation*}
+    \end{definition}
+    
+    \begin{theorem}{Vitali Covering Lemma}
+        Let $E\subseteq\R$ be such that
+        \begin{equation*}
+            m^{*}\left( E \right) < \infty
+        \end{equation*}
+        and let $\mC$ be a Vitali covering of $E$. Then for every $\epsilon>0$, there exist disjoint $I_1,\ldots,I_N\in\mC$ such that
+        \begin{equation*}
+            m^{*}\left( E\setminus\bigcup^{N}_{n=1}I_n \right) < \epsilon.
+        \end{equation*}
+    \end{theorem}
+    
+    \begin{proof}
+        Fix $\epsilon>0$.
+
+        Recall that when $x\in\R$ and $C\subseteq\R$ is closed,
+        \begin{equation*}
+            d\left( x,C \right) = \inf_{c\in C}\left| x-c \right|
+        \end{equation*}
+        is well-defined, and
+        \begin{equation*}
+            x\in C \iff d\left( x,C \right) = 0.
+        \end{equation*}
+
+        Fix open $U\supseteq E$ with $m\left( U \right)<\infty$ and let
+        \begin{equation*}
+            \mC' = \left\lbrace I\in\mC: I\subseteq U \right\rbrace.
+        \end{equation*}
+
+        \begin{claim}
+            \textit{$\mC'$ is a Vitali covering of $E$.}
+
+            Let $x\in E$ and
+            \begin{equation*}
+                \delta = d\left( x, \R\setminus U \right),
+            \end{equation*}
+            then for any $I\in\mC$ such that $x\in I$ and $m\left( I \right)<\delta$, $I\subseteq U$, so that $I\in\mC'$.
+        \end{claim}
+
+        Let $I_1\in\mC$. For every $k>1$, define $I_k\in\mC'$ such that $I_1,\ldots,I_k$ are pairwise disjoint and
+        \begin{equation*}
+            m\left( I_k \right) > \frac{\alpha_k}{2},
+        \end{equation*}
+        where
+        \begin{equation*}
+            \alpha_k = \sup\left\lbrace m\left( I \right): I\in\mC', I\text{ is disjoint from $I_1,\ldots,I_{k-1}$}\right\rbrace.
+        \end{equation*}
+        If this construction halts, then we are done; we have covered $E$ by intervals, except possibly at finitely many points. Hence assume that the construction does not halt and we have countably many disjoint intervals $I_1,I_2,\ldots\in\mC'$.
+
+        Now,
+        \begin{equation*}
+            m\left( \bigcupdot^{\infty}_{k=1} I_k \right) = \sum^{\infty}_{k=1} m\left( I_k \right) \leq m\left( U \right) < \infty.
+        \end{equation*}
+        We may find $N\in\N$ such that such that
+        \begin{equation*}
+            \sum^{\infty}_{k=N+1} m\left( I_k \right) < \frac{\epsilon}{5}.
+        \end{equation*}
+
+        \begin{claim}
+            \textit{$I_1,\ldots,I_N\in\mC$ are disjoint with
+            \begin{equation*}
+                m^{*}\left( E\setminus\bigcup^{N}_{k=1}I_k \right)<\epsilon.
+            \end{equation*}
+            }
+
+            Let
+            \begin{equation*}
+                X = E\setminus\bigcup^{N}_{k=1} \overline{I_k}.
+            \end{equation*}
+            If $x\in X$, let
+            \begin{equation*}
+                \delta = d\left( x,\bigcup^{N}_{k=1}\overline{I_k} \right).
+            \end{equation*}
+            Since $\mC'$ is a Vitali covering of $E$, we may find $I\in\mC'$ such that $x\in I$ and $m\left( I \right)<\delta$. Hence $I$ is disjoint from $\bigcup^{N}_{k=1}I_k$. This means
+            \begin{equation*}
+                m\left( I \right) \leq \alpha_{N+1}.
+            \end{equation*}
+            Pick $K>N$ such that
+            \begin{equation*}
+                \alpha_{K+1}<m\left( I \right) \leq \alpha_K.
+            \end{equation*}
+            Note that such $K>N$ exists, since $\sum^{\infty}_{k=1} \frac{\alpha_k}{2} \leq \sum^{\infty}_{k=1} m\left( I_k \right) < \infty$, which means $\lim_{k\to\infty}\alpha_k = 0$. But this means $I$ is not disjoint from $\bigcup^{K}_{k=1}I_k$. Hence let $j\leq K$ be such that
+            \begin{equation*}
+                I\cap I_j\neq\emptyset.
+            \end{equation*}
+            Then
+            \begin{equation*}
+                m\left( I_j \right) > \frac{\alpha_j}{2} \geq \frac{\alpha_K}{2} \geq \frac{m\left( I \right)}{2}.
+            \end{equation*}
+            Now, let $z\in I_j$ be the midpoint of $I_j$. Then
+            \begin{equation*}
+                \left| x-z \right| \leq m\left( I \right) + \frac{1}{2}m\left( I_j \right) \leq 2m\left( I_j \right) + \frac{1}{2}m\left( I_j \right) = \frac{5}{2}m\left( I_j \right).
+            \end{equation*}
+            Let $J_j$ be the closed interval with the same midpoint $z$ as $I_j$ and
+            \begin{equation*}
+                m\left( J_j \right) = 5m\left( I_j \right).
+            \end{equation*}
+            This means $\left| x-z \right| = \frac{1}{2}m\left( J_j \right)$, so that $x\in J_j$. This means
+            \begin{equation*}
+                X \subseteq \bigcup^{\infty}_{j=N+1} J_j.
+            \end{equation*}
+            Hence
+            \begin{equation*}
+                m^{*}\left( E\setminus\bigcup^{N}_{k=1} I_k \right) = m^{*}\left( X \right) \leq \sum^{\infty}_{j=N+1} m\left( J_j \right) = 5 \sum^{\infty}_{j=N+1} m\left( I_j \right) < 5 \frac{\epsilon}{5} = \epsilon.
+            \end{equation*}
+        \end{claim}
+    \end{proof}
+    
+    \begin{theorem}{}
+        Let $f:\left[ a,b \right]\to\R$ be increasing. Then
+        \begin{enumerate}
+            \item $f$ is continuous except on a countable set;
+            \item $f$ is differentiable except on a set of measure zero; and
+            \item the derivative $f'$\footnotemark[1] of $f$ is $\Lone$ and
+                \begin{equation*}
+                    \int^{b}_{a}f'dm \leq f\left( b \right)-f\left( a \right).
+                \end{equation*}
+        \end{enumerate}
+        
+        \noindent
+        \begin{minipage}{\textwidth}
+            \footnotetext[1]{Since $f$ is differentiable ae, we may define $f'$ in usual way for points at where $f$ is differentiable and set $f'\left( x \right)=0$ for every $x$ where $f$ is not differentiable.}
+        \end{minipage}
+    \end{theorem}
+
+    \clearpage
+    
+    \begin{proof}[Proof of (a)]\qedplacedtrue
+        Extend $f$ to $\R$ by $f\left( x \right)=f\left( a \right)$ for $x<a$ and $f\left( x \right)=f\left( b \right)$ for $x>b$. For all $c\in\left[ a,b \right]$,
+        \begin{equation*}
+            \lim_{x\uparrow c} f\left( x \right) = \sup_{x<c} f\left( x \right)\leq f\left( c \right) \leq \inf_{x>c} f\left( x \right) = \lim_{x\downarrow c} f\left( x \right).
+        \end{equation*}
+        Hence $f$ is continuous at $c$ unless $f$ has a jump of length
+        \begin{equation*}
+            j\left( c \right) = \lim_{x\downarrow c}f\left( x \right) - \lim_{x\uparrow c}f\left( x \right).
+        \end{equation*}
+        But note that
+        \begin{equation*}
+            \sum^{}_{c\in\left[ a,b \right]} j\left( c \right) \leq f\left( b \right)-f\left( a \right).
+        \end{equation*}
+        This means for every $n\in\N$, the number of jumps length at least $\frac{1}{n}$ is finite, so there are countably many jumps.
+    \end{proof}
+
+    \begin{proof}[Proof of (b)]\qedplacedtrue
+        Clearly we have
+        \begin{equation*}
+            \underline{D_r}f \leq \overline{D_r}f
+        \end{equation*}
+        and
+        \begin{equation*}
+            \underline{D_l}f \leq \overline{D_l}f.
+        \end{equation*}
+
+        \begin{claim}
+            \textit{We have
+                \begin{equation*}
+                    \overline{D_l}f \leq \underline{D_r}f
+                \end{equation*}
+                almost everywhere.
+            }
+
+            For $u<v$ in $\Q$, let
+            \begin{equation*}
+                E_{u,v} = \left\lbrace x\in \left[ a,b \right] : \underline{D_r}f\left( x \right) < u < v < \overline{D_l}f\left( x \right) \right\rbrace.
+            \end{equation*}
+            Let
+            \begin{equation}
+                E = \bigcup^{}_{u,v\in\Q : u<v} E_{u,v}.
+            \end{equation}
+            Then by the density of rationals, $E = \left\lbrace x\in\left[ a,b \right]: \underline{D_r}f\left( x \right)<\overline{D_l}f\left( x \right) \right\rbrace$. Hence it remains to show
+            \begin{equation*}
+                m^{*}\left( E \right) = 0.
+            \end{equation*}
+            By [5.1], it suffices to show that
+            \begin{equation*}
+                m^{*}\left( E_{u,v} \right)
+            \end{equation*}
+            for all $u<v$ in $\Q$. Hence fix $u<v$ in $\Q$ and say $m^{*}\left( E_{u,v} \right)=s$. Let $\epsilon>0$ be given and find an open $E_{u,v}\subseteq U$ such that
+            \begin{equation*}
+                m\left( U \right) < s+\epsilon
+            \end{equation*}
+            by the definition of outer measure. Consider
+            \begin{equation*}
+                \mC = \left\lbrace \left[ x,x+h \right]\subseteq U: h>0, \frac{f\left( x+h \right)-f\left( x \right)}{h}<u \right\rbrace.
+            \end{equation*}
+            For $x\in E_{u,v}$, we have
+            \begin{equation*}
+                \underline{D_r}f\left( x \right) < u
+            \end{equation*}
+            so that
+            \begin{equation*}
+                \lim_{\delta\downarrow 0}\inf_{h\in\left( 0,\delta \right)} \frac{f\left( x+h \right)-f\left( x \right)}{h} < u.
+            \end{equation*}
+            This means $\mC$ has arbitrarily small intervals of the form $\left[ x,x+h \right]$, where $x\in E_{u,v}$. Hence $\mC$ is a Vitali covering for $E_{u,v}$. By the Vitali covering lemma, we have disjoint
+            \begin{equation*}
+                I_1 = \left[ x_1,x_1+h_1 \right], \ldots, I_N = \left[ x_N, x_N+h_N \right]\in\mC
+            \end{equation*}
+            such that
+            \begin{equation*}
+                m^{*}\left( E_{u,v}\setminus \bigcup^{N}_{j=1}I_j \right) < \epsilon.
+            \end{equation*}
+            Therefore,
+            \begin{equation*}
+                s-\epsilon < \sum^{n}_{j=1} m\left( I_j \right) = \sum^{N}_{j=1} h_j < m\left( U \right) < s+\epsilon.
+            \end{equation*}
+
+            Note
+            \begin{equation*}
+                s = m^{*}\left( E_{u,v} \right) = m^{*}\left( E_{u,v}\cap\left( \bigcup^{N}_{j=1}I_j \right) \right) + m^{*}\left( E_{u,v}\setminus \bigcup^{N}_{j=1}I_j \right) < m^{*}\left( E_{u,v}\cap\left( \bigcup^{N}_{j=1}I_j \right) \right)+\epsilon.
+            \end{equation*}
+            by Caratheodory's criterion. This means
+            \begin{equation*}
+                m^{*}\left( E_{u,v}\cap\left( \bigcup^{N}_{j=1}I_j \right) \right) > s-\epsilon.
+            \end{equation*}
+            Let
+            \begin{equation*}
+                F = E_{u,v}\cap\left( \bigcup^{N}_{j=1}\left( x_j,x_j+h_j \right) \right)\subseteq \bigcup^{N}_{j=1}\left( x_j,x_j+h_j \right) = V.
+            \end{equation*}
+            As before,
+            \begin{equation*}
+                C' = \left\lbrace \left[ x-k,x \right]\subseteq V: k>0, \frac{f\left( x \right)-f\left( x-k \right)}{k}>v \right\rbrace
+            \end{equation*}
+            is a Vitali cover for $F$. Again by the Vitali covering lemma, we find
+            \begin{equation*}
+                J_1 = \left[ y_1-k_1,y_1 \right], \ldots, J_M = \left[ y_M-k_M,y_M \right]\in\mC'
+            \end{equation*}
+            disjoint such that
+            \begin{equation*}
+                m^{*}\left( F\setminus\bigcup^{M}_{i=1}J_i \right)<\epsilon.
+            \end{equation*}
+            Then
+            \begin{equation*}
+                \sum^{M}_{i=1}K_i = \sum^{N}_{i=1} m\left( J_i \right) > m^{*}\left( F \right)-\epsilon = m^{*}\left( E_{u,v}\cap\left( \bigcup^{N}_{j=1}\left( x_j,x_j+h_j \right) \right) \right)-\epsilon > s-2\epsilon.
+            \end{equation*}
+            Note that
+            \begin{equation*}
+                J_i \subseteq \bigcup^{N}_{j=1}I_j
+            \end{equation*}
+            for all $i\in\left\lbrace 1,\ldots,M \right\rbrace$. Hence
+            \begin{equation*}
+                \left( s-2\epsilon \right) v < \sum^{M}_{i=1}vk_i < \sum^{M}_{i=1} \left( f\left( y_i \right),f\left( y_i-k_i \right) \right) \leq \sum^{N}_{j=1} f\left( x_j+h_j \right)-f\left( x_j \right) \leq \sum^{N}_{j=1} uh_j < u\left( s+\epsilon \right).
+            \end{equation*}
+            So for all $\epsilon>0$,
+            \begin{equation*}
+                v\left( s-2\epsilon \right) < u\left( s+\epsilon \right),
+            \end{equation*}
+            and by letting $\epsilon\to 0$,
+            \begin{equation*}
+                vs\leq us.
+            \end{equation*}
+            But $u<v$, so we conclude that
+            \begin{equation*}
+                s = 0.
+            \end{equation*}
+        \end{claim}
+
+        In a similar fashion,
+        \begin{equation*}
+            \overline{D_r}f\leq \underline{D_l}f
+        \end{equation*}
+        almost everywhere.
+    \end{proof}
+
+    \begin{proof}[Proof of (c)]
+        Consider
+        \begin{equation*}
+            \begin{aligned}
+                g_n:\left[ a,b \right]&\to\R \\
+                x &\mapsto \frac{f\left( x+\frac{1}{n} \right)-f\left( x \right)}{\frac{1}{n}}
+            \end{aligned} , \hspace{2cm}\forall n\in\N.
+        \end{equation*}
+        Since $f$ is monotone, $f$ is measurable, so that each $g_n$ is measurable. Also,
+        \begin{equation*}
+            g_n\left( x \right)\to f'\left( x \right)
+        \end{equation*}
+        almost everywhere. Therefore, $f'$ is measurable with $f'\geq 0$, since each $g_n\geq 0$. Then, by Fatou's lemma,
+        \begin{equation*}
+            \begin{aligned}
+                \int^{b}_{a}f'dm & \leq \liminf_{n\to\infty}\int^{b}_{a}g_ndm = \liminf_{n\to\infty}n\int^{b}_{a}f\left( \cdot+\frac{1}{n} \right)dm-n\int^{b}_{a}fdm = \liminf_{n\to\infty} \int^{b+\frac{1}{n}}_{a+\frac{1}{n}} fdm - n\int^{b}_{a}fdm \\
+                                 & = \liminf_{n\to\infty}n\int^{b+\frac{1}{n}}_{b}fdm - n\int^{a+\frac{1}{n}}_{a}fdm \leq f\left( b \right) - f\left( a \right).
+            \end{aligned} 
+        \end{equation*}
+    \end{proof}
+    
+    \subsection{Bounded Variation and Absolute Continuity}
+
+    \begin{definition}{\textbf{Bounded Variation}}
+        We say $f:\left[ a,b \right]\to\R$ is of \emph{bounded variation} if the \emph{variation} of $f$,
+        \begin{equation*}
+            V^b_a\left( f \right) = \sup\left\lbrace \sum^{n}_{k=1} \left| f\left( x_k \right)-f\left( x_{k-1} \right) \right| : n\in\N, a=x_0<x_1<\cdots<x_n=b \right\rbrace,
+        \end{equation*}
+        is finite.
+    \end{definition}
+    
+    \begin{example}{}
+        $\chi_{Q\cap\left[ 0,1 \right]}:\left[ 0,1 \right]\to\R$ is not of bounded variation.
+    \end{example}
+
+    \rruleline
+    
+    \begin{example}{}
+        If $f:\left[ a,b \right]\to\R$ is increasing, then for $a=x_0<x_1<\cdots<x_n=b$,
+        \begin{equation*}
+            V^b_a\left( f \right) = \sum^{n}_{k=1} \left( f\left( x_k \right)-f\left( x_{k-1} \right) \right) = f\left( b \right)-f\left( a \right).
+        \end{equation*}
+    \end{example}
+    
+    \rruleline
+    
+    \begin{prop}{}
+        Let $f:\left[ a,b \right]\to\R$. Then
+        \begin{equation*}
+            \text{$f$ is of bounded variation} \iff f=g-h\text{ for some increasing $g,h$.}
+        \end{equation*}
+    \end{prop}
+
+    \begin{proof}
+        ($\impliedby$) Suppose $f=g-h$ for some increasing $g,h$. Then for any partition $a=x_0<x_1<\cdots<x_n=b$,
+        \begin{equation*}
+            \sum^{n}_{k=1} \left| f\left( x_k \right)-f\left( x_{k-1} \right) \right| \leq \sum^{n}_{k=1} \left| g\left( x_k \right)-g\left( x_{k-1} \right) \right|+\sum^{n}_{k=1} \left| h\left( x_k \right)-h\left( x_{k-1} \right) \right| = g\left( b \right)-g\left( a \right)+h\left( b \right)-h\left( a \right) < \infty.
+        \end{equation*}
+
+        ($\implies$) Suppose $f$ is of bounded variation. Define
+        \begin{equation*}
+            \begin{aligned}
+                g:\left[ a,b \right]&\to\R\\
+                x&\mapsto V^x_a\left( f \right)
+            \end{aligned} .
+        \end{equation*}
+        Then $g$ is increasing. Let $h=g-f$. For $x<y$,
+        \begin{equation*}
+            h\left( y \right) - h\left( x \right) = V^y_a\left( f \right) - f\left( y \right)-V^x_af\left( x \right)+f\left( x \right) = V^y_x\left( f \right)-\left( f\left( y \right)-f\left( x \right) \right) \geq \left| f\left( y \right)-f\left( x \right) \right|-\left( f\left( y \right)-f\left( x \right) \right) \geq 0.
+        \end{equation*}
+    \end{proof}
+
+    \begin{cor}{}
+        Let $f:\left[ a,b \right]\to\R$ be of bounded variation. Then
+        \begin{enumerate}
+            \item $f$ is continuous except on a countable set;
+            \item $f$ is differentiable except on a set of measure zero; and
+            \item the derivative $f'$ of $f$ is $\Lone$ and
+                \begin{equation*}
+                    \int^{b}_{a}f'dm \leq f\left( b \right)-f\left( a \right).
+                \end{equation*}
+        \end{enumerate}
+    \end{cor}	
+
+    \rruleline
+
+    \begin{cor}{}
+        If $f:\left[ a,b \right]\to\R$ is $\Lone$, then
+        \begin{equation*}
+            \begin{aligned}
+                F:\left[ a,b \right]&\to\R \\
+                x&\mapsto\int^{x}_{a}fdm
+            \end{aligned} 
+        \end{equation*}
+        is of BV.
+    \end{cor}	
+    
+    \rruleline
+    
+    \begin{definition}{\textbf{Absolutely Continuous} Function}
+        We say $f:\left[ a,b \right]\to\R$ is \emph{absolutely continuous} if for all $\epsilon>0$, there exists $\delta>0$ such that whenever $\left( x_1,y_1 \right),\ldots,\left( x_n,y_n \right)\subseteq\left[ a,b \right]$ are disjoint with
+        \begin{equation*}
+            \sum^{n}_{k=1} y_k-x_k < \delta,
+        \end{equation*}
+        then $\sum^{n}_{k=1} \left| f\left( y_k \right)-f\left( x_k \right) \right|<\epsilon$.
+    \end{definition}
+
+    \begin{prop}{}
+        Let $f\in\Lone\left( X,\mA,\mu \right)$. For all $\epsilon>0$, there is $\delta>0$ such that for any $A\in\mA$ with $\mu\left( A \right)<\delta$, we have
+        \begin{equation*}
+            \int^{}_{A}\left| f \right|d\mu < \epsilon.
+        \end{equation*}
+    \end{prop}
+    
+    \begin{proof}
+        Let $\epsilon>0$. We may find a simple nonnegative function $\phi\leq\left| f \right|$ such that
+        \begin{equation*}
+            \int \left| f \right|d\mu < \int\phi d\mu + \frac{\epsilon}{2}.
+        \end{equation*} 
+        Note that, for all $A\in\mA$,
+        \begin{equation*}
+            \int^{}_{A}\left| f \right|-\phi d\mu \leq \int\left| f \right|-\phi d\mu < \frac{\epsilon}{2},
+        \end{equation*}
+        so that
+        \begin{equation*}
+            \int_A\left| f \right|d\mu < \int_A\phi d\mu + \frac{\epsilon}{2}.
+        \end{equation*}
+        Say $\phi\leq M$ for some $M\geq 0$. Take $\delta = \frac{\epsilon}{2M}$ and suppose $A\in\mA$ with $\mu\left( A \right)<\delta$. Then
+        \begin{equation*}
+            \int_A\left| f \right|d\mu < \int_A\phi d\mu + \frac{\epsilon}{2} \leq M\mu\left( A \right)+\frac{\epsilon}{2} < \epsilon.
+        \end{equation*}
+    \end{proof}
+    
+    \begin{cor}{}
+        Let $f:\left[ a,b \right]\to\R$ be $\Lone$. Then
+        \begin{equation*}
+            \begin{aligned}
+                F:\left[ a,b \right]&\to\R \\
+                x&\mapsto\int_{\left[ a,x \right]}fdm
+            \end{aligned} 
+        \end{equation*}
+        is absolutely continuous.
+    \end{cor}	
+
+    \begin{proof}
+        Let $\epsilon>0$ be given and let $\delta>0$ be such that
+        \begin{equation*}
+            \mu\left( A \right)<\delta \implies \int^{}_{A}\left| f \right|dm < \epsilon.
+        \end{equation*}
+        Let $\left( x_1,y_1 \right),\ldots,\left( x_n,y_n \right)\subseteq\left[ a,b \right]$ be disjoint with
+        \begin{equation*}
+            \sum^{n}_{k=1} m\left( \left( x_k,y_k \right) \right) < \delta.
+        \end{equation*}
+        Let $A = \bigcupdot^{n}_{k=1}\left( x_k,y_k \right)$. Then $m\left( A \right) < \delta$, so that $\int_A\left| f \right|<\epsilon$. Thus,
+        \begin{equation*}
+            \sum^{n}_{k=1} \left| F\left( y_k \right)-F\left( x_k \right) \right| = \sum^{n}_{k=1} \left| \int^{y_k}_{x_k}fdm \right| \leq \sum^{n}_{k=1} \int^{y_k}_{x_k}\left| f \right|dm = \int^{}_{A}\left| f \right|dm < \epsilon.
+        \end{equation*}
+    \end{proof}
+    
+    \begin{prop}{}
+        Let $f:\left[ a,b \right]\to\R$. If $f$ is absolutely continuous, then $f$ is of bounded variation.
+    \end{prop}
+
+    \begin{proof}
+        Let $\epsilon=1$ and let $\delta>0$ be such that whenever $\left( x_1,y_1 \right),\ldots,\left( x_n,y_n \right)\subseteq\left[ a,b \right]$ are disjoint with $\sum^{n}_{k=1}y_k-x_k<\delta$, then $\sum^{n}_{k=1} \left| f\left( y_k \right)-f\left( x_k \right) \right|<\epsilon$ by definition of absolute continuity. Write
+        \begin{equation*}
+            \left[ a,b \right] = \bigcup^{p}_{j=1} \left[ a_{j-1},a_j \right]
+        \end{equation*}
+        such that $a_j-a_{j-1}<\delta$. For any partition $a_{j-1} = x_0 < x_1 < \cdots < x_m = a_j$, we have
+        \begin{equation*}
+            \sum^{m}_{s=1} x_s - x_{s-1} < \delta.
+        \end{equation*}
+        Hence
+        \begin{equation*}
+            \sum^{m}_{s=1} \left| f\left( x_s \right)-f\left( x_{s-1} \right) \right| < 1,
+        \end{equation*}
+        so that
+        \begin{equation*}
+            V^{a_j}_{a_{j-1}} \left( f \right) \leq 1 \implies V^b_a \left( f \right) = \sum^{p}_{j=1} V^{a_j}_{a_{j-1}}\left( f \right) \leq p.
+        \end{equation*}
+        Thus $f$ is of bounded variation.
+    \end{proof}
+    
+    \begin{example}{Cantor's Function}
+        Let $f:\left[ 0,1 \right]\to\R$ be the \textit{Cantor's function}. We know that $f$ is an increasing continuous function that is continuous on each of the intervals $\left( \frac{1}{3},\frac{2}{3} \right),\left( \frac{1}{9},\frac{2}{9} \right),\ldots$, so that
+        \begin{equation*}
+            f' = 0 \text{ on }\left[ 0,1 \right]\setminus C,
+        \end{equation*}
+        where $C$ is the \textit{Cantor set}. Since $m\left( C \right) = 0$, $f$ is differentiable everywhere. But
+        \begin{equation*}
+            \int^{1}_{0}f'dm = 0 < 1 = f\left( 1 \right)-f\left( 0 \right).
+        \end{equation*}
+
+        Since $f$ is increasing, $f$ is of bounded variation. However, $f$ is not absolutely continuous. Indeed, if $x_j,y_j$ for $1\leq j\leq 2^n$ are the endpoitns of the intervals remaining at $n$th stage of the construction of the Cantor set, then
+        \begin{equation*}
+            \sum^{2^n}_{j=1} y_j-x_j = \left( \frac{2}{3} \right)^n\to 0
+        \end{equation*}
+        but
+        \begin{equation*}
+            \sum^{2^n}_{j=1} \left| f\left( y_j \right)-f\left( x_j \right) \right| = f\left( 1 \right)-f\left( 0 \right) = 1.
+        \end{equation*}
+    \end{example}
+
+    \rruleline
+    
+    \begin{prop}{}
+        Let $f:\left[ a,b \right]\to\R$ be $\Lone$. If
+        \begin{equation*}
+            \begin{aligned}
+                F:\left[ a,b \right]&\to\R \\
+                x&\mapsto \int^{x}_{a}fdm
+            \end{aligned} 
+        \end{equation*}
+        is increasing, then $f\geq 0$ almost everywhere.
+    \end{prop}
+    
+    \begin{proof}
+        Let
+        \begin{equation*}
+            E=\left\lbrace x\in\left[ a,b \right]:f\left( x \right)<0 \right\rbrace
+        \end{equation*}
+        and let
+        \begin{equation*}
+            E_n = \left\lbrace x\in\left[ a,b \right]:f\left( x \right)<\frac{-1}{n} \right\rbrace , \hspace{2cm}\forall n\in\N,
+        \end{equation*}
+        which means $E = \bigcup^{\infty}_{n=1} E_n$.
+
+        Suppose for contradiction $m\left( E \right)>0$ so that there is $n\in\N$ such that $m\left( E_n \right)>0$. Let
+        \begin{equation*}
+            \epsilon = \frac{m\left( E_n \right)}{2n}
+        \end{equation*}
+        and let $\delta>0$ be such that
+        \begin{equation*}
+            m\left( A \right) < \delta \implies \int_A\left| f \right|dm < \epsilon.
+        \end{equation*}
+        By regularity of the Lebesgue measure, there is open $U\supseteq E_n$ such that
+        \begin{equation*}
+            m\left( U\setminus E_n \right) < \delta.
+        \end{equation*}
+        Since any open subset of $\R$ can be written as a disjoint union of open sets, write
+        \begin{equation*}
+            U = \bigcupdot^{\infty}_{k=1} \left( x_k,y_k \right).
+        \end{equation*}
+        Then
+        \begin{equation*}
+            0\leq \sum^{\infty}_{k=1} F\left( y_k \right) - F\left( x_k \right) = \int_Ufdm = \int_{U\setminus E_n} fdm + \int_{E_n}fdm < \epsilon - \frac{m\left( E_n \right)}{n} = -\frac{m\left( E_n \right)}{2n},
+        \end{equation*}
+        which is a contradiction.
+
+        Thus we conclude $m\left( E \right) = 0$, as required.
+    \end{proof}
+    
+    \begin{cor}{}
+        Let $f:\left[ a,b \right]\to\R$ be $\Lone$ and let
+        \begin{equation*}
+            \begin{aligned}
+                F:\left[ a,b \right]&\to\R\\
+                x&\mapsto \int^{x}_{a}fdm
+            \end{aligned} .
+        \end{equation*}
+        If $F\left( x \right) = 0$ for all $x\in \left[ a,b \right]$, then $f=0$ almost everywhere.
+    \end{cor}	
+
+    \rruleline
+    
+    \begin{theorem}{Lebesgue Differentiation Theorem}
+        Let $f:\left[ a,b \right]\to\R$ be $\Lone$ and let
+        \begin{equation*}
+            \begin{aligned}
+                F:\left[ a,b \right]&\to\R \\
+                x&\mapsto C + \int^{x}_{a}fdm
+            \end{aligned} 
+        \end{equation*}
+        for some $C\in\R$. Then $F'=f$ almost everywhere.
+    \end{theorem}
+    
+    \begin{proof}
+        Since $F$ is of bounded variation, $F'$ exists almost everywhere and is $\Lone$. For convenience, extend
+        \begin{equation*}
+            f\left( x \right) = 0 , \hspace{2cm}\forall x>b
+        \end{equation*}
+        so that
+        \begin{equation*}
+            F\left( x \right) = F\left( b \right) , \hspace{2cm}\forall x>b.
+        \end{equation*}
+        Also, $\left( g_{n} \right)^{\infty}_{n=1}$ by
+        \begin{equation*}
+            g_n\left( x \right) = n\left( F\left( x+\frac{1}{n} \right)-F\left( x \right) \right), \hspace{2cm}\forall n\in\N, x\geq a
+        \end{equation*}
+        converges to $F'$ pointwise almost everywhere.
+
+        \begin{case}
+            \textit{$\left| f \right|\leq M$ for some $M\geq 0$.}
+
+            Then
+            \begin{equation*}
+                g_n\left( x \right) = n\int^{x+\frac{1}{n}}_{x}fdm \implies \left| g_n\left( x \right) \right| \leq n \int^{x+\frac{1}{n}}_{x}\left| f \right|dm \leq n \frac{1}{n}M = M, \hspace{2cm}\forall n\in\N,x\geq a.
+            \end{equation*}
+            But $\int^b_a M dm < \infty$, so we are at a position to apply the Lebesgue dominated convergence theorem. That is, for $c\in \left[ a,b \right]$,
+            \begin{equation*}
+                \begin{aligned}
+                    \int^{c}_{a}F'dm & = \lim_{n\to\infty}\int^{c}_{a}g_ndm = \lim_{n\to\infty} n\underbrace{\int^{c}_{a}F\left( x+\frac{1}{n} \right)-F\left( x \right)dx}_{\text{Riemann integral}} = \lim_{n\to\infty} n \int^{c+\frac{1}{n}}_{a+\frac{1}{n}} F\left( x \right)dx - n \int^{c}_{a} F\left( x \right)dx \\
+                                     & = \lim_{n\to\infty} n\int^{c+\frac{1}{n}}_{c}F\left( x \right)dx - n\int^{a+\frac{1}{n}}_{a}F\left( x \right)dx \overset{\text{FTC}}{=} F\left( c \right) - F\left( a \right) = \int^{c}_{a}fdm .
+                \end{aligned} 
+            \end{equation*}
+            Note that we can replace Lebesgue integral by the corresponding Riemann integral since $F$ is (absolutely) continuous.
+
+            Hence
+            \begin{equation*}
+                \int^{c}_{a}F'-fdm = 0, \hspace{0.5cm}\forall c\in \left[ a,b \right]\implies F'-f = 0 \text{ almost everywhere}
+            \end{equation*}
+            by Corollary 5.6.1.
+        \end{case}
+
+        \begin{case}
+            \textit{$f\geq 0$.}
+
+            Let
+            \begin{equation*}
+                f_n = \min\left( f,n \right),\hspace{2cm}\forall n\in\N,
+            \end{equation*}
+            so that each $\left| f_n \right|<n$. Hence Case 1 applies to each $f_n$. Then, for almost every $x\in\left[ a,b \right]$,
+            \begin{equation*}
+                F\left( x \right) = \int^{x}_{a}f_ndm + \int^{x}_{a}f-f_ndm \implies F'\left( x \right) = f_n\left( x \right) + \frac{d}{dx} \int^{x}_{a}f-f_ndm \geq f\left( x \right).
+            \end{equation*}
+            For all $c\in\left[ a,b \right]$, since $F$ is of bounded variation and $F'\geq f_n$ almost everywhere for all $n\in\N$ implies $F'\geq f$ almost everwyere,
+            \begin{equation*}
+                \int^{c}_{a}F'dm \leq F\left( c \right)-F\left( a \right) = \int^{c}_{a}fdm \leq \int^{c}_{a}F'dm \implies \int^{c}_{a}fdm = \int^{c}_{a}F'dm.
+            \end{equation*}
+            Hence $F'-f=0$ almost everywhere.
+        \end{case}
+
+        For the general case, consider $f^+,f^-$ and use Case 2.
+    \end{proof}
+    
+    \begin{lemma}{}
+        Let $f:\left[ a,b \right]\to\R$ be absolutely continuous. If $f'=0$ almost everywhere, then $f$ is constant.
+    \end{lemma}
+
+    \begin{proof}
+        Let $c\in\left( a,b \right]$ and let $\epsilon>0$ be given. Take $\delta>0$ as per the definition of absolute continuity. Consider
+        \begin{equation*}
+            E = \left\lbrace x\in\left( a,c \right): f'\left( x \right) = 0 \right\rbrace,
+        \end{equation*}
+        which is measurable since $f'$ is a pointwise limit of measurable functions (or we can simply invoke completeness of Lebesgue measure), so that
+        \begin{equation*}
+            m\left( \left[ a,c \right]\setminus E \right) = 0.
+        \end{equation*}
+        Define
+        \begin{equation*}
+            \mC = \left\lbrace \left[ x,x+h \right]\subseteq\left( a,c \right): x\in E, h>0, \left| f\left( x+h \right)-f\left( x \right) \right|<\epsilon h \right\rbrace.
+        \end{equation*}
+        We see that $\mC$ is a Vitali covering for $E$. So by the Vitali covering lemma, we may find disjoint $I_1,\ldots,I_n\in\mC$ such that
+        \begin{equation*}
+            m\left( E\setminus \bigcupdot^{n}_{i=1}I_i \right) < \delta.
+        \end{equation*}
+        Since $m\left( \left[ a,c \right]\setminus E \right) = 0$,
+        \begin{equation*}
+            m\left( \left[ a,c \right]\setminus\bigcupdot^{n}_{i=1}I_i \right) < \delta
+        \end{equation*}
+        as well. Say
+        \begin{equation*}
+            I_i = \left[ a_i,b_i \right], \hspace{2cm}\forall i\in\left\lbrace 1,\ldots,n \right\rbrace
+        \end{equation*}
+        with
+        \begin{equation*}
+            a < a_1 < b_1 < a_2 < b_2 < \cdots < a_n < b_n < c.
+        \end{equation*}
+        Therefore,
+        \begin{flalign*}
+            && \left| f\left( c \right)-f\left( a \right) \right| & \leq \sum^{n}_{i=1} \left| f\left( b_i \right)-f\left( a_i \right) \right| + \left| f\left( a_1 \right)-f\left( a \right) \right| + \left| f\left( c \right)-f\left( b_n \right) \right| + \sum^{n-1}_{i=1} \left| f\left( a_{i+1} \right)-f\left( b_i \right) \right| && \\
+            && & < \sum^{n}_{i=1} \left| f\left( b_i \right)-f\left( a_i \right) \right| + \epsilon && \text{since $m\left( \left[ a,c \right]\setminus\bigcupdot^{n}_{i=1} I_i \right)<\delta$}\\
+            && & < \sum^{n}_{i=1}\epsilon\left( b_i-a_i \right) + \epsilon && \text{by definition of $\mC$} \\
+            && & \leq \epsilon\left( c-a \right) + \epsilon.
+        \end{flalign*}
+        Since our choice of $\epsilon>0$ was arbitrary, it follows $f\left( a \right)=f\left( c \right)$.
+    \end{proof}
+
+    \begin{theorem}{}
+        Let $F:\left[ a,b \right]\to\R$. The following are equivalent.
+        \begin{enumerate}
+            \item There is $f:\Lone\left( \left[ a,b \right] \right)$ such that
+                \begin{equation*}
+                    F\left( x \right) = C+\int^{x}_{a} fdm, \hspace{2cm}\forall x\in\left[ a,b \right].
+                \end{equation*}
+            \item $F$ is absolutely continuous.
+            \item $F$ is differentiable almost everywhere with $F'\in\Lone\left( \left[ a,b \right] \right)$ and
+                \begin{equation*}
+                    F\left( x \right) = F\left( a \right) + \int^{x}_{a}F'dm, \hspace{2cm}\forall x\in\left[ a,b \right].
+                \end{equation*}
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        (c)$\implies$(a) is trivial and (a)$\implies$(b) is proven in Corollary 5.4.1.
+
+        For (b)$\implies$(c), assume $F$ is absolutely continuous. This means $F$ is of bounded variation, so $F'$ exists almost everywhere with $F'\in\Lone\left( \left[ a,b \right] \right)$. Consider
+        \begin{equation*}
+            \begin{aligned}
+                G:\left[ a,b \right]&\to\R \\
+                x&\mapsto \int^{x}_{a}F'dm.
+            \end{aligned} 
+        \end{equation*}
+        Then by the Lebesgue differentiation theorem, $G'=F'$ almost everywhere. Now $G-F$ is absolutely continuous as a sum of two absolutely continuous function. This means $\left( G-F \right)' = G'-F' = 0$ almost everywhere, so that $G-F$ is constant, say $G=F+C$. That is,
+        \begin{equation*}
+            F\left( x \right) = C+\int^{x}_{a} F'dm , \hspace{2cm}\forall x\in\left[ a,b \right].
+        \end{equation*}
+        But by noticing
+        \begin{equation*}
+            F\left( a \right) = C + \int^{a}_{a}F'dm = C,
+        \end{equation*}
+        we conclude
+        \begin{equation*}
+            F\left( x \right) = F\left( a \right) + \int^{x}_{a}F'dm, \hspace{2cm}\forall x\in\left[ a,b \right].
+        \end{equation*}
+    \end{proof}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 \end{document}

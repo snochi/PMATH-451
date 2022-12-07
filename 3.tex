@@ -585,23 +585,50 @@
     \end{theorem}
     
     \begin{proof}
-        \begin{case}
-            \textit{Suppose $f,g,f_n$ are real-valued.}
+        We are going to only prove the case where $f,g,f_n$ are real-valued.
 
-            Since $\left| f \right|\leq g$ by taking limits as $n\to\infty$,
-            \begin{equation*}
-                \int\left| f \right|d\mu\leq\int gd\mu < \infty.
-            \end{equation*}
-            Hence $f\in L^1$. Then
-            \begin{equation*}
-                \int g+fd\mu \overset{\text{Fatou}}{\leq} \liminf_{n\to\infty}\int g+f_nd\mu = \int gd\mu + \liminf_{n\to\infty}\int f_nd\mu.
-            \end{equation*}
-            Similarly,
-            \begin{equation*}
-                \int g-fd\mu \overset{\text{Fatou}}{\leq} \liminf_{n\to\infty}\int g-f_nd\mu = \int gd\mu - \limsup_{n\to\infty}\int f_nd\mu.
-            \end{equation*}
-        \end{case}
+        Since $\left| f \right|\leq g$ by taking limits as $n\to\infty$,
+        \begin{equation*}
+            \int\left| f \right|d\mu\leq\int gd\mu < \infty.
+        \end{equation*}
+        Hence $f\in L^1$. Then
+        \begin{equation*}
+            \int g+fd\mu \overset{\text{Fatou}}{\leq} \liminf_{n\to\infty}\int g+f_nd\mu = \int gd\mu + \liminf_{n\to\infty}\int f_nd\mu.
+        \end{equation*}
+        Similarly,
+        \begin{equation*}
+            \int g-fd\mu \overset{\text{Fatou}}{\leq} \liminf_{n\to\infty}\int g-f_nd\mu = \int gd\mu - \limsup_{n\to\infty}\int f_nd\mu.
+        \end{equation*}
+
+        Since $\int gd\mu < \infty$,
+        \begin{equation*}
+            \int fd\mu \leq \liminf_{n\to\infty}\int f_nd\mu
+        \end{equation*}
+        and
+        \begin{equation*}
+            -\int fd\mu \leq - \limsup_{n\to\infty}\int f_nd\mu.
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            \limsup_{n\to\infty}\int f_nd\mu \leq \int fd\mu \leq \liminf_{n\to\infty}\int f_n,
+        \end{equation*}
+        which means
+        \begin{equation*}
+            \lim_{n\to\infty}\int f_nd\mu = \int fd\mu.
+        \end{equation*}
     \end{proof}
+
+    \np In our progression of theory of integration, we proceeded in the order
+    \begin{gather*}
+        \text{simple} \\
+        \downarrow\\
+        \text{measurable, $\left[ 0,\infty \right]$-valued}\\
+        \downarrow\\
+        \text{measurable, $\R$-valued} \\
+        \downarrow\\
+        \text{measurable, $\CC$-valued}
+    \end{gather*} 
+    So what has been missing are the measurable functions which take extended real values. We are going to address this problem quickly.
 
     \subsection{Spaces of Integrable Functions}
 

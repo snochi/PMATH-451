@@ -236,8 +236,70 @@
         \end{case}
     \end{proof}
 
+    \clearpage
 
+    \begin{theorem}{Tonelli}
+        Let $\left( X,\mA,\mu \right),\left( Y,\mB,\nu \right)$ be complete measure spaces and suppose $\mu\times\nu$ is $\sigma$-finite. If $f\in\Lplus\left( X\times Y,\overline{\mA\times\mB},\mu\times\nu \right)$, then
+        \begin{enumerate}
+            \item $f_x,f^y\in\Lplus$ almost everywhere;
+            \item for all $y\in Y$
+                \begin{equation*}
+                    \begin{aligned}
+                        F:X&\to Y \\
+                        x&\mapsto\int_Yf_xd\nu
+                    \end{aligned} 
+                \end{equation*}
+                is integrable; and
+            \item
+                \begin{equation*}
+                    \int_{X\times Y} fd\left( \mu\times\nu \right) = \int_X\int_Y fd\nu d\mu = \int_Y\int_X fd\mu d\nu.
+                \end{equation*}
+        \end{enumerate}
+    \end{theorem}
 
+    \begin{proof}
+        Since $\nu\times\mu$ is $\sigma$-finite, let $\left\lbrace C_n \right\rbrace^{\infty}_{n=1}\subseteq\overline{\mA\times\mB}$ be such that
+        \begin{equation*}
+            X\times Y = \bigcup^{\infty}_{n=1} C_n
+        \end{equation*}
+        with
+        \begin{equation*}
+            \left( \mu\times\nu \right)\left( C_n \right) < \infty,\hspace{2cm}\forall n\in\N.
+        \end{equation*}
+        Without loss of generality, we assme
+        \begin{equation*}
+            C_1\subseteq C_2\subseteq\cdots
+        \end{equation*}
+        by replacing $C_n$ with $C_1\cup\cdots\cup C_n$.
+
+        Let
+        \begin{equation*}
+            f_n = \min\left( f,n \right)\chi_{C_n}, \hspace{2cm}\forall n\in\N.
+        \end{equation*}
+        Then note that $f_n\to f$ pointwise where $\left( f_{n} \right)^{\infty}_{n=1}$ is an increasing sequence of measurable functions. Hence
+        \begin{equation*}
+            \int fd\left( \mu\times\nu \right) \overset{\text{MCT}}{=} \lim_{n\to\infty}\int f_nd\left( \mu\times\nu \right) \overset{\text{Fub}}{=} \lim_{n\to\infty} \int_X\underbrace{\int_Y f_nd\nu}_{=F_n} d\mu.
+        \end{equation*}
+        Note that $F_n\nearrow F$ pointwise, so by the MCT,
+        \begin{equation*}
+            \lim_{n\to\infty}\int_X F_n\left( x \right)d\mu = \int_XF\left( x \right)d\mu.
+        \end{equation*}
+        Thus
+        \begin{equation*}
+            \int fd\left( \mu\times\nu \right) = \int_X\int_Yfd\nu d\mu.
+        \end{equation*}
+    \end{proof}
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

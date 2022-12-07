@@ -5,7 +5,732 @@
 
 \begin{document}
 
-    \section{$L^p$ Spaces}
+    \section{Measure Decomposition}
+    
+    \subsection{Signed Measure}
+
+    \begin{definition}{\textbf{Signed Measure} on a Measurable Space}
+        Let $\left( X,\mA \right)$ be a measurable space. A \emph{signed measure} $\nu:\mA\to\left[ -\infty,\infty \right]$ on $\left( X,\mA \right)$ such that
+        \begin{enumerate}
+            \item $\nu\left( \emptyset \right)=0$;
+            \item for all countable collection of disjoint sets $\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mA$, $\nu\left( \bigcupdot^{\infty}_{n=1}A_n \right) = \sum^{\infty}_{n=1} \nu\left( A_n \right)$; and
+            \item $\nu$ takes on at most one of the values $-\infty,\infty$.
+        \end{enumerate}
+    \end{definition}
+    
+    \np Note (c) in Def'n 6.1 is essential; for, if we have disjoint $A,B\in\mA$ with $\nu\left( A \right) = \infty, \nu\left( B \right)=-\infty$, then $\nu\left( A\cupdot B \right)$ would be a problem.
+
+    \begin{prop}{}
+        Suppose $\nu$ is a signed measure on $\left( X,\mA \right)$. Suppose
+        \begin{equation*}
+            \left| \nu\left( \bigcupdot^{\infty}_{n=1}A_n \right) \right| < \infty.
+        \end{equation*}
+        Then $\sum^{\infty}_{n=1}\nu\left( A_n \right)$ converges absolutely.
+    \end{prop}
+
+    \begin{proof}
+        Suppose $\sum^{\infty}_{n=1} \nu\left( A_n \right)$ converges conditionally. Then the subseries of positive terms and negative terms diverges to $\infty,-\infty$, respectively. But this means, by taking $A$ to be the union of $A_n$'s with positive measures and $B$ to be the union of $A_n$'s with negative measures, we see that $\nu\left( A \right)=\infty, \nu\left( B \right)=-\infty$, which is a contradiction.
+    \end{proof}
+    
+    \begin{prop}{Example of Signed Measures}
+        Let $f\in\Lone\left( X,\mA,\mu \right)$ be real-valued and define
+        \begin{equation*}
+            \begin{aligned}
+                \nu:\mA&\to\left[ -\infty,\infty \right] \\ 
+                A&\mapsto\int_Afd\mu
+            \end{aligned} .
+        \end{equation*}
+        Then $\nu$ is a signed measure.
+    \end{prop}
+
+    \begin{proof}
+        Clearly $\nu\left( \emptyset \right) = 0$. Since $f$ is $\Lone$, note that $\left| \nu\left( A \right) \right| \leq \int_A\left| f \right|d\mu < \infty$, so that $\nu$ takes neither $\infty$ nor $-\infty$. It remains to check countable additivity.
+
+        Let $A_1,A_2,\ldots\in\mA$ be disjoint and let $A=\bigcupdot^{\infty}_{n=1}A_n$. Let
+        \begin{equation*}
+            B_n = \bigcupdot^{n}_{k=1} A_k, \hspace{2cm}\forall n\in\N.
+        \end{equation*}
+        Then $f\chi_{B_n}\to f\chi_{A}$ pointwise and $\left| f\chi_{B_n} \right|\leq\left| f \right|$, where $\left| f \right|$ is $\Lone$. Hence by the LDCT,
+        \begin{equation*}
+            \int_{B_n}fd\mu \to \int_Afd\mu.
+        \end{equation*}
+        This precisely means
+        \begin{equation*}
+            \sum^{n}_{k=1}\nu\left( A_k \right) = \sum^{n}_{k=1} \int_{A_k}fd\mu = \int_{B_n}fd\mu \to \nu\left( A \right),
+        \end{equation*}
+        as needed.
+    \end{proof}
+
+    \clearpage
+    
+    \begin{example}{}
+        Let $f\in\Lplus\left( X,\mA,\mu \right)$ and let $g\in\Lone\left( X,\mA,\mu \right)\cap\Lplus\left( X,\mA,\mu \right)$, where both $f,g$ are real-valued. Then
+        \begin{equation*}
+            \begin{aligned}
+                \nu:\mA&\to\left[ -\infty,\infty \right] \\ 
+                A&\mapsto \int_Afd\mu-\int_Agd\mu
+            \end{aligned} 
+        \end{equation*}
+        is a signed measure, with possibly $\nu\left( A \right)=\infty$.
+    \end{example}
+    
+    \rruleline
+    
+    \begin{definition}{\textbf{Null Set}, \textbf{Positive Set}, \textbf{Positive Set} for a Signed Measure}
+        Let $\left( X,\mA \right)$ be a measurable space and let $\nu$ be a signed measure on $\left( X,\mA \right)$. We say $A\in\mA$ is
+        \begin{enumerate}
+            \item a \emph{null set} for $\nu$ if for all $B\in\mA$ with $B\subseteq A$, we have $\nu\left( B \right) = 0$;
+            \item a \emph{positive set} for $\nu$ if $\nu\left( B \right)\geq 0$ for all $B\in\mA$ with $B\subseteq A$; and
+            \item a \emph{negative set} for $\nu$ if $\nu\left( B \right)\leq 0$ for all $B\in\mA$ with $B\subseteq A$. 
+        \end{enumerate}
+    \end{definition}
+    
+    \begin{theorem}{Hahn Decomposition Theorem}
+        Let $\left( X,\mA \right)$ be a measurable space and let $\nu$ be a signed measure on $\left( X,\mA \right)$. 
+        Then there exists positive $P\in\mA$ and negative $N\in\mA$ such that
+        \begin{equation*}
+            X = P\cupdot N.
+        \end{equation*}
+        If $X = P'\cupdot N'$ is another such decomposition, then $P\triangle P', N\triangle N'$ are null.
+    \end{theorem}
+    
+    \placeqed[Postponed]
+
+    \begin{lemma_inside}{}
+        Let $\left( X,\mA \right)$ be a measurable space and let $\nu$ be a signed measure on $\left( X,\mA \right)$. If $A\in\mA$ is such that $0<\nu\left( A \right)<\infty$, then there is positive $P\subseteq A$ such that $\nu\left( P \right)>0$.
+    \end{lemma_inside}
+
+    \begin{proof}
+        If $A$ is positive, take $P=A$ and we are done.
+
+        Suppose $A$ is not positive, so there is a subset of $A$ with a negative signed measure. So take measurable $B_1\subseteq A$ such that
+        \begin{equation*}
+            \nu\left( B_1 \right) \leq \frac{1}{2}\inf\left\lbrace \nu\left( B \right):B\in\mA, B\subseteq A\setminus\bigcupdot^{n-1}_{k=1}B_k \right\rbrace.
+        \end{equation*}
+        Recursively, choose
+        \begin{equation*}
+            B_n \subseteq A\setminus \bigcupdot^{n-1}_{k=1} B_k
+        \end{equation*}
+        so that
+        \begin{equation*}
+            \nu\left( B_n \right)\leq \frac{1}{2}\left\lbrace \nu\left( B \right):B\in\mA,B\subseteq A\setminus\bigcupdot^{n-1}_{k=1}B_k \right\rbrace.
+        \end{equation*}
+        We remark that, if we cannot find such a $B_n$ at $n$th recursive step, then every measurable subset of $A\setminus\bigcupdot^{n-1}_{k=1}B_k$ has a positive signed measure. Moreover,
+        \begin{equation*}
+            \nu\left( A\setminus\bigcupdot^{n-1}_{k=1}B_k \right) = \underbrace{\nu\left( A \right)}_{>0} - \underbrace{\sum^{n-1}_{k=1} \nu\left( B_k \right)}_{<0} > 0,
+        \end{equation*}
+        so that $A\bigcupdot^{n-1}_{k=1}B_k \subseteq A$ is a positive set we were looking for.
+
+        Hence suppose the recursive process continues so that we have $B_1,B_2,\ldots$. Take
+        \begin{equation*}
+            P = A\setminus\bigcupdot^{\infty}_{k=1} B_k.
+        \end{equation*}
+        As before,
+        \begin{equation*}
+            A = P\cupdot\bigcupdot^{\infty}_{k=1} B_k.
+        \end{equation*}
+        Since $\left| \nu\left( A \right) \right|<\infty$, by Proposition 6.1, $\nu\left( P \right) < \infty$.
+
+        \begin{claim}
+            \textit{$P$ is positive.}
+
+            Suppose there is measurable $B\subseteq P$ such that $\nu\left( B \right)<0$. Since $\sum^{\infty}_{k=1}\nu\left( B_k \right)$ converges, $\nu\left( B_k \right)\to 0$. Hence we may take $n\in\N$ such that
+            \begin{equation*}
+                \nu\left( B \right) < 2\nu\left( B_n \right).
+            \end{equation*}
+            But
+            \begin{equation*}
+                2\nu\left( B_n \right) \leq \inf\left\lbrace \nu\left( C \right): C\in\mA, C\subseteq\setminus\bigcupdot^{n-1}_{k=1}B_k \right\rbrace \leq\nu\left( B \right),
+            \end{equation*}
+            which is a contradiction.
+        \end{claim}
+    \end{proof}
+    
+    \begin{lemma_inside}{}
+        If $A_1,A_2,\ldots\in\mA$ are positive, then $\bigcup^{\infty}_{n=1} A_n$ is positive.
+    \end{lemma_inside}
+
+    \begin{proof}
+        Let $B\subseteq\bigcup^{\infty}_{n=1}A_n$ and let
+        \begin{equation*}
+            B_n = B\cap\left( A_n\setminus \bigcup^{n-1}_{k=1} A_k \right).
+        \end{equation*}
+        Then $B = \bigcupdot^{\infty}_{n=1} B_n$ where each $B_n\subseteq A_n$. But each $A_n$ is positive, so that $\nu\left( B_n \right)\geq 0$. Thus
+        \begin{equation*}
+            \nu\left( B \right) = \sum^{\infty}_{n=1} \nu\left( B_n \right)\geq 0.
+        \end{equation*}
+    \end{proof}
+    
+    \begin{boxyproof}{Proof of Theorem 6.3}
+        We may assume $\nu$ does not take on the value of $\infty$ (otherwise, consider $-\nu$). Let
+        \begin{equation*}
+            M = \sup\left\lbrace \nu\left( A \right) : A \text{ is positive} \right\rbrace.
+        \end{equation*}
+        Note that there is at least one positive set in $\mA$: namely $\emptyset$. We may find positive $A_1,A_2,\ldots\in\mA$ such that
+        \begin{equation*}
+            \mu\left( A_n \right)\to M.
+        \end{equation*}
+        By Lemma 6.3.2,
+        \begin{equation*}
+            P = \bigcup^{\infty}_{n=1}A_n
+        \end{equation*}
+        is positive. Also,
+        \begin{equation*}
+            \mu\left( P \right) = \nu\left( A_n \right) + \nu\left( P\setminus A_n \right) \geq \nu\left( A_n \right), \hspace{2cm}\forall n\in\N,
+        \end{equation*}
+        which means $M\leq\nu\left( P \right)$. But $P$ is positive, so $\nu\left( P \right)\leq M$, so that
+        \begin{equation*}
+            \nu\left( P \right) = M.
+        \end{equation*}
+        Since $\nu$ only takes finite values, it follows $M<\infty$ as well.
+
+        Let 
+        \begin{equation*}
+            N = X\setminus P.
+        \end{equation*}
+
+        \begin{claim}
+            \textit{$N$ is negative.}
+
+            For contradiction, suppose there is $E\in\mA$ such that $E\subseteq N$ and $\nu\left( E \right)>0$. By Lemma 6.3.1, there is a positive subset $A\subseteq E$ such that $\nu\left( A \right)>0$. But then $P\cupdot A$ is a disjoint union of positive sets, so that $P\cupdot A$ is positive and
+            \begin{equation*}
+                \nu\left( P\cupdot A \right) = \nu\left( P \right) + \nu\left( A \right) = M+\nu\left( A \right)>M,
+            \end{equation*}
+            since $M<\infty$, which is a contradiction.
+        \end{claim}
+
+        Suppose
+        \begin{equation*}
+            X = P'\cupdot N'
+        \end{equation*}
+        similarly. Then $P\setminus P' = N'\setminus N$ and $P'\setminus P = N\setminus N'$. Note that the sets are null, since they are simultaneously positive and negative. It follows that
+        \begin{equation*}
+            P\triangle P' = \left( P\setminus P' \right) \cup \left( P'\setminus P \right) = \left( N'\setminus N \right)\cup\left( N\setminus N' \right) = N\triangle N'
+        \end{equation*}
+        is also null, as a union of null sets.
+    \end{boxyproof}
+    
+    \begin{example}{}
+        Let $f\in\Lone\left( X,\mA,\mu \right)$ be real-valued and let
+        \begin{equation*}
+            \begin{aligned}
+                \nu:\mA&\to\left[ -\infty,\infty \right] \\
+                A&\mapsto\int_Afd\mu
+            \end{aligned} .
+        \end{equation*}
+        Let
+        \begin{equation*}
+            \begin{aligned}
+                P & = \left\lbrace x\in X: f\left( x \right)\geq 0 \right\rbrace \\
+                N & = \left\lbrace x\in X: f\left( x \right) < 0 \right\rbrace
+            \end{aligned} .
+        \end{equation*}
+        Then, for all $A\subseteq P$,
+        \begin{equation*}
+            \nu\left( A \right) = \int_Afd\mu \geq 0
+        \end{equation*}
+        and similarly, for all $B\subseteq N$,
+        \begin{equation*}
+            \nu\left( B \right) = \int_Bfd\mu\leq 0.
+        \end{equation*}
+        Thus $P\cupdot N$ is a Hahn decomposition of $X$.
+
+        Note that
+        \begin{equation*}
+            \begin{aligned}
+                \nu^+:\mA&\to\left[ 0,\infty \right] \\
+                A&\mapsto\nu\left( A\cap P \right)
+            \end{aligned} .
+        \end{equation*}
+        Then $\nu^+$ is measure on $\left( X,\mA \right)$, with
+        \begin{equation*}
+            \nu^+\left( A \right) = \int_{A\cap P}fd\mu = \int_A f\chi_Pd\mu = \int_Af^+d\mu,\hspace{2cm}\forall A\in\mA.
+        \end{equation*}
+        Similarly,
+        \begin{equation*}
+            \begin{aligned}
+                \nu^-:\mA&\to\left[ 0,\infty \right] \\
+                A&\mapsto-\nu\left( A\cap N \right)
+            \end{aligned} 
+        \end{equation*}
+        is a measure on $\left( X,\mA \right)$ with
+        \begin{equation*}
+            \nu^-\left( A \right) = \int_Af^-d\mu,\hspace{2cm}\forall A\in\mA.
+        \end{equation*}
+        
+        But then
+        \begin{equation*}
+            \nu\left( A \right) = \int_Afd\mu = \int_Af^+d\mu - \int_Af^-d\mu = \nu^+\left( A \right)-\nu^-\left( A \right), \hspace{2cm}\forall A\in\mA,
+        \end{equation*}
+        so that $\nu=\nu^+-\nu^-$. That is, we \textit{decomposed} a signed measure into its positive and negative parts.
+    \end{example}
+
+    \rruleline
+
+    \clearpage
+    
+    \begin{definition}{\textbf{Mutually Singular} Signed Measures}
+        Suppose $\left( X,\mA \right)$ is a measurable space and let $\mu,\nu$ be signed measures. We say $\mu,\nu$ are \emph{mutually singular}, denoted as $\mu\perp\nu$, if $X=A\cupdot B$ such that $A$ is $\nu$-null and $B$ is $\mu$-null.
+    \end{definition}
+    
+    \np Consider the setting of Def'n 6.3. Given $C\in\mA$,
+    \begin{equation*}
+        C = \left( C\cap A \right)\cupdot\left( C\cap B \right).
+    \end{equation*}
+    This means
+    \begin{equation*}
+        \mu\left( C \right) = \mu\left( C\cap A \right)
+    \end{equation*}
+    and similarly
+    \begin{equation*}
+        \nu\left( C \right) = \nu\left( C\cap B \right).
+    \end{equation*}
+    As we can see, $\nu^+,\nu^-$ from Example 6.2 are mutually singular, which is of interest of the next theorem.
+
+    \begin{theorem}{Jordan Decomposition Theorem}
+        Let $\left( X,\mA \right)$ be a measurable spcae and let $\nu$ be a signed measure on $\left( X,\mA \right)$. Then there exists a unique pair $\left( \nu^+,\nu^- \right)$ of mutually singular measures such that
+        \begin{equation*}
+            \nu = \nu^+-\nu^-.
+        \end{equation*}
+    \end{theorem}
+    
+    \begin{proof}
+        Let $X = P\cupdot N$ be a Hahn decomposition with respect to $\nu$. Consider
+        \begin{equation*}
+            \begin{aligned}
+                \nu^+:\mA&\to\left[ 0,\infty \right] \\
+                A&\mapsto\nu\left( A\cap P \right) \\
+                \nu^-:\mA&\to\left[ 0,\infty \right] \\
+                A&\mapsto-\nu\left( A\cap N \right)
+            \end{aligned} .
+        \end{equation*}
+        By construction, $\nu^+,\nu^-$ are mutually singular measures such that $\nu=\nu^+-\nu^-$. Indeed, given $A\subseteq N$,
+        \begin{equation*}
+            \nu^+\left( A \right) = \nu\left( A\cap P \right) \geq \nu\left( N\cap P \right) = \nu\left( \emptyset \right) = 0
+        \end{equation*}
+        and similarly, given any $A\subseteq P$, $\nu^-\left( A \right) = 0$. We also have that
+        \begin{equation*}
+            \mu\left( A \right) = \mu\left( \left( A\cap P \right)\cupdot\left( A\cap N \right) \right) = \mu\left( A\cap P \right) + \mu\left( A\cap N \right) = \mu^+\left( A \right) - \mu^-\left( A \right).
+        \end{equation*}
+
+        For uniqueness, suppose $\nu=\mu^+-\mu^-$, where $\mu^+,\mu^-$ are mutually singular measures; say $X = P'\cupdot N'$ such that $P'$ is $\mu^-$-null and $N'$ is $\mu^+$-null. For $A\in\mA, A\subseteq P'$,
+        \begin{equation*}
+            \nu\left( A \right) = \mu^+\left( A \right) - \mu^-\left( A \right) = \mu^+\left( A \right) \geq 0,
+        \end{equation*}
+        so that $P'$ is positive with respect to $\nu$. Similarly, $N'$ is negative with respect to $\nu$. By Hahn decomposition, $P\triangle P' = N\triangle N'$ is null. Therefore, for all $A\in\mA$,
+        \begin{equation*}
+            \mu^+\left( A \right) = \mu^+\left( A\cap P' \right) = \nu\left( A\cap P' \right) = \nu\left( A\cap P \right) = \nu^+\left( A \right),
+        \end{equation*}
+        and similarly, $\mu^-\left( A \right) = \nu^+\left( A \right)$. Thus $\nu^+=\mu^+, \nu^-=\mu^-$, as required.
+    \end{proof}
+   
+    \subsection{Decomposing Measures}
+
+    \begin{prop}{}
+        Suppose $\nu$ is a signed measure with the Jordan decomposition $\nu=\nu^+-\nu^-$. The following are equivalent.
+        \begin{enumerate}
+            \item $A$ is $\nu$-null.
+            \item $A$ is $\nu^+,\nu^-$-null.
+            \item $A$ is $\left| \nu \right|$-null.
+        \end{enumerate}
+    \end{prop}
+
+    \begin{proof}
+        We first observe that
+        \begin{equation*}
+            \left| \nu \right| = \nu^+-\nu^-.
+        \end{equation*}
+        (a)$\implies$(b) Suppose $B\subseteq A$ and let $X = P\cupdot N$ be a Hahn decomposition of $X$. Then $\nu^+\left( B \right) = \nu\left( B\cap P \right) = 0$ since $B\cap P \subseteq B \subseteq A$. Similarly, $\nu^-\left( B \right) = \nu\left( B\cap N \right) = 0$.
+
+        (b)$\implies$(c) Clearly, given $B\subseteq A$,
+        \begin{equation*}
+            \left| \nu\left( B \right) \right| = \nu^+\left( B \right)+\nu^-\left( B \right) = 0 + 0 = 0.
+        \end{equation*}
+
+        (c)$\implies$(a) Suppose $B\subseteq A$. Then
+        \begin{equation*}
+            \nu^+\left( B \right)+\nu^-\left( B \right) = 0,
+        \end{equation*}
+        where both $\nu^+,\nu^-$ are measures, so that
+        \begin{equation*}
+            \nu\left( B \right) = \nu^+\left( B \right)-\nu^-\left( B \right) = 0.
+        \end{equation*}
+    \end{proof}
+    
+    \begin{definition}{\textbf{Absolutely Continuous} Signed Measure with respect to a Measure}
+        Let $\nu$ be a signed measure and let $\mu$ be a measure on a measurable space $\left( X,\mA \right)$. We say $\nu$ is \emph{absolutely continuous} with respect to $\mu$, denoted as $\nu\ll\mu$, if for all $A\in\mA$,
+        \begin{equation*}
+            \mu\left( A \right) = 0 \implies \nu\left( A \right) = 0.
+        \end{equation*}
+    \end{definition}
+    
+    \np Note that we are using the term \textit{absolute continuity} again. The following exercise shows where this is coming from.
+
+    \begin{exercise}{}
+        Let $\nu$ be a finite signed measure and let $\mu$ be a measure on a measurable space $\left( X,\mA \right)$. Then
+        \begin{equation*}
+            \nu\ll\mu \iff \forall\epsilon>0\exists\delta>0\forall A\in\mA\left[ \mu\left( A \right)<\epsilon\implies \left| \nu\left( A \right) \right|<\epsilon \right].
+        \end{equation*}
+    \end{exercise}
+
+    \rruleline
+
+    \np In particular, Proposition 5.4 is a special case of the above exercise, with $\nu$ defined as $\nu\left( A \right) = \int_A\left| f \right|d\mu$ for some $f\in\Lone\left( X,\mA,\mu \right)$.
+    
+    \begin{theorem}{Radon-Nikodym Theorem}
+        Let $\nu,\mu$ be $\sigma$-finite measures on a measurable space $\left( X,\mA \right)$. If $\nu\ll\mu$, then there exists $f\in\Lplus\left( X,\mA,\mu \right)$ such that
+        \begin{equation*}
+            \nu\left( A \right) = \int_Afd\mu, \hspace{2cm}\forall A\in\mA.
+        \end{equation*}
+        Moreover, $f$ is uniquely determined $\mu$-almost everywhere.
+    \end{theorem}
+
+    \np We will only prove the case when $\nu,\mu$ are \textit{finite}. The $\sigma$-finite case is left as an easy exercise.
+    
+    \begin{proof}[Proof of Existence]\qedplacedtrue
+        For each $r\in\Q,r>0$, let $X=P_r\cupdot N_r$ be a Hahn decomposition with respect to $\nu-r\mu$. Set $P_0 = X, N_0 = \emptyset$. Consider $f:X\to\R$ by
+        \begin{equation*}
+            f\left( x \right) = \sup\left\lbrace r\in\Q: x\in P_r \right\rbrace, \hspace{2cm}\forall x\in X.
+        \end{equation*}
+        For $t>0$,
+        \begin{equation*}
+            f^{-1}\left( \left( t,\infty \right] \right) = \bigcup^{}_{r\in\Q: r>t} P_r\in\mA,
+        \end{equation*}
+        as a countable union of measurable subsets. Moreover, $f^{-1}\left( \left[ 0,\infty \right] \right) = X$, so that $f\in\Lplus\left( X,\mA,\mu \right)$.
+
+        Suppose $0<r<s$ in $\Q$. Then $P_s$ is positive for $\nu-s\mu$ and so is positive for $\nu-r\mu$. This means
+        \begin{equation*}
+            \left( \nu-r\mu \right) \left( N_r\cap P_s \right) = 0,
+        \end{equation*}
+        so that
+        \begin{equation*}
+            \nu\left( N_r\cap P_s \right) = r\mu\left( N_r\cap P_s \right).
+        \end{equation*}
+        On the other hand, $N_r$ is negative for $\nu-r\mu$ but $r<s$, so that $N_r$ is negative for $\nu-s\mu$. This means
+        \begin{equation*}
+            \nu\left( N_r\cap P_s \right) = s\mu\left( N_r\cap P_s \right)
+        \end{equation*}
+        as well, where $s\neq r$. Hence it follows that
+        \begin{equation*}
+            \mu\left( N_r\cap P_s \right) = 0.
+        \end{equation*}
+        It follows
+        \begin{equation*}
+            \mu\left( N_r\cap \bigcup^{}_{s\in\Q:s>r} P_s \right) = 0.
+        \end{equation*}
+        Hence
+        \begin{equation*}
+            f|_{N_r} \leq r \text{ $\mu$-almost everywhere},
+        \end{equation*}
+        so that
+        \begin{equation*}
+            \mu\left( f^{-1}\left( \left( r,\infty \right] \right) \right) \leq \mu\left( P_r \right).
+        \end{equation*}
+
+        Now,
+        \begin{align*}
+            \left( \nu-r\mu \right)\left( P_r \right) \geq 0 & \implies \nu\left( P_r \right)\geq r\nu\left( P_r \right) \\
+                                                             & \implies \nu\left( P_r \right)\leq \frac{1}{r}\nu\left( P_r \right) \leq \frac{1}{r}\nu\left( X \right).
+        \end{align*} 
+        Taking $r\to\infty$,
+        \begin{equation*}
+            \mu\left( f^{-1}\left( \left( r,\infty \right] \right) \right) = \nu\left( P_r \right) \leq \frac{1}{r}\nu\left( X \right) \to 0.
+        \end{equation*}
+        This means
+        \begin{equation*}
+            \nu\left( f^{-1}\left( \left\lbrace \infty \right\rbrace \right) \right) = 0,
+        \end{equation*}
+        which means $f$ is finite almost everywhere.
+
+        Let $E\in\mA$ and fix $N\in\N$. Consider
+        \begin{equation*}
+            E_k = E\cap P_{\frac{k}{N}} \cap N_{\frac{k+1}{N}}, \hspace{2cm}\forall k\in\N\cup\left\lbrace 0 \right\rbrace.
+        \end{equation*}
+        Let
+        \begin{equation*}
+            E_{\infty} = E\setminus \bigcup^{\infty}_{k=1} E_k.
+        \end{equation*}
+        We proceed to show that $\mu\left( E_{\infty} \right)=0$. If $E_{\infty} = \emptyset$, we are done. Otherwise, fix $x\in E_{\infty}$. Since $P_0=X$, $x\in P_0$. If there is $k\geq 0$ such that $x\in P_{\frac{k}{N}}, x\notin P_{\frac{k+1}{N}}$, then $x\in N_{\frac{k+1}{N}}$. But this means $x\in E_k$, which contradicts $x\in E_{\infty}$. It follows that $x\in P_{\frac{k}{N}}$ for all $k\geq 0$, so that
+        \begin{equation*}
+            E_{\infty} \subseteq \bigcap^{}_{k\in\N\cup\left\lbrace 0 \right\rbrace} P_{\frac{k}{N}}.
+        \end{equation*}
+        Hence,
+        \begin{equation*}
+            \mu\left( E_{\infty} \right) \leq \mu\left( P_{\frac{k}{N}} \right) \leq \frac{N}{k} \mu\left( X \right) \to 0,
+        \end{equation*}
+        so that $\mu\left( E_{\infty} \right)=0$ as well. It follows
+        \begin{equation*}
+            \nu\left( E_{\infty} \right) = 0
+        \end{equation*}
+        by the absolute continuity of $\nu$ with respect to $\mu$.
+
+        Now,
+        \begin{equation*}
+            \begin{aligned}
+                \left( \nu-\frac{k}{N}\mu \right)\left( E_k \right) & \geq 0 \\
+                \left( \nu-\frac{k+1}{N}\mu \right)\left( E_k \right) & \leq 0 \\
+            \end{aligned} 
+        \end{equation*}
+        since $E_k \subseteq P_{\frac{k}{N}}\cap N_{\frac{k+1}{N}}$ where $P_{\frac{k}{N}}$ is positive for $\nu-\frac{k}{N}\mu$ and $N_{\frac{k+1}{N}}$ is negative for $\nu-\frac{k+1}{N}$. This implies
+        \begin{equation}
+            \frac{k}{N} \mu\left( E_k \right) \leq \nu\left( E_k \right) \leq \frac{k+1}{N} \mu\left( E_k \right).
+        \end{equation}
+
+        Moreover, for $x\in E_k$,
+        \begin{equation*}
+            \frac{k}{N} \leq f\left( x \right)
+        \end{equation*}
+        by definition and
+        \begin{equation*}
+            f\left( x \right) \leq \frac{k+1}{N} \text{ $\mu$-almost everywhere},
+        \end{equation*}
+        by considering $f\left( x \right)\leq f|_{N_{\frac{k+1}{N}}}\left( x \right)$ and that $f_{N_r}\leq r$ $\mu$-almost everywhere for $r\in\Q$. Hence
+        \begin{equation*}
+            \frac{k}{N} x_{E_k}\leq f\chi_{E_k} \leq \frac{k+1}{N}\chi_{E_k}
+        \end{equation*}
+        $\mu$-almost everywhere, so that
+        \begin{equation}
+            \frac{k}{N}\mu\left( E_k \right)\leq\int_{E_k}fd\mu \leq \frac{k+1}{N}\mu\left( E_k \right).
+        \end{equation}
+
+        Summing over $k\geq 0$, we obtain that
+        \begin{equation*}
+            \begin{aligned}
+                \sum^{\infty}_{k=0} \frac{k}{N}\mu\left( E_k \right)& \leq \sum^{\infty}_{k=0} \nu\left( E_k \right) = \underbrace{E_{\infty}}_{=0} + \sum^{\infty}_{k=0}\nu\left( E_k \right) = \nu\left( E \right)  \\
+                                                                    & \leq \sum^{\infty}_{k=0} \frac{k+1}{N}\mu\left( E_k \right) = \sum^{\infty}_{k=1} \frac{k}{N}\mu\left( E_k \right) + \sum^{\infty}_{k=0} \frac{1}{N}\mu\left( E_k \right) = \sum^{\infty}_{k=0} \frac{k}{N}\mu\left( E_k \right) + \frac{\mu\left( E \right)}{N}
+            \end{aligned} 
+        \end{equation*}
+        from [6.1]. In a similar way, we obtain
+        \begin{equation*}
+            \sum^{\infty}_{k=0} \frac{k}{N}\mu\left( E_k \right)\leq\int_Efd\mu \leq \sum^{\infty}_{k=0} \frac{k}{N}\mu\left( E_k \right) + \frac{\mu\left( E \right)}{N}.
+        \end{equation*}
+        It follows that
+        \begin{equation*}
+            \left| \nu\left( E \right)-\int_Efd\mu \right| \leq \frac{\mu\left( E \right)}{N} \leq \frac{\mu\left( X \right)}{N} \to 0.
+        \end{equation*}
+        It follows that $\int_Efd\mu = \nu\left( E \right)$.
+    \end{proof}
+    
+    \begin{proof}[Proof of Uniqueness upto $\mu$-almost Everywhere]
+        Let $f,g\in\Lplus\left( X,\mA,\mu \right)$ be such that
+        \begin{equation*}
+            \nu\left( A \right) = \int_Afd\mu = \int_Agd\mu, \hspace{2cm}\forall A\in\mA.
+        \end{equation*}
+        Consider $B = \left\lbrace x\in X: f\left( x \right)>g\left( x \right) \right\rbrace$ and
+        \begin{equation*}
+            B_n = \left\lbrace x\in X: f\left( x \right)\geq g\left( x \right)+\frac{1}{n} \right\rbrace, \hspace{2cm}\forall n\in\N.
+        \end{equation*}
+        Suppose for contradiction that $\mu\left( B \right) > 0$. This means there is $n\in\N$ such that
+        \begin{equation*}
+            \mu\left( B_n \right) > 0.
+        \end{equation*}
+        Therefore, for such $n\in\N$,
+        \begin{equation*}
+            \nu\left( B_n \right) = \int_{B_n}fd\mu \geq \int_{B_n}g+\frac{1}{n}d\mu = \int_{B_n}gd\mu + \underbrace{\frac{\mu\left( B_n \right)}{n}}_{>0} > \int_{B_n}gd\mu = \nu\left( B_n \right),
+        \end{equation*}
+        which is a contradiction.
+
+        This means $\mu\left( B \right) = 0$, which implies
+        \begin{equation*}
+            f\leq g\text{ $\mu$-almost everywhere}.
+        \end{equation*}
+        By symmetry, $g\leq f$ $\mu$-almost everywhere, so that
+        \begin{equation*}
+            f=g\text{ $\mu$-almost everywhere},
+        \end{equation*}
+        as required.
+    \end{proof}
+    
+    \np Observe that absolute continuity is necessary for the Radon-Nikodym theorem. For instance, if $f\in\Lplus\left( X,\mA,\mu \right)$, then
+    \begin{equation*}
+        \begin{aligned}
+            \nu:\mA&\to\left[ 0,\infty \right] \\
+            A&\mapsto\int_Afd\mu
+        \end{aligned} 
+    \end{equation*}
+    is such that
+    \begin{equation*}
+        \mu\left( A \right) \implies \nu\left( A \right) = \int_Afd\mu = 0,
+    \end{equation*}
+    so that $\nu\ll\mu$.
+
+    The following example demonstrates that the $\sigma$-finite assumption is also necessary.
+    
+    \begin{example}{}
+        Let $X=\left[ 0,1 \right], \mA=\Bor\left( \left[ 0,1 \right] \right)$ and let $m_c$ be the counting measure on $\left( X,\mA \right)$. This means $m\ll m_c$, where $m$ is the Lebesgue measure on $\left( X,\mA \right)$. Observe that $m_c$ is not $\sigma$-finite.
+
+        Suppose for contradiction that there is $f\in\Lplus\left( X,\mA,m_c \right)$ such that
+        \begin{equation*}
+            m\left( A \right) = \int_Afdm_c.
+        \end{equation*}
+        Then for all $a\in\left[ 0,1 \right]$,
+        \begin{equation*}
+            0 = m\left( \left\lbrace a \right\rbrace \right) = \int_{\left\lbrace a \right\rbrace}fdm_c = f\left( a \right)m_c\left( \left\lbrace a \right\rbrace \right) = f\left( a \right)
+        \end{equation*}
+        which means
+        \begin{equation*}
+            m\left( \left[ 0,1 \right] \right) = \int 0dm_c = 0,
+        \end{equation*}
+        which is a contradiction.
+    \end{example}
+
+    \rruleline
+    
+    \begin{cor}{}
+        Let $\mu,\nu$ be measure and signed measure, respectively, on a measurable space $\left( X,\mA \right)$. If $\left| \nu \right|,\mu$ are $\sigma$-finite and $\left| \nu \right|\ll\mu$, then there exists $f=g-h$ with at least one of $g,h$ is in $\Lone\left( X,\mA,\mu \right)$ and
+        \begin{equation*}
+            \nu\left( A \right) = \int_Afd\mu, \hspace{2cm}\forall A\in\mA.
+        \end{equation*}
+    \end{cor}	
+
+    \begin{proof}
+        We utilize the following claim.
+
+        \begin{claim}
+            \textit{There exists $p:X\to\R$ with $\left| p\left( x \right) \right|=1$ for all $x\in X$ such that 
+                \begin{equation*}
+                    \nu\left( A \right) = \int_Apd\left| \nu \right|.
+                \end{equation*}
+            }
+
+            Let $X = P\cupdot N$ be a Hahn decomposition of $X$ with respect to $\nu$ and let
+            \begin{equation*}
+                p = \chi_P - \chi_N.
+            \end{equation*}
+            Then, with the Jordan decomposition
+            \begin{equation*}
+                \nu = \nu^+ - \nu^-
+            \end{equation*}
+            for $\nu$, we have
+            \begin{equation*}
+                \begin{aligned}
+                    \int_A\chi_P-\chi_Nd\left| \nu \right| & = \int_Apd\nu^+ + \int_Apd\nu^- = \int_{A\cap P} pd\nu^+ + \int_{A\cap N} pd\nu^- = \int_{A\cap P}1d\nu^+ + \int_{A\cap N}-1d\nu^- \\
+                                               & = \int_{A\cap P} 1d\nu^+ - \int_{A\cap N} 1d\nu^- = \nu^+\left( A\cap P \right) - \nu^-\left( A\cap N \right) = \nu^+\left( A \right) - \nu^-\left( A \right) = \nu\left( A \right).
+                \end{aligned} 
+            \end{equation*}
+        \end{claim}
+
+        Since $\nu\ll\mu$, we have $\left| \nu \right|\ll\mu$. So by the Radon-Nikodym theorem, there exists $q\in\Lplus\left( X,\mA,\mu \right)$ such that
+        \begin{equation*}
+            \left| \nu \right|\left( A \right) = \int_Aqd\mu.
+        \end{equation*}
+        Then, for $A\in\mA$,
+        \begin{equation*}
+            \nu\left( A \right) = \nu^+\left( A \right)-\nu^-\left( A \right) = \nu\left( A\cap P \right) + \nu\left( A\cap N \right) = \left| \nu \right|\left( A\cap P \right) - \left| \nu \right|\left( A\cap N \right) = \int_{A\cap P}qd\mu - \int_{A\cap N}d\mu = \int_Apqd\mu,
+        \end{equation*}
+        so by letting $f=pq$, we have
+        \begin{equation*}
+            \int_Afd\mu = \nu\left( A \right).
+        \end{equation*}
+        But
+        \begin{equation*}
+            f = pq = q\left( \chi_P-\chi_N \right) = q\chi_P - q\chi_N,
+        \end{equation*}
+        so let $g=q\chi_P, h=q\chi_N$. Since signed measure cannot take both $-\infty,\infty$, it follows that
+        \begin{equation*}
+            \int_Pqd\mu < \infty \text{ or } \int_Npd\mu < \infty,
+        \end{equation*}
+        which means one of $g,h$ is $\Lone$.
+    \end{proof}
+    
+    \begin{theorem}{Lebesgue Decomposition Theorem}
+        Let $\nu,\mu$ be $\sigma$-finite measures on $\left( X,\mA \right)$. Then there exists a unique decomposition
+        \begin{equation*}
+            \nu = \nu_a+\nu_s
+        \end{equation*}
+        such that $\nu_a\ll\mu$ and $\nu_s\perp\mu$.
+    \end{theorem}
+
+    \begin{proof}
+        Consider
+        \begin{equation*}
+            \lambda = \mu+\nu.
+        \end{equation*}
+        Then $\lambda$ is a measure and $\nu,\mu\ll\lambda$. By the Radon-Nikodym theorem, there exists $f,g\in\Lplus\left( X,\mA,\lambda \right)$ such that
+        \begin{equation*}
+            \mu\left( A \right) = \int_Afd\lambda, \nu\left( A \right) = \int_Agd\lambda,\hspace{2cm}\forall A\in\mA.
+        \end{equation*}
+        Let
+        \begin{equation*}
+            A = f^{-1}\left( \left( 0,\infty \right] \right), B = f^{-1}\left( \left\lbrace 0 \right\rbrace \right).
+        \end{equation*}
+        Define $\nu_a,\nu_s:\mA\to\left[ 0,\infty \right]$ by
+        \begin{equation*}
+            \nu_a\left( E \right) = \nu\left( E\cap A \right), \nu_s\left( E \right) = \nu\left( E\cap B \right), \hspace{2cm}\forall E\in\mA.
+        \end{equation*}
+        Clearly $\nu = \nu_a+\nu_s$.
+
+        \begin{claim}
+            \textit{$\nu_s\perp\mu$.}
+
+            Consider $X=A\cupdot B$.
+
+            If $C\subseteq A$, then
+            \begin{equation*}
+                \nu_s\left( C \right) = \nu\left( C\cap B \right) = \nu\left( \emptyset \right) = 0.
+            \end{equation*}
+            Hence $A$ is $\nu_s$-null. On the other hand, given $C\subseteq B$,
+            \begin{equation*}
+                \mu\left( C \right) = \int_Cfd\lambda = \int_C 0d\lambda = 0.
+            \end{equation*}
+            Hence $B$ is $\mu$-null.
+        \end{claim}
+
+        \begin{claim}
+            $\nu_a\ll\mu$.
+
+            Suppose $E\in\mA$ with $\mu\left( E \right) = 0$. Then
+            \begin{equation*}
+                \int f\chi_E d\lambda = \int_Efd\lambda = 0.
+            \end{equation*}
+            Since $f\in\Lplus\left( X,\mA,\lambda \right)$, it follows that $f\chi_E$ is a measurable nonnegative function, so that
+            \begin{equation*}
+                f\chi_E = 0 \text{ $\lambda$-almost everywhere}.
+            \end{equation*}
+            Hence
+            \begin{equation*}
+                \nu_a\left( E \right) = \nu\left( E\cap A \right) = \lambda\left( E\cap A \right) = 0.
+            \end{equation*}
+        \end{claim}
+
+        Proof of uniqueness is left as an exercise.
+    \end{proof}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 
 \end{document}

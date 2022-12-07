@@ -5,7 +5,438 @@
 
 \begin{document}
 
-    \section{Application on Probability Theory}
+    \section{$\LLL^p$ Spaces}
+
+    Fix a measure space $\left( X,\mA,\mu \right)$.
+
+    \subsection{$\LLL^p$ Spaces}
+
+    Given measurable $f:X\to\R$, let
+    \begin{equation*}
+        \left[ f \right] = \left\lbrace g\in\R^{X} : g=f\text{ $\mu$-almost everywhere} \right\rbrace.
+    \end{equation*}
+
+    \begin{definition}{$\LLL^p\left( X,\mA,\mu \right)$}
+        Given $p\in\left[ 1,\infty \right)$, we define
+        \begin{equation*}
+            \LLL^p\left( X,\mA,\mu \right) = \left\lbrace \left[ f \right] : f\in\R^{X}, f\text{ is measurable}, \left| f \right|^p\in\Lone\left( X,\mA,\mu \right) \right\rbrace.
+        \end{equation*}
+        We define
+        \begin{equation*}
+            \LLL^{\infty}\left( X,\mA,\mu \right) = \left\lbrace \left[ f \right] : f\in\R^X, f\text{ is measurable}, \sup\left\lbrace t\geq 0 : \mu\left( \left\lbrace x\in X: \left| f\left( x \right) \right|>t \right\rbrace \right) > 0 \right\rbrace < \infty \right\rbrace.
+        \end{equation*}
+    \end{definition}
+
+    \np For convenience, we are going to \textit{treat} equivalence classes $\left[ f \right]$ as functions $f$.
+
+    \begin{example}{$l^p$}
+        Consider $\left( \N,\mP\left( \N \right), m_c \right)$, where $m_c$ is the counting measure on $\left( X,\mP\left( \N \right) \right)$. Then given $f:\N\to\R$, $f$ is measurable and
+        \begin{equation*}
+            \int fd\mu = \sum^{\infty}_{n=1} f\left( n \right).
+        \end{equation*}
+        Hence for $p\in\left[ 1,\infty \right)$,
+        \begin{equation*}
+            f\in\LLL^p \iff \int\left| f \right|^p d\mu < \infty \iff \sum^{\infty}_{n=1} \left| f\left( n \right) \right|^p << \infty \iff f\in l^p.
+        \end{equation*}
+    \end{example}
+    
+    \rruleline
+
+    \begin{prop}{}
+        Let $p\in\left[ 1,\infty \right]$. Then $\left( \LLL^p,\left\lVert \cdot\right\rVert_p \right)$ is a Banach space, where
+        \begin{equation*}
+            \left\lVert f\right\rVert_p = \left( \int \left| f \right|^pd\mu \right)^{\frac{1}{p}}, \hspace{2cm}\forall f\in\LLL^p
+        \end{equation*}
+        for $p\in\left[ 1,\infty \right)$ and
+        \begin{equation*}
+            \left\lVert f \right\rVert_{\infty} = \sup\left\lbrace t\geq 0 : \mu\left( \left\lbrace x\in X: \left| f\left( x \right) \right|>t \right\rbrace \right) > 0 \right\rbrace, \hspace{2cm}\forall f\in\LLL^{\infty}.
+        \end{equation*}
+    \end{prop}
+
+    \rruleline
+    
+    \begin{prop}{}
+        Let $\left( X,\mA,\mU \right)$ be a measure space.
+        \begin{enumerate}
+            \item For $p\in\left[ 1,\infty \right)$, the set of simple functions of finite support is dense in $\LLL^p\left( X,\mA,\mu \right)$.
+            \item The set of simple functions is dense in $\LLL^{\infty}\left( X,\mA,\mu \right)$.
+        \end{enumerate}
+    \end{prop}
+
+    \begin{proof}[Proof of (a)]\qedplacedtrue
+        Let $f\in\LLL^p$ and let $\left( \phi_{n} \right)^{\infty}_{n=1}$ be an increasing sequence of simple functions converging pointwise to $f$. Then
+        \begin{equation*}
+            \left| \phi_n \right|^p\leq\left| f \right|^p, \hspace{2cm}\forall n\in\N,
+        \end{equation*}
+        so that $\phi_n\in\LLL^p$. This means, for a value $a$ which $\phi_n$ takes, $\phi_n^{-1}\left( a \right)$ have finite measure. So $\left( \phi_{n} \right)^{\infty}_{n=1}$ is a sequence of simple functions of finite support. It remains to show $\phi_n\to f$ in $\left\lVert \cdot\right\rVert_p$.
+
+        But $\left| \phi_n-f \right|\leq\left| \phi_n \right|+\left| f \right|\leq 2\left| f \right|$, so that
+        \begin{equation*}
+            \left| \phi_n-f \right| \leq 2^p\left| f \right|^p
+        \end{equation*}
+        for all $n\in\N$. Hence by the LDCT,
+        \begin{equation*}
+            \int\left| \phi_n-f \right|^pd\mu \to 0,
+        \end{equation*}
+        as required.
+    \end{proof}
+
+    \begin{proof}[Proof of (b)]
+        Exercise.
+    \end{proof}
+    
+    \begin{recall}{\textbf{Dual Space} of a Normed Linear Space}
+        Let $V$ be a normed linear space over $\K$. The \emph{dual space} of $V$, denoted as $V^{*}$, is defined as
+        \begin{equation*}
+            V^{*} = \left\lbrace T:V\to\K: \text{$T$ is linear and continuous} \right\rbrace.
+        \end{equation*}
+    \end{recall}
+    
+    \np Recall the following results for normed linear spaces.
+
+    \begin{prop}{}
+        Let $\left( V,\left\lVert \cdot\right\rVert \right)$ be a normed linear space and let $\phi:V\to\K$ be a linear functional. The following are equivalent.
+        \begin{enumerate}
+            \item $\phi$ is continuous.
+            \item $\phi$ is continuous at $0$.
+            \item $\phi$ is bounded.
+        \end{enumerate}
+    \end{prop}
+    
+    \rruleline
+
+    \begin{prop}{}
+        Let $\left( V,\left\lVert \cdot\right\rVert \right)$ be a normed linear space. Then $\left( V^{*},\left\lVert \cdot\right\rVert \right)$ is a Banach space.
+    \end{prop}
+
+    \rruleline
+    
+    \begin{theorem}{Holder's Inequality}
+        Let $\left( X,\mA,\mu \right)$ be a measure space and let $p,q\in\left[ 1,\infty \right]$ with $\frac{1}{p}+\frac{1}{q} = 1$ or $p=1,q=\infty$. If $f\in\LLL^p\left( X,\mA,\mu \right), g\in\LLL^q\left( X,\mA,\mu \right)$, then $fg\in\Lone$ and
+        \begin{equation*}
+            \left\lVert fg \right\rVert_{1}\leq\left\lVert f\right\rVert_p\left\lVert g\right\rVert_q.
+        \end{equation*}
+    \end{theorem}
+
+    \rruleline
+    
+    \begin{example}{}
+        Let $\left( X,\mA,\mu \right)$ be a finite measure space and let $p<r$ in $\left[ 1,\infty \right)$. 
+
+        \begin{claim}
+            $\LLL^{\infty}\subseteq\LLL^r$.
+
+            Let $f\in\LLL^{\infty}$. Then $\left| f \right|\leq M$ almost everywhere for some $M\geq 0$. This means $\int\left| f \right|^rd\mu \leq \int M^rd\mu = M^r\mu\left( X \right) < \infty$.
+        \end{claim}
+
+        \begin{claim}
+            $\LLL^r\subseteq\LLL^p$.
+
+            For $f\in\LLL^r$, $\int\left| f \right|^rd\mu<\infty$, so that $f^{\frac{r}{p}}\in\LLL^p$. Let $s$ be the Holder conjugate of $\frac{r}{p}$. Then
+            \begin{equation*}
+                \left\lVert f\right\rVert^p_p = \left\lVert \left| f \right|^p\cdot 1\right\rVert_1 \leq \left\lVert \left| f \right|^p\right\rVert_{\frac{r}{p}}\left\lVert 1\right\rVert_s = \left\lVert f\right\rVert_r^{\frac{p}{r}} \mu\left( X \right) < \infty.
+            \end{equation*}
+        \end{claim}
+    \end{example}
+
+    \rruleline
+
+    \clearpage
+    
+    \np It turns out there are no containment relations for $\LLL^p\left( \R,\mM,m \right)$, where $m$ is the Lebesgue measure and $\mM$ is the collection of Lebesgue measurable sets. On the other hand,
+    \begin{equation*}
+        l^p\subseteq l^r
+    \end{equation*}
+    for $p<r$ in $\left[ 1,\infty \right]$.
+    
+    \begin{theorem}{Riesz Representation Theorem for $\LLL^p$}
+        Let $\left( X,\mA,\mu \right)$ be a $\sigma$-finite measure space and let $p\in\left[ 1,\infty \right)$. Let $q$ be the Holder conjugate for $p$. Then
+        \begin{equation*}
+            \begin{aligned}
+                \phi:\LLL^q&\to\left( \LLL^p \right)^{*} \\
+                g & \mapsto \Phi_g
+            \end{aligned} 
+        \end{equation*}
+        is an isometric isomorphism, where
+        \begin{equation*}
+            \Phi_g\left( f \right) = \int fgd\mu, \hspace{2cm}\forall g\in\LLL^q, f\in\LLL^p.
+        \end{equation*}
+    \end{theorem}
+    
+    \begin{proof}
+        \begin{claim}
+            \textit{For $g\in\LLL^q$,
+                \begin{equation*}
+                    \left\lVert \Phi_g\right\rVert = \left\lVert g\right\rVert_q.
+                \end{equation*}
+            }
+
+            We consider the case where $p\in\left( 1,\infty \right)$ only.
+
+            For $f\in\LLL^p$, by Holder's inequality,
+            \begin{equation*}
+                \left| \Phi_g\left( f \right) \right| = \left| \int fgd\mu \right| \leq \int\left| fg \right|d\mu = \left\lVert fg \right\rVert_{1} \leq \left\lVert f\right\rVert_p\left\lVert g\right\rVert_q,
+            \end{equation*}
+            so that
+            \begin{equation*}
+                \left\lVert \Phi_g\right\rVert \leq \left\lVert g\right\rVert_q.
+            \end{equation*}
+            Since the case $g=0$ is trivial, assume $g\neq 0$ and let
+            \begin{equation*}
+                f = \frac{\left| g \right|^{q-1}\sgn\left( g \right)}{\left\lVert g\right\rVert_q^{q-1}}.
+            \end{equation*}
+            Note $p\left( q-1 \right) = pq\left( 1-\frac{1}{q} \right) = q$, so that
+            \begin{equation*}
+                \left| f \right|^p = \frac{\left| g \right|^q}{\left\lVert g\right\rVert^{q}_q},
+            \end{equation*}
+            which means
+            \begin{equation*}
+                \left\lVert f\right\rVert^p_p = \int \left| f \right|^pd\mu = \frac{1}{\left\lVert g\right\rVert_q^q}\int\left| g \right|^qd\mu = 1.
+            \end{equation*}
+            Moreover,
+            \begin{equation*}
+                \left| \Phi_g\left( f \right) \right| = \left| \int fgd\mu \right| = \left| \int \frac{\left| g \right|^q}{\left\lVert g\right\rVert^{q-1}_q} \right| = \left\lVert g\right\rVert_q.
+            \end{equation*}
+
+            Thus $\left\lVert \Phi_g\right\rVert = \left\lVert g\right\rVert_q$, as required.
+        \end{claim}
+
+        \begin{claim}
+            \textit{If $g:X\to\R$ is measurable with
+                \begin{equation*}
+                    \left| \int\psi g\mu \right| \leq M\left\lVert \psi\right\rVert_p,
+                \end{equation*}
+                for all simple $\psi$ with finite support, then $g\in\LLL^q$ and $\left\lVert g\right\rVert_q\leq M$.
+            }
+
+            \clearpage
+
+            We first consider the case where $p,q\in\left( 1,\infty \right)$.
+
+            Let $\left( \psi_{n} \right)^{\infty}_{n=1}$ be a sequence of simple functions such that $\psi_n\to g$ pointwise and
+            \begin{equation*}
+                \left| \psi_n \right|\leq\left| \psi_{n+1} \right|\leq\left| g \right|, \hspace{2cm}\forall n\in\N.
+            \end{equation*}
+            Since $X$ is $\sigma$-finite, write
+            \begin{equation*}
+                X = \bigcup^{\infty}_{n=1} X_n,
+            \end{equation*}
+            where each $\mu\left( X_n \right)<\infty$ and $X_1\subseteq X_2\subseteq \cdots$. Let
+            \begin{equation*}
+                \zeta_n = \psi_n\chi_{X_n},
+            \end{equation*}
+            which is a simple function with a finite support. Then
+            \begin{equation*}
+                \left| \zeta_n \right|\leq\left| \zeta_{n+1} \right|\leq\left| g \right|,\hspace{2cm}\forall n\in\N
+            \end{equation*}
+            and $\zeta_n\to g$ pointwise. Define
+            \begin{equation*}
+                f_n = \frac{\left| \zeta_n \right|^{q-1}\sgn\left( g \right)}{\left\lVert \zeta_n\right\rVert_q^{q-1}}
+            \end{equation*}
+            Then each $f_n$ is simple with finite support and $\left\lVert f_n\right\rVert_p = 1$, just as in Claim 1. Then
+            \begin{equation*}
+                M \geq \sup_{n\in\N}\left| \int f_ndgd\mu \right| = \sup_{n\in\N} \int \frac{\left| \zeta_n \right|^{q-1}\left| g \right|}{\left\lVert \zeta_n\right\rVert_q^{q-1}}d\mu \geq \sup_{n\in\N} \int \frac{\left| \zeta_n \right|^q}{\left\lVert \zeta_n\right\rVert_q^{q-1}}d\mu = \sup_{n\in\N}\left\lVert \zeta_n\right\rVert_q.
+            \end{equation*}
+            Now, $\left| \zeta_n \right|^q\leq\left| g \right|^q$, $\left( \left| \zeta_n^q \right| \right)^{\infty}_{n=1}$ is increasing, and $\left| \zeta_n \right|^q\to\left| g \right|^q$ pointwise, so by the monotone convergence theorem,
+            \begin{equation*}
+                \sup_{n\in\N} \left\lVert \zeta_n\right\rVert_q = \lim_{n\to\infty} \left\lVert \zeta_n\right\rVert_q = \left\lVert g\right\rVert_q.
+            \end{equation*}
+            Thus
+            \begin{equation*}
+                M \geq \left\lVert g\right\rVert_q,
+            \end{equation*}
+            as required.
+
+            Now suppose $p=1,q=\infty$. Let $\epsilon>0$ be given and consider
+            \begin{equation*}
+                A = \left\lbrace x:\left| g\left( x \right) \right|\geq M+\epsilon \right\rbrace.
+            \end{equation*}
+            Since we want to show $\left\lVert g \right\rVert_{\infty}\leq M$, suppose $\mu\left( A \right)>0$ for contradiction. Since $X$ is $\sigma$-finite, we may find $B\subseteq A$ such that
+            \begin{equation*}
+                0<\mu\left( B \right)<\infty.
+            \end{equation*}
+            Take
+            \begin{equation*}
+                f = \frac{1}{\mu\left( B \right)}\sgn\left( g \right)\chi_B
+            \end{equation*}
+            so that $f$ is simple and $\left\lVert f \right\rVert_{1} = 1$. Then
+            \begin{equation*}
+                \int fgd\mu = \frac{1}{\mu\left( B \right)} \int \left| g \right|\chi_Bd\mu = \frac{1}{\mu\left( B \right)} \int_B\left| g \right|d\mu \geq \frac{1}{\mu\left( B \right)} \int_B M+\epsilon d\mu = M+\epsilon > M = M \left\lVert f \right\rVert_{1},
+            \end{equation*}
+            which is a contradiction.
+
+            Since the choice of $\epsilon$ was arbitrary, it follows $M$ is an essential bound for $\left| g \right|$, so that
+        \end{claim}
+
+        We now turn to the proof of the Riesz representation theorem. We consider two cases.
+
+        \begin{case}
+            \textit{$\mu\left( X \right)<\infty$.}
+
+            Let $\Phi\in\LLL^p\left( X,\mA,\mu \right)^{*}$, where we desire to find $g\in\LLL^q$ such that $\Phi=\Phi_g$. Consider
+            \begin{equation*}
+                \begin{aligned}
+                    \nu:\mA&\mapsto\R \\
+                    A & \mapsto \Phi\left( \chi_A \right)
+                \end{aligned} .
+            \end{equation*}
+            Note that
+            \begin{equation*}
+                \nu\left( \emptyset \right) = \Phi\left( \chi_{\emptyset} \right) = \Phi\left( 0 \right) = 0.
+            \end{equation*}
+            Let $\left\lbrace A_n \right\rbrace^{\infty}_{n=1}\subseteq\mA$ and let $A = \bigcup^{\infty}_{n=1} A_n$. Then
+            \begin{equation*}
+                \left\lVert \chi_A-\sum^{N}_{n=1}\chi_{A_n}\right\rVert^p_p = \left\lVert \sum^{\infty}_{n=N+1}\chi_{A_n}\right\rVert^p_p = \left( \left( \int\left( \sum^{\infty}_{n=N+1} \chi_{A_n} \right)^{p}d\mu \right)^{\frac{1}{p}} \right)^p = \int \sum^{\infty}_{n=N+1} \chi_{A_n}d\mu = \mu\left( \bigcup^{\infty}_{n=N+1} A_n \right) = \sum^{\infty}_{n=N+1} \mu\left( A_n \right).
+            \end{equation*}
+            Since $\mu\left( X \right)<\infty$, it follows $\mu\left( A \right) = \sum^{\infty}_{n=1} \mu\left( A_n \right) < \infty$, so that
+            \begin{equation*}
+                \sum^{\infty}_{n=N+1}\mu\left( A_n \right)\to 0.
+            \end{equation*}
+            Hence $\chi_A = \sum^{\infty}_{n=1} \chi_{A_n}\in\LLL^p$. By continuity of $\Phi$,
+            \begin{equation*}
+                \nu\left( A \right) = \Phi\left( \chi_A \right) = \sum^{\infty}_{n=1} \Phi\left( \chi_{A_n} \right) = \sum^{\infty}_{n=1} \nu\left( A_n \right).
+            \end{equation*}
+            Hence $\nu$ is a measure. 
+
+            If $\mu\left( A \right) = 0$, then $\chi_A = 0$ $\mu$-almost everywhere, so that
+            \begin{equation*}
+                \nu\left( A \right) = \Phi\left( 0 \right) = 0.
+            \end{equation*}
+            This means $\nu\ll\mu$, so by the Radon-Nikodym theorem, there is $g\in\Lone$ such that
+            \begin{equation*}
+                \nu\left( A \right) = \int_Agd\mu.
+            \end{equation*}
+            Note that $g$ is $\Lone$ since the measure space is finite. Take a simple function
+            \begin{equation*}
+                \psi = \sum^{n}_{k=1} a_k\chi_{A_k}.
+            \end{equation*}
+            Then
+            \begin{equation*}
+                \Phi\left( \psi \right) = \sum^{n}_{k=1}a_k\chi_{A_k} = \sum^{n}_{k=1} a_k\nu\left( A_k \right) = \int\psi d\nu.
+            \end{equation*}
+            Also,
+            \begin{equation*}
+                \sum^{n}_{k=1} a_k\nu\left( A_k \right) = \sum^{n}_{k=1} a_k \int_{A_k}gd\mu = \sum^{n}_{k=1} \int a_k\chi_{A_k}gd\mu = \int\psi gd\mu.
+            \end{equation*}
+            That is,
+            \begin{equation*}
+                \Phi\left( \psi \right) = \int\psi d\nu = \int\psi gd\mu = \Phi_g\left( \psi \right).
+            \end{equation*}
+            Hence
+            \begin{equation*}
+                \left| \int\psi gd\mu \right| = \left| \Phi\left( \psi \right) \right| \leq \left\lVert \Phi\right\rVert\left\lVert \psi\right\rVert_p.
+            \end{equation*}
+            By taking $M = \left\lVert \Phi\right\rVert$, we see that $g\in\LLL^q$ with $\left\lVert g\right\rVert_q\leq M$. Then $\Phi,\Phi_g$ are continuous functions that coincide on a dense subset of $\LLL^p$, so that $\Phi=\Phi_g$.
+        \end{case}
+
+        \clearpage
+
+        We now consider the general case, where $X$ is assumed to be $\sigma$-finite. Write $X = \bigcup^{\infty}_{n=1}X_n$ so that each $\mu\left( X_n \right)<\infty$ and
+        \begin{equation*}
+            X_1\subseteq X_2\subseteq\cdots.
+        \end{equation*}
+        We may identify $\LLL^r\left( X_n,\mA\cap\mP\left( X_n \right),\mu \right)$ as a subset of $\LLL^r\left( X,\mA,\mu \right)$.
+
+        Let $\Phi\in\LLL^p\left( X,\mA,\mu \right)^{*}$. For every $n\in\N$, there exists a unique $g_n\in\LLL^q\left( X_n \right)$ such that
+        \begin{equation*}
+            \Phi|_{X_n} = \Phi_{g_n}
+        \end{equation*}
+        by Case 1. Moreover,
+        \begin{equation*}
+            \left\lVert g_n\right\rVert_q = \left\lVert \Phi_{g_n}\right\rVert\leq\left\lVert \Phi\right\rVert.
+        \end{equation*}
+        By uniqueness, there is a unique $g:X\to\R$ such that for all $n\in\N$, $g|_{X_n} = g_n$. Since $X_1\subseteq X_2\subseteq\cdots$, $g_n\to g$ pointwise, which means $g$ is measurable.
+
+        Note that, since $X_n$'s are nested, $\left( \left| g_n \right|^{q} \right)^{\infty}_{n=1}$ is an increasing sequence converging pointwise to $\left| g \right|^q$, so that
+        \begin{equation*}
+            \left\lVert g_n\right\rVert_q \to \left\lVert g\right\rVert_q
+        \end{equation*}
+        by the monotone convergence theorem. It follows that
+        \begin{equation*}
+            \left\lVert g\right\rVert_q \leq \left\lVert \Phi\right\rVert < \infty,
+        \end{equation*}
+        so that $g\in\LLL^q\left( X,\mA,\mu \right)$.
+
+        If $f\in\LLL^p\left( X,\mA,\mu \right)$, we have
+        \begin{equation*}
+            \left| f\chi_{X_n}-f \right|^p \leq \left( 2\left| f \right| \right)^p = 2^p\left| f \right|^p.
+        \end{equation*}
+        By the Lebesgue dominated convergence theorem, 
+        \begin{equation*}
+            f\chi_{X_n}\to f\text{ in $\LLL^p$}.
+        \end{equation*}
+        Hence, by continuity of $\Phi$, 
+        \begin{equation*}
+            \Phi\left( f \right) = \lim_{n\to\infty}\Phi\left( f\chi_{X_n} \right) = \lim_{n\to\infty} \int \left( f\chi_{X_n} \right)gd\mu = \lim_{n\to\infty} \int_{X_n}fg_{n}d\mu = \int fgd\mu = \Phi_g\left( f \right),
+        \end{equation*}
+        where the second last equality follows from the Lebesgue dominated convergence theorem.
+    \end{proof}
+
+    \begin{example}{}
+        Consider $\left( \N,\mP\left( \N \right),\mu \right)$ with
+        \begin{equation*}
+            \begin{aligned}
+                \mu\left( \emptyset \right) & = 0 \\
+                \mu\left( A \right) & = \infty , \hspace{2cm}\forall A\neq\emptyset
+            \end{aligned} .
+        \end{equation*}
+        Then observe that, for $f:\N\to\R$, if there is $n\in\N$ such that $f\left( n \right)\neq 0$,
+        \begin{equation*}
+            \int\left| f \right|d\mu\geq\int_{\left\lbrace n \right\rbrace}\left| f \right|d\mu = \infty,
+        \end{equation*}
+        so that $\Lone=\left\lbrace 0 \right\rbrace$.
+
+        But we have $\LLL^{\infty} = l^{\infty}$, so that
+        \begin{equation*}
+            \left( \Lone \right)^{*} \neq \LLL^{\infty}.
+        \end{equation*}
+    \end{example}
+
+    \rruleline
+
+    \begin{theorem}{Riesz Representation Theorem II}
+        Let $\left( X,\mA,\mu \right)$ and let $p,q\in\left( 1,\infty \right)$ be Holder conjugates. Then $g\mapsto\Phi_g$ is an isometric isomorphism from $\LLL^q$ to $\left( \LLL^p \right)^{*}$.
+    \end{theorem}
+
+    \begin{proof}[Proof Idea]
+        Use $M = \sup\left\lbrace \left\lVert g_E\right\rVert_q : E\subseteq X \text{ is $\sigma$-finite} \right\rbrace$.
+    \end{proof}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 
 \end{document}
