@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Debian) (preloaded format=xelatex 2022.10.25)  9 DEC 2022 21:56
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Debian) (preloaded format=xelatex 2022.10.25)  10 DEC 2022 15:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1010,57 +1010,51 @@ Underfull \hbox (badness 10000) in paragraph at lines 915--919
 
 ] [16
 
-] [17] [18] [19] [20
+] [17] [18] [19] [20] [21
 
-] [21
+] [22
 
-] [22] [23] [24
+] [23
 
-] [25
-
-]) (./3.tex [26]
+]) (./3.tex [24]
 Underfull \hbox (badness 10000) in paragraph at lines 22--27
 
  []
 
-[27
+[25
 
-] [28] [29] [30] [31] [32] [33
-
-] [34] [35
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 500--506
+] [26] [27] [28] [29] [30] [31]
+Underfull \hbox (badness 10000) in paragraph at lines 496--502
 
  []
 
-[36] [37] [38]) (./4.tex [39]
+[32] [33] [34]) (./4.tex [35]
 Underfull \hbox (badness 10000) in paragraph at lines 26--31
 
  []
 
-[40
+[36
 
-] [41] [42] [43]) (./5.tex [44
+] [37] [38] [39]) (./5.tex [40
 
-] [45
+] [41
 
-] [46
+] [42
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 202--207
 
  []
 
-[47] [48
+[43] [44
 
-] [49] [50] [51] [52] [53] [54] [55]) (./6.tex [56] [57
+] [45] [46] [47] [48] [49] [50] [51]) (./6.tex [52] [53
 
-] [58
+] [54
 
-] [59] [60] [61
+] [55] [56] [57
 
-] [62] [63] [64] [65] [66]) (./7.tex
+] [58] [59] [60] [61] [62]) (./7.tex
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 8.
@@ -1134,7 +1128,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 8.
 
-[67]
+[63]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 12.
@@ -1208,13 +1202,13 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 12.
 
-[68
+[64
 
-] [69] [70
+] [65] [66
 
-] [71
+] [67
 
-] [72]) [73
+] [68]) [69
 
 ]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 28.
@@ -1234,4 +1228,4 @@ Here is how much of TeX's memory you used:
  14 hyphenation exceptions out of 8191
  68i,24n,88p,799b,622s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on pmath451.pdf (73 pages).
+Output written on pmath451.pdf (69 pages).
